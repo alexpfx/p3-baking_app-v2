@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di;
 
 import dagger.Module;
 

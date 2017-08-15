@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipeActivity">
+    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -30,9 +30,10 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+
     <fragment
         android:id="@+id/recipes_fragment"
-        android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipeListFragment"
+        android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

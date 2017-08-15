@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
 import android.content.Context;
 import android.net.Uri;

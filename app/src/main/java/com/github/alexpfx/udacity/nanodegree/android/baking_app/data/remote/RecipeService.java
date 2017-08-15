@@ -1,6 +1,6 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data.remote;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 
 import java.util.List;
 

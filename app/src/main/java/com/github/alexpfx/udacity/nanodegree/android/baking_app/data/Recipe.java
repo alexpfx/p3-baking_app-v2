@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
 
 import com.google.gson.annotations.SerializedName;
 

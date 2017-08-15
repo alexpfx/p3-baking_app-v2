@@ -12,54 +12,22 @@ public interface BakingAppContract {
     String AUTHORITY = "com.github.alexpfx.udacity.nanodegree.android.baking_app";
 
     Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
-
-    class Paths {
-        public static final String INGREDIENTS = "ingredients";
-        public static final String STEPS = "steps";
-        public static final String RECIPES = "recipes";
-    }
-
-    /* SQLITE */
-
     String DROP_TABLE = " DROP TABLE IF EXISTS ";
 
+
+    /* SQLITE */
     String CREATE_TABLE = "CREATE TABLE ";
-
     String TEXT_TYPE = " TEXT ";
-
     String INTEGER_TYPE = " INTEGER ";
-
     String COMMA = ",";
-
     String SEMICOLON = ";";
-
     String OPEN_BRACKETS = "(";
-
     String CLOSE_BRACKETS = ")";
-
     String PRIMARY_KEY = " PRIMARY KEY ";
-
     String FOREIGN_KEY = " FOREIGN KEY ";
-
     String REFERENCES = " REFERENCES ";
-
     String AUTOINCREMENT = " AUTOINCREMENT ";
-
     String END_SQL = CLOSE_BRACKETS + SEMICOLON;
-
-    class SyntaxUtils {
-        public static final String compositePrimaryKey(String... columns) {
-            StringBuilder sb = new StringBuilder(PRIMARY_KEY + OPEN_BRACKETS);
-            for (int i = 0; i < columns.length; i++) {
-                sb.append(columns[i]);
-                if (i != columns.length - 1) {
-                    sb.append(", ");
-                }
-            }
-            sb.append(CLOSE_BRACKETS);
-            return sb.toString();
-        }
-    }
 
     interface IngredientsEntry extends BaseColumns {
         Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(Paths.INGREDIENTS).build();
@@ -74,6 +42,8 @@ public interface BakingAppContract {
         String COLUMN_INGREDIENT = "INGREDIENT";
 
         String COLUMN_RECIPE_ID = "RECIPE_ID";
+
+        String[] ALL_COLUMNS = {COLUMN_INGREDIENT, COLUMN_MEASURE, COLUMN_QUANTITY, COLUMN_RECIPE_ID};
 
         String SQL_CREATE_TABLE = CREATE_TABLE +
                 TABLE_NAME + OPEN_BRACKETS +
@@ -101,13 +71,18 @@ public interface BakingAppContract {
 
         String COLUMN_THUMBNAIL_URL = "THUMBNAIL_URL";
 
+        String COLUMN_VIDEO_URL = "VIDEO_URL";
+
         String COLUMN_RECIPE_ID = "RECIPE_ID";
+
+        String[] ALL_COLUMNS = {COLUMN_SHORT_DESCRIPTION, COLUMN_DESCRIPTION, COLUMN_VIDEO_URL, COLUMN_THUMBNAIL_URL, COLUMN_RECIPE_ID};
 
         String SQL_CREATE_TABLE = CREATE_TABLE + TABLE_NAME + OPEN_BRACKETS +
                 _ID + INTEGER_TYPE + COMMA +
                 COLUMN_SHORT_DESCRIPTION + TEXT_TYPE + COMMA +
                 COLUMN_DESCRIPTION + TEXT_TYPE + COMMA +
                 COLUMN_THUMBNAIL_URL + TEXT_TYPE + COMMA +
+                COLUMN_VIDEO_URL + TEXT_TYPE + COMMA +
                 COLUMN_RECIPE_ID + INTEGER_TYPE + COMMA +
                 FOREIGN_KEY + OPEN_BRACKETS + COLUMN_RECIPE_ID + CLOSE_BRACKETS +
                 REFERENCES + RecipeEntry.TABLE_NAME + OPEN_BRACKETS + RecipeEntry._ID + CLOSE_BRACKETS + COMMA +
@@ -127,6 +102,8 @@ public interface BakingAppContract {
 
         String COLUMN_IMAGE = "IMAGE";
 
+        String[] ALL_COLUMNS = {_ID, COLUMN_NAME, COLUMN_SERVINGS, COLUMN_IMAGE};
+
         String SQL_CREATE_TABLE = CREATE_TABLE + TABLE_NAME + OPEN_BRACKETS +
                 _ID + INTEGER_TYPE + PRIMARY_KEY + AUTOINCREMENT + COMMA +
                 COLUMN_NAME + TEXT_TYPE + COMMA +
@@ -135,6 +112,26 @@ public interface BakingAppContract {
                 END_SQL;
 
 
+    }
+
+    class Paths {
+        public static final String INGREDIENTS = "ingredients";
+        public static final String STEPS = "steps";
+        public static final String RECIPES = "recipes";
+    }
+
+    class SyntaxUtils {
+        public static final String compositePrimaryKey(String... columns) {
+            StringBuilder sb = new StringBuilder(PRIMARY_KEY + OPEN_BRACKETS);
+            for (int i = 0; i < columns.length; i++) {
+                sb.append(columns[i]);
+                if (i != columns.length - 1) {
+                    sb.append(", ");
+                }
+            }
+            sb.append(CLOSE_BRACKETS);
+            return sb.toString();
+        }
     }
 
 }

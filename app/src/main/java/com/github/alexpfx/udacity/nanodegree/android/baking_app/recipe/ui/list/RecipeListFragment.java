@@ -1,19 +1,21 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
 
 import java.util.List;
 
@@ -23,10 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 1. Obter repositório e fazer consulta.
- * 2. Preencher lista do adapter.
+ * 1. Implementar onClick que abrirá RecipeDetailFragment.
+ * 2.
  */
-public class RecipeListFragment extends Fragment {
+public class RecipeListFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "RecipeListFragment";
 
@@ -39,12 +41,13 @@ public class RecipeListFragment extends Fragment {
     @Inject
     RecipesRepository repository;
 
+    private OnRecipeSelectListener recipeSelectListener;
+
     private boolean isTablet = false;
 
     public RecipeListFragment() {
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,11 +56,19 @@ public class RecipeListFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        initInjections ();
+        initInjections();
         setupRecycler();
 
-        Log.d(TAG, "onCreateView: "+adapter);
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnRecipeSelectListener) {
+            recipeSelectListener = (OnRecipeSelectListener) context;
+        }
     }
 
     private void initInjections() {
@@ -67,16 +78,32 @@ public class RecipeListFragment extends Fragment {
     private void setupRecycler() {
         final RecyclerView.LayoutManager layoutManager;
         if (isTablet) {
-            layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        } else {
             layoutManager = new GridLayoutManager(getContext(), 3);
+        } else {
+            layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         }
+        recycler.setLayoutManager(layoutManager);
+
         recycler.setAdapter(adapter);
 
+        adapter.setListener(this);
         List<Recipe> recipes = repository.recipes();
-        Log.d(TAG, "setupRecycler: "+recipes);
+        adapter.setItemList(recipes);
 
-        recycler.setLayoutManager(layoutManager);
     }
 
+
+    public void loadRecipes() {
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if (recipeSelectListener == null) {
+            return;
+        }
+        Recipe recipe = (Recipe) view.getTag();
+        recipeSelectListener.onRecipeSelect(recipe);
+    }
 }

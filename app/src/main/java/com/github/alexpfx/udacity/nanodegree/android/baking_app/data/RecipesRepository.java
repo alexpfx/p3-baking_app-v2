@@ -1,6 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
-
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data.Recipe;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
 
 import java.util.List;
 
@@ -13,4 +11,5 @@ import java.util.List;
  */
 public interface RecipesRepository {
     List<Recipe> recipes();
+
 }

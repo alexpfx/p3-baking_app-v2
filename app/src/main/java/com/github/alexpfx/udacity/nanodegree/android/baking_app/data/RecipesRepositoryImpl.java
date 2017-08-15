@@ -1,12 +1,13 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.data.remote.RecipeService;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDataSource;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeService;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,6 +16,7 @@ import retrofit2.Response;
 /**
  * Created by alexandre on 18/07/17.
  */
+@Singleton
 public class RecipesRepositoryImpl implements RecipesRepository {
 
     private final RecipeService recipeService;
@@ -30,12 +32,20 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
     @Override
     public List<Recipe> recipes() {
-        refresh();
+            refresh();
+
         return recipeDataSource.getRecipes();
     }
 
+    public Recipe loadRecipe (){
+        refresh();
+
+        return recipeDataSource.getRecipes().get(0);
+
+    }
+
     private void refresh() {
-        if (!recipeDataSource.hasData()) {
+        if (recipeDataSource.isEmpty()) {
             recipeService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
                 @Override
                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
@@ -47,13 +57,11 @@ public class RecipesRepositoryImpl implements RecipesRepository {
                     throw new RuntimeException(t);
                 }
             });
-
         }
-
     }
 
     private void storeResponse(Response<List<Recipe>> response) {
-        recipeDataSource.save(response.body());
+        recipeDataSource.store(response.body());
     }
 
 

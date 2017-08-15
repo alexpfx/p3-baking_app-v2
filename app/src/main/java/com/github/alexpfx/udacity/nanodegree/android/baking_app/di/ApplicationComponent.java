@@ -2,7 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
 import android.content.Context;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
 
 import java.util.concurrent.Executor;
 
