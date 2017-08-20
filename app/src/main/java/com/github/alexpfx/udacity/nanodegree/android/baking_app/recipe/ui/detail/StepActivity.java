@@ -9,13 +9,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.DaggerRecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
 
-public class StepActivity extends AppCompatActivity implements HasComponent<RecipeComponent> {
+public class StepActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnStepSelectListener {
 
     private static final String TAG = "StepActivity";
     private RecipeComponent recipeComponent;
@@ -28,7 +29,7 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
-        Log.d(TAG, "onCreate: "+extras.getInt(RecipeActivity.KEY_RECIPE_ID));
+        Log.d(TAG, "onCreate: " + extras.getInt(RecipeActivity.KEY_RECIPE_ID));
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,9 +39,7 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
             }
         });
 
-
         recipeComponent = DaggerRecipeComponent.builder().applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
-
 
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
         recipeDetailFragment.setArguments(extras);
@@ -52,5 +51,10 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     @Override
     public RecipeComponent getComponent() {
         return recipeComponent;
+    }
+
+    @Override
+    public void onStepSelect(Step step) {
+
     }
 }

@@ -1,6 +1,15 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
 import android.app.Activity;
+import android.content.Context;
+
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,5 +28,15 @@ public class ActivityModule {
     @Provides @PerActivity
     Activity provideActivity (){
         return activity;
+    }
+
+    @Provides @PerActivity
+    TrackSelector providesTrackSelector (){
+        return new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(new DefaultBandwidthMeter()));
+    }
+
+    @Provides @PerActivity
+    SimpleExoPlayer providesPlayer(Activity context, TrackSelector trackSelector){
+        return ExoPlayerFactory.newSimpleInstance(context, trackSelector);
     }
 }

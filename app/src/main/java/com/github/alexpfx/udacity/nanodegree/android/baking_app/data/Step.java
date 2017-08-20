@@ -90,6 +90,15 @@ public class Step {
     public Step() {
     }
 
+    public Step(int id, String shortDescription, String description, String videoURL, String thumbnailURL, Integer recipeId) {
+        this.id = id;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+        this.recipeId = recipeId;
+    }
+
     public Step(String shortDescription, String description) {
         this.shortDescription = shortDescription;
         this.description = description;

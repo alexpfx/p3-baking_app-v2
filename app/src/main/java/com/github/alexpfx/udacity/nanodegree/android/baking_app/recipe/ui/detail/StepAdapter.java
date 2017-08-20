@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +25,19 @@ import butterknife.ButterKnife;
 @PerActivity
 public class StepAdapter extends RecyclerView.Adapter {
 
+
+    private static final String TAG = "StepAdapter";
     private List<Step> itemList;
     private Context context;
-
+    private View.OnClickListener onClickListener;
 
     @Inject
     public StepAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -44,7 +49,8 @@ public class StepAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
-        vh.bind(itemList.get(position));
+        Step step = itemList.get(position);
+        vh.bind(step, onClickListener);
     }
 
     @Override
@@ -53,24 +59,28 @@ public class StepAdapter extends RecyclerView.Adapter {
     }
 
 
+
+
+    public void setItemList(List<Step> itemList) {
+        this.itemList = itemList;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
+        private static final String TAG = "ViewHolder";
         @BindView(R.id.text_short_description)
         TextView txtShortDescription;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        private static final String TAG = "ViewHolder";
-        public void bind (Step step){
-            Log.d(TAG, "bind: "+step);
+        public void bind(Step step, View.OnClickListener onClickListener) {
             txtShortDescription.setText(step.getShortDescription());
+            txtShortDescription.setTag(step);
+            txtShortDescription.setOnClickListener(onClickListener);
         }
-    }
-
-    public void setItemList(List<Step> itemList) {
-        this.itemList = itemList;
     }
 }
 

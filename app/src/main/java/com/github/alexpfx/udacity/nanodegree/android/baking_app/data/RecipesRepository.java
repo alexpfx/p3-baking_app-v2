@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface RecipesRepository {
     List<Recipe> recipes();
-
+    List<Step> stepsByRecipe (int recipeId);
+    List<Ingredient> ingredientsByRecipe (int recipeId);
 }

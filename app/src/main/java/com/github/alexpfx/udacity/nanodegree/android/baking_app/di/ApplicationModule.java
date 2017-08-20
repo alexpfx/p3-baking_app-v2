@@ -8,8 +8,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.datab
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDaoImpl;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDataSource;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDataSourceImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.executor.JobExecutor;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDaoImpl;
@@ -47,13 +45,6 @@ public class ApplicationModule {
     Executor provideExecutor(JobExecutor jobExecutor) {
         return jobExecutor;
     }
-
-    @Provides
-    @Singleton
-    RecipeDataSource dataSource(RecipeDataSourceImpl recipeDataSource) {
-        return recipeDataSource;
-    }
-
 
     @Provides
     @Singleton

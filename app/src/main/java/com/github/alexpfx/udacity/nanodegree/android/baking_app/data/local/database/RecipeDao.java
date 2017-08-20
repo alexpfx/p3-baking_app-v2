@@ -11,13 +11,12 @@ import java.util.List;
  */
 
 public interface RecipeDao {
-    Cursor getAll();
+    List<Recipe> getAll();
 
-    void insert(Recipe recipe);
+    Recipe get(int recipeId);
 
-    Cursor get(int recipeId);
+    void bulkInsert(List<Recipe> recipes);
 
-    void bulkInset(List<Recipe> recipes);
+    boolean isEmpty ();
 
-    Cursor rawQuery(String sql, String[] selectionArgs);
 }

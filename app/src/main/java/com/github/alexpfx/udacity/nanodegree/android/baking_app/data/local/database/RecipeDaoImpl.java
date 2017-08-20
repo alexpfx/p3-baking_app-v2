@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,30 +28,37 @@ public class RecipeDaoImpl implements RecipeDao {
     }
 
     @Override
-    public Cursor getAll() {
-        return dbHelper.getReadableDatabase().query(
+    public List<Recipe> getAll() {
+        Cursor cursor = dbHelper.getReadableDatabase().query(
                 BakingAppContract.RecipeEntry.TABLE_NAME,
                 BakingAppContract.RecipeEntry.ALL_COLUMNS,
                 null, null, null, null, null);
-
+        if (!cursor.moveToFirst()) {
+            return Collections.EMPTY_LIST;
+        }
+        List<Recipe> list = new ArrayList<>();
+        do {
+            list.add(MappingUtil.toRecipe(cursor));
+        } while (cursor.moveToNext());
+        return list;
     }
 
     @Override
-    public Cursor get(int recipeId) {
-        return dbHelper.getReadableDatabase().query(BakingAppContract.RecipeEntry.TABLE_NAME,
+    public Recipe get(int recipeId) {
+        Cursor cursor = dbHelper.getReadableDatabase().query(BakingAppContract.RecipeEntry.TABLE_NAME,
                 BakingAppContract.RecipeEntry.ALL_COLUMNS,
                 BakingAppContract.RecipeEntry._ID + "= ?",
                 new String[]{String.valueOf(recipeId)}, null, null, null);
+
+        if (!cursor.moveToFirst()) {
+            return null;
+        }
+        return MappingUtil.toRecipe(cursor);
     }
 
-    @Override
-    public void insert(Recipe recipe) {
-
-
-    }
 
     @Override
-    public void bulkInset(List<Recipe> recipes) {
+    public void bulkInsert(List<Recipe> recipes) {
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         try {
@@ -69,8 +78,12 @@ public class RecipeDaoImpl implements RecipeDao {
     }
 
     @Override
-    public Cursor rawQuery(String sql, String[] selectionArgs) {
-        return dbHelper.getReadableDatabase().rawQuery(sql, selectionArgs);
+    public boolean isEmpty() {
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("select count (*) as count from " + BakingAppContract.RecipeEntry.TABLE_NAME, null);
+        cursor.moveToFirst();
+        return cursor.getInt(0) == 0;
     }
+
 
 }

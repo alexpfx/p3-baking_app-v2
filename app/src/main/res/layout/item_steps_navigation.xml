@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    >
+
+    <ImageButton
+        android:id="@+id/btn_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="left"
+        android:padding="@dimen/fab_margin"
+        android:src="@android:drawable/ic_media_previous"
+        android:background="@null"
+        />
+
+    <TextView
+        android:id="@+id/text_short_description"
+        android:layout_toRightOf="@+id/btn_previous"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/btn_next"
+        android:layout_alignBottom="@+id/btn_previous"
+        android:layout_alignTop="@+id/btn_previous"
+        tools:text="descrição da receita"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+
+
+        />
+
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:src="@android:drawable/ic_media_next"
+        android:background="@null"
+        android:padding="@dimen/fab_margin"
+        />
+
+
+</RelativeLayout>

@@ -13,5 +13,9 @@ import java.util.List;
 public interface IngredientDao {
     void bulkInsert(List<Ingredient> ingredients);
 
-    Cursor getAll(int recipeId);
+
+    List<Ingredient> getAll (int recipeId);
+
+
+
 }

@@ -1,6 +1,8 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDataSource;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDao;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeService;
 
 import java.util.List;
@@ -21,31 +23,39 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
     private final RecipeService recipeService;
     private final Executor executor;
-    private final RecipeDataSource recipeDataSource;
+    private final RecipeDao recipeDao;
+    private final IngredientDao ingredientDao;
+    private final StepDao stepDao;
 
     @Inject
-    public RecipesRepositoryImpl(RecipeService recipeService, Executor executor, RecipeDataSource recipeDataSource) {
+    public RecipesRepositoryImpl(RecipeService recipeService, Executor executor,
+                                 RecipeDao recipeDao, IngredientDao ingredientDao, StepDao stepDao
+    ) {
         this.recipeService = recipeService;
         this.executor = executor;
-        this.recipeDataSource = recipeDataSource;
+        this.recipeDao = recipeDao;
+        this.ingredientDao = ingredientDao;
+        this.stepDao = stepDao;
     }
 
     @Override
     public List<Recipe> recipes() {
-            refresh();
-
-        return recipeDataSource.getRecipes();
+        refresh();
+        return recipeDao.getAll();
     }
 
-    public Recipe loadRecipe (){
-        refresh();
+    @Override
+    public List<Step> stepsByRecipe(int recipeId) {
+        return stepDao.getAll(recipeId);
+    }
 
-        return recipeDataSource.getRecipes().get(0);
-
+    @Override
+    public List<Ingredient> ingredientsByRecipe(int recipeId) {
+        return ingredientDao.getAll(recipeId);
     }
 
     private void refresh() {
-        if (recipeDataSource.isEmpty()) {
+        if (recipeDao.isEmpty()) {
             recipeService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
                 @Override
                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
@@ -61,7 +71,31 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     }
 
     private void storeResponse(Response<List<Recipe>> response) {
-        recipeDataSource.store(response.body());
+        List<Recipe> recipes = response.body();
+        recipeDao.bulkInsert(recipes);
+
+        for (Recipe recipe : recipes) {
+            insertSteps(recipe, recipe.getSteps());
+            insertIngredients(recipe, recipe.getIngredients());
+        }
+
+    }
+
+    private void insertIngredients(Recipe recipe, List<Ingredient> ingredients) {
+        int count = 1;
+        for (Ingredient ingredient : ingredients) {
+            ingredient.setId(count++);
+            ingredient.setRecipeId(recipe.getId());
+        }
+        ingredientDao.bulkInsert(ingredients);
+    }
+
+    private void insertSteps(Recipe recipe, List<Step> steps) {
+        for (Step step : steps) {
+            step.setRecipeId(recipe.getId());
+        }
+        stepDao.bulkInsert(steps);
+
     }
 
 
