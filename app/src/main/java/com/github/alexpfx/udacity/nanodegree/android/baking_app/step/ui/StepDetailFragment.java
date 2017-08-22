@@ -3,7 +3,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,11 +41,14 @@ public class StepDetailFragment extends Fragment implements NavigationViewHolder
     public StepDetailFragment() {
     }
 
+    private static final String TAG = "StepDetailFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
         ButterKnife.bind(this, view);
+
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
 

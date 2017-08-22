@@ -1,5 +1,6 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,11 +11,13 @@ import android.view.View;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ActivityModule;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.DaggerRecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDetailActivity;
 
 public class StepActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnStepSelectListener {
 
@@ -25,12 +28,12 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
         Log.d(TAG, "onCreate: " + extras.getInt(RecipeActivity.KEY_RECIPE_ID));
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,7 +42,10 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
             }
         });
 
-        recipeComponent = DaggerRecipeComponent.builder().applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
+
+        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this))
+                .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
+
 
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
         recipeDetailFragment.setArguments(extras);
@@ -55,6 +61,12 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
 
     @Override
     public void onStepSelect(Step step) {
+        Intent intent = new Intent(this, StepDetailActivity.class);
+        Bundle extras = new Bundle();
+        extras.putParcelable(step);
+        intent.putExtras(extras);
+        startActivity(intent);
+
 
     }
 }

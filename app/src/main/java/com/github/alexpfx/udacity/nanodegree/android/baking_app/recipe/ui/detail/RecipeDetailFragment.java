@@ -54,6 +54,7 @@ public class RecipeDetailFragment extends Fragment {
         public void onClick(View view) {
             Step step = (Step) view.getTag();
             stepSelectListener.onStepSelect(step);
+
         }
     };
 

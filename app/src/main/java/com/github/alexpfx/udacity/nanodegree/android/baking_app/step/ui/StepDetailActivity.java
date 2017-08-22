@@ -8,17 +8,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ActivityModule;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.DaggerRecipeComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 
-public class StepDetailActivity extends AppCompatActivity {
+public class StepDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent> {
+
+    private RecipeComponent recipeComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,6 +33,16 @@ public class StepDetailActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new StepDetailFragment()).commit();
+
+        recipeComponent = DaggerRecipeComponent.builder().applicationComponent(
+                ((HasComponent<ApplicationComponent>) getApplication()).getComponent()
+        ).activityModule(new ActivityModule(this)).build();
     }
 
+    @Override
+    public RecipeComponent getComponent() {
+        return recipeComponent;
+    }
 }
