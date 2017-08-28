@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 
 import java.util.ArrayList;
 import java.util.Collections;

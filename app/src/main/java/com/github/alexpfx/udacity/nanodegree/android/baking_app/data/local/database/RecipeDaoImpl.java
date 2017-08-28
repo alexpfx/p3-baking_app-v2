@@ -80,9 +80,11 @@ public class RecipeDaoImpl implements RecipeDao {
     @Override
     public boolean isEmpty() {
         SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery("select count (*) as count from " + BakingAppContract.RecipeEntry.TABLE_NAME, null);
-        cursor.moveToFirst();
-        return cursor.getInt(0) == 0;
+        try (Cursor cursor = database.rawQuery("select count (*) as count from " + BakingAppContract.RecipeEntry
+                .TABLE_NAME, null)) {
+            cursor.moveToFirst();
+            return cursor.getInt(0) == 0;
+        }
     }
 
 

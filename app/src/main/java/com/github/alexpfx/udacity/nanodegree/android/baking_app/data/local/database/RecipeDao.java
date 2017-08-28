@@ -1,7 +1,5 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database;
 
-import android.database.Cursor;
-
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 
 import java.util.List;

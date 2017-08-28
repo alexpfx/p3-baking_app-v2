@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -58,12 +58,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
-        @BindView(R.id.text_ingredient_name)
-        TextView txtIngredientName;
-        @BindView(R.id.text_ingredient_measure)
-        TextView txtMeasure;
-        @BindView(R.id.text_ingredient_quantity)
-        TextView txtQuantity;
+        @BindView(R.id.text_ingredient)
+        TextView txtIngredient;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,10 +68,17 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
         }
 
         public void bind(Ingredient ingredient) {
-            Log.d(TAG, "bind: " + ingredient);
-            txtIngredientName.setText(ingredient.getIngredient());
-            txtMeasure.setText(ingredient.getMeasure());
-            txtQuantity.setText("" + ingredient.getQuantity());
+            txtIngredient.setText(getFormatedText(ingredient));
+        }
+    }
+
+    private String getFormatedText(Ingredient ingredient) {
+        double quantity = ingredient.getQuantity();
+
+        if (quantity == (long) quantity) {
+            return String.format(Locale.US, "%s - %s %s", ingredient.getIngredient(), String.valueOf(quantity), ingredient.getMeasure());
+        } else {
+            return String.format(Locale.US, "%s - %.1f %s", ingredient.getIngredient(), quantity, ingredient.getMeasure());
         }
     }
 }

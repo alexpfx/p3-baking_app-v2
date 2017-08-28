@@ -12,8 +12,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.MappingUtil.toRecipe;
-
 /**
  * Created by alexandre on 06/08/17.
  */

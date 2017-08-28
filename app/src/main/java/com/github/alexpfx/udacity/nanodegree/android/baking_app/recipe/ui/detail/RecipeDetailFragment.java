@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,7 +61,8 @@ public class RecipeDetailFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
         ButterKnife.bind(this, view);
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
@@ -75,13 +77,19 @@ public class RecipeDetailFragment extends Fragment {
         stepAdapter.setItemList(steps);
         stepAdapter.setOnClickListener(onItemRecipeClick);
 
-        setupRecycler(recyclerIngredients, ingredientsAdapter, new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        setupRecycler(recyclerSteps, stepAdapter, new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        setupRecycler(recyclerIngredients, ingredientsAdapter, new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
+        setupRecycler(recyclerSteps, stepAdapter, new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
+                false));
         return view;
     }
 
-    private void setupRecycler(RecyclerView recyclerView, RecyclerView.Adapter adapter, RecyclerView.LayoutManager layoutManager) {
+    private void setupRecycler(RecyclerView recyclerView, RecyclerView.Adapter adapter, LinearLayoutManager
+            layoutManager) {
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
     }
 

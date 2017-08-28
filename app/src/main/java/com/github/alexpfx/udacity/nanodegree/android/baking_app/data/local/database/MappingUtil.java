@@ -7,13 +7,16 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.*;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.IngredientsEntry;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.RecipeEntry;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.StepEntry;
 
 /**
  * Created by alexandre on 06/08/17.
  */
 
 public final class MappingUtil {
+    private static final String TAG = "MappingUtil";
 
     public static Recipe toRecipe(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(RecipeEntry._ID));
@@ -49,9 +52,9 @@ public final class MappingUtil {
     public static ContentValues toContentValues(Recipe recipe) {
         ContentValues vc = new ContentValues();
         vc.put(RecipeEntry._ID, recipe.getId());
-        vc.put(RecipeEntry.COLUMN_IMAGE, recipe.getName());
-        vc.put(RecipeEntry.COLUMN_SERVINGS, recipe.getServings());
         vc.put(RecipeEntry.COLUMN_NAME, recipe.getName());
+        vc.put(RecipeEntry.COLUMN_IMAGE, recipe.getImage());
+        vc.put(RecipeEntry.COLUMN_SERVINGS, recipe.getServings());
         return vc;
     }
 
@@ -61,6 +64,7 @@ public final class MappingUtil {
         contentValues.put(IngredientsEntry.COLUMN_INGREDIENT, ingredient.getIngredient());
         contentValues.put(IngredientsEntry.COLUMN_QUANTITY, ingredient.getQuantity());
         contentValues.put(IngredientsEntry.COLUMN_RECIPE_ID, ingredient.getRecipeId());
+        contentValues.put(IngredientsEntry.COLUMN_MEASURE, ingredient.getMeasure());
         return contentValues;
     }
 

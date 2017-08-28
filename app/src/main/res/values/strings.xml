@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">p3-baking_app-v2</string>
     <string name="title_activity_recipe">RecipeActivity</string>
-    <string name="title_activity_recipe_master">RecipeMasterActivity</string>
     <string name="title_activity_step">StepActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_step_detail">StepDetailActivity</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="recipe_image">Recipe image</string>
 </resources>

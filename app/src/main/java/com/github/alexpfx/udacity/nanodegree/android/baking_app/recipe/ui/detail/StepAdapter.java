@@ -67,7 +67,7 @@ public class StepAdapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
-        @BindView(R.id.text_short_description)
+        @BindView(R.id.step_text)
         TextView txtShortDescription;
 
 

@@ -5,5 +5,5 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.navigat
  */
 public interface NavigationViewControl {
     void setBtnPrevVisibility (int visibility);
-    void setBtnNextVisibility (int visibility);
+    void changeVisibility(int visibility);
 }

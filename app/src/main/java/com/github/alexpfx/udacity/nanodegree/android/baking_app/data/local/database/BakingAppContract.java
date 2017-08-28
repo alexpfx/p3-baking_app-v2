@@ -121,7 +121,7 @@ public interface BakingAppContract {
     }
 
     class SyntaxUtils {
-        public static final String compositePrimaryKey(String... columns) {
+        static String compositePrimaryKey(String... columns) {
             StringBuilder sb = new StringBuilder(PRIMARY_KEY + OPEN_BRACKETS);
             for (int i = 0; i < columns.length; i++) {
                 sb.append(columns[i]);

@@ -2,12 +2,9 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -33,15 +30,6 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
 
         Bundle extras = getIntent().getExtras();
         Log.d(TAG, "onCreate: " + extras.getInt(RecipeActivity.KEY_RECIPE_ID));
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
 
         recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
@@ -63,7 +51,7 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     public void onStepSelect(Step step) {
         Intent intent = new Intent(this, StepDetailActivity.class);
         Bundle extras = new Bundle();
-        extras.putParcelable(step);
+        extras.putParcelable("step", step);
         intent.putExtras(extras);
         startActivity(intent);
 

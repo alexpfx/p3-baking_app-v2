@@ -143,4 +143,22 @@ public class Step implements Parcelable {
             return new Step[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Step step = (Step) o;
+
+        return id == step.id && recipeId.equals(step.recipeId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + recipeId.hashCode();
+        return result;
+    }
 }
