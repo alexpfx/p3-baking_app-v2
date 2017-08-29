@@ -4,16 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.App;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppOpenHelper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDaoImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDaoImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDao;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.executor.JobExecutor;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDaoImpl;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDaoImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.executor.JobExecutor;
 
 import java.util.concurrent.Executor;
 
@@ -54,25 +55,32 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    RecipeDao recipeDao (RecipeDaoImpl recipeDao){
+    RecipeDao recipeDao(RecipeDaoImpl recipeDao) {
         return recipeDao;
     }
 
     @Singleton
     @Provides
-    IngredientDao ingredientDao (IngredientDaoImpl ingredientDao){
+    IngredientDao ingredientDao(IngredientDaoImpl ingredientDao) {
         return ingredientDao;
     }
 
     @Singleton
     @Provides
-    StepDao stepDao (StepDaoImpl stepDao){
+    StepDao stepDao(StepDaoImpl stepDao) {
         return stepDao;
     }
+
     @Singleton
     @Provides
-    SQLiteOpenHelper sqLiteOpenHelper(BakingAppOpenHelper bakingAppOpenHelper){
+    SQLiteOpenHelper sqLiteOpenHelper(BakingAppOpenHelper bakingAppOpenHelper) {
         return bakingAppOpenHelper;
+    }
+
+    @Singleton
+    @Provides
+    boolean isTablet (Context context){
+        return context.getResources().getBoolean(R.bool.isTablet);
     }
 
 }

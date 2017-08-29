@@ -25,11 +25,19 @@ public class App extends Application implements HasComponent<ApplicationComponen
         }
         LeakCanary.install(this);
 
+
+    }
+
+    @Override
+    public void initialize() {
         applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
     }
 
     @Override
     public ApplicationComponent getComponent() {
+        if (applicationComponent == null){
+            initialize();
+        }
         return applicationComponent;
     }
 }

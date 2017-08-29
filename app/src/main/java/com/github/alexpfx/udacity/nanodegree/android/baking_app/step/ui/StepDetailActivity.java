@@ -36,15 +36,23 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
         fragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
-        recipeComponent = DaggerRecipeComponent.builder().applicationComponent(
-                ((HasComponent<ApplicationComponent>) getApplication()).getComponent()
-        ).activityModule(new ActivityModule(this)).build();
+
 
 
     }
 
     @Override
+    public void initialize() {
+        recipeComponent = DaggerRecipeComponent.builder().applicationComponent(
+                ((HasComponent<ApplicationComponent>) getApplication()).getComponent()
+        ).activityModule(new ActivityModule(this)).build();
+    }
+
+    @Override
     public RecipeComponent getComponent() {
+        if (recipeComponent == null){
+            initialize();
+        }
         return recipeComponent;
     }
 }

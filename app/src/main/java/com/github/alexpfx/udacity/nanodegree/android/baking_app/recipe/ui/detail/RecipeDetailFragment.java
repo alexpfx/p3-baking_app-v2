@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.OnParameterRequested;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
@@ -18,7 +19,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class RecipeDetailFragment extends Fragment {
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
 
-        int recipeId = getArguments().getInt(RecipeActivity.KEY_RECIPE_ID);
+        int recipeId = onParameterRequested.requestRecipeId();
 
         List<Step> steps = repository.stepsByRecipe(recipeId);
         List<Ingredient> ingredients = repository.ingredientsByRecipe(recipeId);
@@ -88,7 +88,8 @@ public class RecipeDetailFragment extends Fragment {
     private void setupRecycler(RecyclerView recyclerView, RecyclerView.Adapter adapter, LinearLayoutManager
             layoutManager) {
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager
+                .getOrientation()));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
     }
@@ -99,6 +100,15 @@ public class RecipeDetailFragment extends Fragment {
         if (context instanceof OnStepSelectListener) {
             stepSelectListener = (OnStepSelectListener) context;
         }
+        if (context instanceof OnParameterRequested) {
+            onParameterRequested = (OnRecipeIdRequested) context;
+        }
+    }
+
+    OnRecipeIdRequested onParameterRequested;
+
+    public interface OnRecipeIdRequested {
+        Integer requestRecipeId ();
     }
 
 

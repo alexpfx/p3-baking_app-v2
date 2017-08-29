@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.OnParameterRequested;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -52,11 +54,20 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     @PerActivity
     @Inject
     SimpleExoPlayer player;
-
+    OnParameterRequested<Step> onParameterRequested;
     private Step step;
     private List<Step> steps;
 
     public StepDetailFragment() {
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnParameterRequested){
+            onParameterRequested = (OnParameterRequested<Step>) context;
+        }
     }
 
     @Override
@@ -66,17 +77,18 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
         ButterKnife.bind(this, view);
 
-        Bundle arguments = getArguments();
-        step = arguments.getParcelable("step");
+//        Bundle arguments = getArguments();
+//        step = arguments.getParcelable("step");
 
 
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
 
-        steps = recipesRepository.stepsByRecipe(step.getRecipeId());
-
-        onStepLoad(step);
-        setupRecyclerView();
+        if (step != null) {
+            steps = recipesRepository.stepsByRecipe(step.getRecipeId());
+            onStepLoad(step);
+            setupRecyclerView();
+        }
 
 
         return view;
@@ -88,7 +100,6 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         stepDetailAdapter.setStepList(steps, steps.indexOf(step));
         stepDetailAdapter.setOnStepLoadListener(this);
     }
-
 
     @Override
     public void onStepLoad(Step step) {
@@ -104,7 +115,6 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         player.setPlayWhenReady(true);
 
     }
-
 
     @Override
     public void onDestroy() {
@@ -133,5 +143,9 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
             return;
         }
         player.release();
+    }
+
+    public interface OnStepRequest {
+        Step onStepRequest ();
     }
 }

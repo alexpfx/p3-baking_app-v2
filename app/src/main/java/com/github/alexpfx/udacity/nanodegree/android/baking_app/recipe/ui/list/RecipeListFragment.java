@@ -7,15 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
 
 import java.util.List;
 
@@ -43,7 +44,8 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
 
     private OnRecipeSelectListener recipeSelectListener;
 
-    private boolean isTablet = false;
+    @Inject
+    boolean isTablet;
 
     public RecipeListFragment() {
 
@@ -52,6 +54,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         ButterKnife.bind(this, view);
@@ -72,31 +75,18 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     }
 
     private void initInjections() {
+        Log.d(TAG, "initInjections: "+getActivity());
         ((HasComponent<RecipeComponent>) getActivity()).getComponent().inject(this);
     }
 
     private void setupRecycler() {
-        final RecyclerView.LayoutManager layoutManager;
-        if (isTablet) {
-            layoutManager = new GridLayoutManager(getContext(), 3);
-        } else {
-            layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        }
-        recycler.setLayoutManager(layoutManager);
-
+        recycler.setLayoutManager(getLayoutManager());
         recycler.setAdapter(adapter);
-
         adapter.setListener(this);
         List<Recipe> recipes = repository.recipes();
         adapter.setItemList(recipes);
 
     }
-
-
-    public void loadRecipes() {
-
-    }
-
 
     @Override
     public void onClick(View view) {
@@ -105,5 +95,11 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
         }
         Recipe recipe = (Recipe) view.getTag();
         recipeSelectListener.onRecipeSelect(recipe);
+    }
+
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return (isTablet) ?
+                new GridLayoutManager(getContext(), 3) :
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
     }
 }

@@ -6,5 +6,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
 public interface HasComponent <C> {
 
+    void initialize ();
     C getComponent ();
 }
