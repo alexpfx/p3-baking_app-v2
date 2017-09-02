@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class StepAdapter extends RecyclerView.Adapter {
     private List<Step> itemList;
     private Context context;
     private View.OnClickListener onClickListener;
+    private int selectedPosition = -1;
 
     @Inject
     public StepAdapter(Context context) {
@@ -51,7 +53,9 @@ public class StepAdapter extends RecyclerView.Adapter {
         ViewHolder vh = (ViewHolder) holder;
         Step step = itemList.get(position);
         vh.bind(step, onClickListener);
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -59,16 +63,18 @@ public class StepAdapter extends RecyclerView.Adapter {
     }
 
 
-
-
     public void setItemList(List<Step> itemList) {
         this.itemList = itemList;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private static final String TAG = "ViewHolder";
         @BindView(R.id.step_text)
         TextView txtShortDescription;
+        private View.OnClickListener onClickListener;
+        private boolean selected;
 
 
         public ViewHolder(View itemView) {
@@ -77,9 +83,26 @@ public class StepAdapter extends RecyclerView.Adapter {
         }
 
         public void bind(Step step, View.OnClickListener onClickListener) {
+            this.onClickListener = onClickListener;
             txtShortDescription.setText(step.getShortDescription());
             txtShortDescription.setTag(step);
-            txtShortDescription.setOnClickListener(onClickListener);
+            txtShortDescription.setOnClickListener(this);
+            setSelected(getAdapterPosition() == selectedPosition);
+            txtShortDescription.setSelected(selected);
+            Log.d(TAG, "bind: " + selectedPosition);
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            selectedPosition = getAdapterPosition();
+            onClickListener.onClick(view);
+            Log.d(TAG, "onClick: " + selectedPosition);
+            notifyDataSetChanged();
+        }
+
+        public void setSelected(boolean selected) {
+            this.selected = selected;
         }
     }
 }

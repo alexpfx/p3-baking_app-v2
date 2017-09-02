@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.OnParameterRequested;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -54,19 +52,21 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     @PerActivity
     @Inject
     SimpleExoPlayer player;
-    OnParameterRequested<Step> onParameterRequested;
+
+
     private Step step;
     private List<Step> steps;
+    private OnStepRequest onStepRequest;
+
 
     public StepDetailFragment() {
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnParameterRequested){
-            onParameterRequested = (OnParameterRequested<Step>) context;
+        if (context instanceof OnStepRequest) {
+            onStepRequest = (OnStepRequest) context;
         }
     }
 
@@ -77,12 +77,10 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
         ButterKnife.bind(this, view);
 
-//        Bundle arguments = getArguments();
-//        step = arguments.getParcelable("step");
-
-
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
+
+        step = onStepRequest.onStepRequest();
 
         if (step != null) {
             steps = recipesRepository.stepsByRecipe(step.getRecipeId());
@@ -110,9 +108,9 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(videoURL), new DefaultDataSourceFactory
                 (getContext(), Util.getUserAgent(getContext(), "recipePlayer")), new DefaultExtractorsFactory(),
                 null, null);
-        Log.d(TAG, "onStepLoad: " + videoURL);
         player.prepare(mediaSource);
         player.setPlayWhenReady(true);
+
 
     }
 
@@ -146,6 +144,7 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     }
 
     public interface OnStepRequest {
-        Step onStepRequest ();
+        Step onStepRequest();
     }
+
 }

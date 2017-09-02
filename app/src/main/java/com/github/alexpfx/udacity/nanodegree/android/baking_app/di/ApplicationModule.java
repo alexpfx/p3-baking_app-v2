@@ -79,7 +79,7 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    boolean isTablet (Context context){
+    Boolean isTablet (Context context){
         return context.getResources().getBoolean(R.bool.isTablet);
     }
 

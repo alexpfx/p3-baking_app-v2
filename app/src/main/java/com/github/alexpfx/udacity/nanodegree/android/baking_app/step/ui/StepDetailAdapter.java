@@ -35,6 +35,7 @@ public class StepDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final SimpleExoPlayer player;
     private Context context;
     private NavigationViewHolder navigationViewHolder;
+
     private List<Step> stepList;
     private int index;
     private OnStepLoadListener onStepLoadListener;
@@ -156,9 +157,11 @@ public class StepDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void bind(Step step) {
             txtStep.setText(step.getDescription());
         }
+
     }
 
     class PlayerViewHolder extends RecyclerView.ViewHolder {
+
         @BindView(R.id.video_player_view)
         SimpleExoPlayerView exoPlayerView;
 

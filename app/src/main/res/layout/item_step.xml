@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
+
     >
 
-
     <TextView
+
+        android:clickable="true"
+
         android:id="@+id/step_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/default_text_padding"
         android:layout_gravity="start|center"
         android:gravity="start"
+        android:padding="@dimen/default_text_padding"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="recipe introduction"
+        android:background="@drawable/step_item_select_state"
+
+
         />
 
 

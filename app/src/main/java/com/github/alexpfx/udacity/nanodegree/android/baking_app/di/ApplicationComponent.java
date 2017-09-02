@@ -20,5 +20,5 @@ public interface ApplicationComponent {
     Context context ();
     Executor executor ();
     RecipesRepository recipesRepository();
-    boolean isTablet();
+    Boolean isTablet();
 }

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.OnParameterRequested;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
@@ -55,7 +54,6 @@ public class RecipeDetailFragment extends Fragment {
         public void onClick(View view) {
             Step step = (Step) view.getTag();
             stepSelectListener.onStepSelect(step);
-
         }
     };
 
@@ -100,7 +98,7 @@ public class RecipeDetailFragment extends Fragment {
         if (context instanceof OnStepSelectListener) {
             stepSelectListener = (OnStepSelectListener) context;
         }
-        if (context instanceof OnParameterRequested) {
+        if (context instanceof OnRecipeIdRequested) {
             onParameterRequested = (OnRecipeIdRequested) context;
         }
     }

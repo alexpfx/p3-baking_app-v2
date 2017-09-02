@@ -34,9 +34,7 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
         StepDetailFragment fragment = new StepDetailFragment();
 
         fragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
-
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
 
     }
