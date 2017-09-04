@@ -22,15 +22,9 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     private RecipeComponent recipeComponent;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
 
         setContentView(R.layout.activity_recipe);
 
@@ -48,7 +42,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
 
     @Override
     public RecipeComponent getComponent() {
-        if (recipeComponent == null){
+        if (recipeComponent == null) {
             initialize();
         }
         return recipeComponent;

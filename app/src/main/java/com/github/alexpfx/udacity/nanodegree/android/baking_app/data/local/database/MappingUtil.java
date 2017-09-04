@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.data
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
@@ -76,6 +77,12 @@ public final class MappingUtil {
         contentValues.put(StepEntry.COLUMN_THUMBNAIL_URL, step.getThumbnailURL());
         contentValues.put(StepEntry.COLUMN_RECIPE_ID, step.getRecipeId());
         contentValues.put(StepEntry.COLUMN_VIDEO_URL, step.getVideoURL());
+//        Log.d(TAG, "toContentValues: "+step.getThumbnailURL());
+
+        String videoURL = step.getVideoURL();
+        if (videoURL != null && !videoURL.isEmpty() && !videoURL.endsWith(".mp4")){
+            Log.d(TAG, "toContentValues: "+ videoURL);
+        }
         return contentValues;
     }
 

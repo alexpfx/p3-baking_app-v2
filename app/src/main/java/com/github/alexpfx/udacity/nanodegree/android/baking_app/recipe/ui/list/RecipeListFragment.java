@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 
@@ -83,9 +84,13 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
         recycler.setLayoutManager(getLayoutManager());
         recycler.setAdapter(adapter);
         adapter.setListener(this);
-        List<Recipe> recipes = repository.recipes();
-        adapter.setItemList(recipes);
 
+        repository.recipes(new RecipesRepositoryImpl.Callback() {
+            @Override
+            public void onRecipesReceived(final List<Recipe> recipes) {
+                adapter.setItemList(recipes);
+            }
+        });
     }
 
     @Override

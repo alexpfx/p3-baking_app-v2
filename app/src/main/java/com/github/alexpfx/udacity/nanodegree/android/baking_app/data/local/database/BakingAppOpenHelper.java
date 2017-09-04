@@ -19,7 +19,7 @@ import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.loca
 public class BakingAppOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = "BakingAppOpenHelper";
 
-    public static final int DATABASE_VERSION = 15;
+    public static final int DATABASE_VERSION = 24;
     public static final String DATABASE_NAME = "baking.db";
 
 

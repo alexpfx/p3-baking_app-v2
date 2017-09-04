@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
@@ -32,7 +31,6 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     private RecipeComponent recipeComponent;
     private Step step;
 
-    Button b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +64,7 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
 
     @Override
     public void initialize() {
-        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this))
+        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this, StepActivity.class.getName()))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
         recipeComponent.inject(this);
     }

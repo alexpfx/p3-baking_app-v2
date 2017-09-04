@@ -10,7 +10,7 @@ import java.util.List;
  * Responsavel apenas por obter os dados de receita
  */
 public interface RecipesRepository {
-    List<Recipe> recipes();
+    void recipes(RecipesRepositoryImpl.Callback callback);
     List<Step> stepsByRecipe (int recipeId);
     List<Ingredient> ingredientsByRecipe (int recipeId);
 }

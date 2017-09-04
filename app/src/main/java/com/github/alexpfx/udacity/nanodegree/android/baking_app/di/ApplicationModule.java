@@ -2,6 +2,8 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.App;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
@@ -81,6 +83,12 @@ public class ApplicationModule {
     @Provides
     Boolean isTablet (Context context){
         return context.getResources().getBoolean(R.bool.isTablet);
+    }
+
+    @Singleton
+    @Provides
+    Handler handler (){
+        return new Handler(Looper.getMainLooper());
     }
 
 }

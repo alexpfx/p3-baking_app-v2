@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,9 +40,7 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     private static final String TAG = "StepDetailFragment";
     @BindView(R.id.recycler_step_detail)
     RecyclerView recyclerView;
-    @PerActivity
-    @Inject
-    SimpleExoPlayer simpleExoPlayer;
+
     @PerActivity
     @Inject
     StepDetailAdapter stepDetailAdapter;
@@ -52,6 +51,14 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     @PerActivity
     @Inject
     SimpleExoPlayer player;
+
+    @PerActivity
+    @Inject
+    MediaSessionCompat mediaSessionCompat;
+
+    @PerActivity
+    @Inject
+    PlayerEventListener playerEventListener;
 
 
     private Step step;
@@ -104,19 +111,25 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
             return;
         }
-        String videoURL = step.getVideoURL();
+        playVideoUrl(step.getVideoURL());
+
+    }
+
+    private void playVideoUrl(String videoURL) {
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(videoURL), new DefaultDataSourceFactory
                 (getContext(), Util.getUserAgent(getContext(), "recipePlayer")), new DefaultExtractorsFactory(),
                 null, null);
-        player.prepare(mediaSource);
+
+        player.prepare(mediaSource, true, false);
         player.setPlayWhenReady(true);
-
-
+        player.addListener(playerEventListener);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        releasePlayer();
+        mediaSessionCompat.setActive(false);
 
     }
 
@@ -140,7 +153,9 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         if (player == null) {
             return;
         }
+        player.stop();
         player.release();
+        player = null;
     }
 
     public interface OnStepRequest {

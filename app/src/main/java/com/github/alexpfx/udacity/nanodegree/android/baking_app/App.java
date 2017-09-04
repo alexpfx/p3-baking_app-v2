@@ -24,8 +24,6 @@ public class App extends Application implements HasComponent<ApplicationComponen
             return;
         }
         LeakCanary.install(this);
-
-
     }
 
     @Override

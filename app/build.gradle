@@ -40,6 +40,13 @@ dependencies {
         exclude group: 'com.google.code.findbugs'
     })
 
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.0') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
+
     compile 'com.squareup.retrofit2:retrofit:' + retrofitVersion
     compile 'com.squareup.retrofit2:converter-gson:' + retrofitConvertersVersion
     compile 'com.squareup.retrofit2:converter-scalars:' + retrofitConvertersVersion

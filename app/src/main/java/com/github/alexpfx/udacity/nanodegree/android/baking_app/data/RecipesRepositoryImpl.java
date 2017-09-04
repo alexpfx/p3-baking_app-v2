@@ -1,10 +1,13 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.data;
 
+import android.os.Handler;
+
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.RecipeDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.remote.RecipeService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -12,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -26,22 +28,35 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     private final RecipeDao recipeDao;
     private final IngredientDao ingredientDao;
     private final StepDao stepDao;
+    private Handler uiThread;
 
     @Inject
     public RecipesRepositoryImpl(RecipeService recipeService, Executor executor,
-                                 RecipeDao recipeDao, IngredientDao ingredientDao, StepDao stepDao
+                                 RecipeDao recipeDao, IngredientDao ingredientDao, StepDao stepDao, Handler uiThread
     ) {
         this.recipeService = recipeService;
         this.executor = executor;
         this.recipeDao = recipeDao;
         this.ingredientDao = ingredientDao;
         this.stepDao = stepDao;
+        this.uiThread = uiThread;
     }
 
     @Override
-    public List<Recipe> recipes() {
-        refresh();
-        return recipeDao.getAll();
+    public void recipes(final Callback callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                refresh();
+                uiThread.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onRecipesReceived(recipeDao.getAll());
+                    }
+                });
+            }
+        });
+
     }
 
     @Override
@@ -56,17 +71,14 @@ public class RecipesRepositoryImpl implements RecipesRepository {
 
     private void refresh() {
         if (recipeDao.isEmpty()) {
-            recipeService.getAllRecipes().enqueue(new Callback<List<Recipe>>() {
-                @Override
-                public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                    storeResponse(response);
-                }
+            try {
+                Call<List<Recipe>> allRecipes = recipeService.getAllRecipes();
+                Response<List<Recipe>> response = allRecipes.execute();
+                storeResponse(response);
 
-                @Override
-                public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                    throw new RuntimeException(t);
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,6 +108,10 @@ public class RecipesRepositoryImpl implements RecipesRepository {
         }
         stepDao.bulkInsert(steps);
 
+    }
+
+    public interface Callback {
+        void onRecipesReceived(List<Recipe> recipes);
     }
 
 
