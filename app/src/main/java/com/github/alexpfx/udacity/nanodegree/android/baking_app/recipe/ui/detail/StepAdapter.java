@@ -71,7 +71,7 @@ public class StepAdapter extends RecyclerView.Adapter {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private static final String TAG = "ViewHolder";
-        @BindView(R.id.step_text)
+        @BindView(R.id.text_step)
         TextView txtShortDescription;
         private View.OnClickListener onClickListener;
         private boolean selected;

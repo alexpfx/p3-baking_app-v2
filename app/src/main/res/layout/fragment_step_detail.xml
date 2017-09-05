@@ -1,16 +1,97 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDetailFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDetailFragment">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_step_detail"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/holo_orange_dark"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+
+        <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            >
+
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                android:id="@+id/video_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:default_artwork="@drawable/video_placeholder"
+                app:use_artwork="@drawable/video_placeholder"
+                />
+
+        </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
+
+        <ImageView
+            android:id="@+id/step_detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            tools:src="@drawable/placeholder_image"/>
+
+
+        <TextView
+
+            android:id="@+id/step_description_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="start|center"
+            android:layout_weight="2"
+            android:background="@drawable/step_item_select_state"
+            android:clickable="true"
+            android:gravity="start"
+            android:padding="@dimen/default_text_padding"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="recipe introduction"
+
+
+            />
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+            >
+
+            <ImageButton
+                android:id="@+id/btn_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:contentDescription="@string/previous"
+                android:src="@drawable/ic_navigate_before_black_24dp"
+
+                />
+
+
+            <ImageButton
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:contentDescription="@string/next"
+                android:src="@drawable/ic_navigate_next_black_24dp"
+                />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
 </ScrollView>

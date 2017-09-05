@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                      xmlns:app="http://schemas.android.com/apk/res-auto"
+                                      xmlns:tools="http://schemas.android.com/tools"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:padding="@dimen/item_ingredient_padding_start_end"
+                                      app:columnCount="2"
+
+    >
+
+    <ImageView
+        android:layout_alignParentStart="true"
+        android:foregroundGravity="center"
+        android:paddingEnd="@dimen/item_ingredient_padding_start_end"
+        android:src="@drawable/ic_pen"
+
+
+        />
+
+
+    <TextView
+        android:id="@+id/text_ingredient"
+        android:layout_width="0dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_gravity="fill"
+        tools:text="Nononono nonono ononono nononoononono nononoononono "
+        />
+
+
+    <ImageView
+        android:layout_alignParentStart="true"
+        android:foregroundGravity="center"
+        android:paddingEnd="@dimen/item_ingredient_padding_start_end"
+        android:src="@drawable/ic_scale"
+
+        />
+
+
+    <TextView
+        android:id="@+id/text_quantity"
+        android:layout_width="0dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_gravity="fill"
+        tools:text="1000 kg"
+        />
+
+</android.support.v7.widget.GridLayout>

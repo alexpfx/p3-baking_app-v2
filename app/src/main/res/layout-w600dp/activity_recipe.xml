@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_activity_recipe"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -20,10 +20,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_recipe" />
+    <include layout="@layout/layout_content_recipe" />
 
     <fragment
-        android:id="@+id/recipes_fragment"
+        android:id="@+id/fragment_recipe_list"
         android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

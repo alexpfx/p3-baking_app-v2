@@ -28,7 +28,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
 
         setContentView(R.layout.activity_recipe);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_activity_recipe);
         setSupportActionBar(toolbar);
 
     }

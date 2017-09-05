@@ -81,7 +81,7 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_recipe_name)
     TextView txtRecipeName;
     View itemView;
-    @BindView(R.id.img_recipe)
+    @BindView(R.id.image_recipe)
     ImageView imgRecipe;
 
 
@@ -119,7 +119,7 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
 
     private void loadImage(Context context, Object model) {
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.placeholder);
+        requestOptions.placeholder(R.drawable.placeholder_image);
         requestOptions.error(R.drawable.placeholder_no_image);
         requestOptions.centerCrop();
 

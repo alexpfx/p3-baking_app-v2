@@ -31,10 +31,10 @@ public class RecipeDetailFragment extends Fragment {
 
     private static final String TAG = "RecipeDetailFragment";
 
-    @BindView(R.id.recycler_ingredients)
+    @BindView(R.id.recycler_ingredient_list)
     RecyclerView recyclerIngredients;
 
-    @BindView(R.id.recycler_steps)
+    @BindView(R.id.recycler_step_list)
     RecyclerView recyclerSteps;
 
     @PerActivity

@@ -37,13 +37,13 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_activity_recipe);
         setSupportActionBar(toolbar);
         initialize();
         TransitionManager.beginDelayedTransition(new FrameLayout(getApplicationContext()));
 
         if(!isTablet){
-            getSupportFragmentManager().beginTransaction().replace(R.id.step_container, new RecipeDetailFragment())
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_step_container, new RecipeDetailFragment())
                     .commit();
         }
 
@@ -51,7 +51,7 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     }
 
     private int getContainerViewId() {
-        return !isTablet ? R.id.step_container : R.id.step_detail_container;
+        return !isTablet ? R.id.layout_step_container : R.id.step_detail_container;
     }
 
     @Override

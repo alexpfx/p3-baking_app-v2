@@ -23,7 +23,7 @@ public class NavigationViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.btn_next)
     ImageButton btnNext;
 
-    @BindView(R.id.step_text)
+    @BindView(R.id.text_step)
     TextView txtShortDescripton;
 
 

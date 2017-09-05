@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +27,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -37,9 +34,6 @@ import butterknife.ButterKnife;
  */
 public class StepDetailFragment extends Fragment implements StepDetailAdapter.OnStepLoadListener {
 
-    private static final String TAG = "StepDetailFragment";
-    @BindView(R.id.recycler_step_detail)
-    RecyclerView recyclerView;
 
     @PerActivity
     @Inject
@@ -100,8 +94,6 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     }
 
     private void setupRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(stepDetailAdapter);
         stepDetailAdapter.setStepList(steps, steps.indexOf(step));
         stepDetailAdapter.setOnStepLoadListener(this);
     }

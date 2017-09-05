@@ -40,13 +40,26 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_ingredients, parent, false);
 
-        return new ViewHolder(view);
+        if (viewType == 0) {
+            return new HeadViewHolder(LayoutInflater.from(context).inflate(R.layout.item_ingredient_header, parent,
+                    false));
+        }
+
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_ingredient, parent, false));
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? 0 : 1;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (!(holder instanceof ViewHolder)){
+            return;
+        }
+
         ViewHolder vh = (ViewHolder) holder;
         vh.bind(itemList.get(position));
     }
@@ -56,10 +69,28 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
         return itemList == null ? 0 : itemList.size();
     }
 
+    private String getQuantityFormated(double quantity, String measure) {
+        if (quantity == (long) quantity) {
+            return String.format(Locale.US, "%s %s", String.valueOf(quantity), measure);
+        } else {
+            return String.format(Locale.US, "%.1f %s", quantity, measure);
+        }
+    }
+
+    class HeadViewHolder extends RecyclerView.ViewHolder {
+
+        public HeadViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
         @BindView(R.id.text_ingredient)
         TextView txtIngredient;
+
+        @BindView(R.id.text_quantity)
+        TextView txtQuantity;
 
 
         public ViewHolder(View itemView) {
@@ -68,17 +99,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
         }
 
         public void bind(Ingredient ingredient) {
-            txtIngredient.setText(getFormatedText(ingredient));
-        }
-    }
-
-    private String getFormatedText(Ingredient ingredient) {
-        double quantity = ingredient.getQuantity();
-
-        if (quantity == (long) quantity) {
-            return String.format(Locale.US, "%s - %s %s", ingredient.getIngredient(), String.valueOf(quantity), ingredient.getMeasure());
-        } else {
-            return String.format(Locale.US, "%s - %.1f %s", ingredient.getIngredient(), quantity, ingredient.getMeasure());
+            String ingredientText = ingredient.getIngredient();
+            txtIngredient.setText(String.format(Locale.US, "%s: ", Character.toUpperCase(ingredientText.charAt(0)) +
+                    ingredientText
+                            .substring(1)));
+            txtQuantity.setText(getQuantityFormated(ingredient.getQuantity(), ingredient.getMeasure()));
         }
     }
 }
