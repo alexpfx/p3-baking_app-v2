@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity">
+    tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity"
+
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,9 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/layout_content_recipe" />
-
     <fragment
+
         android:id="@+id/fragment_recipe_list"
         android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeListFragment"
         android:layout_width="match_parent"

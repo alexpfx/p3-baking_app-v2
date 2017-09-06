@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.GenericHeaderViewHolder;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 
 @PerActivity
 public class IngredientsAdapter extends RecyclerView.Adapter {
+    public static final String TITLE = "Ingredients";
     private List<Ingredient> itemList;
 
     private Context context;
@@ -42,7 +44,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (viewType == 0) {
-            return new HeadViewHolder(LayoutInflater.from(context).inflate(R.layout.item_ingredient_header, parent,
+            return new GenericHeaderViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_generic_recyclerview_cardified_header, parent,
                     false));
         }
 
@@ -56,12 +58,15 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (!(holder instanceof ViewHolder)){
-            return;
+        if (holder instanceof ViewHolder) {
+            ViewHolder vh = (ViewHolder) holder;
+            vh.bind(itemList.get(position));
+        }else if (holder instanceof GenericHeaderViewHolder) {
+            GenericHeaderViewHolder vh = (GenericHeaderViewHolder) holder;
+            vh.bind(TITLE);
         }
 
-        ViewHolder vh = (ViewHolder) holder;
-        vh.bind(itemList.get(position));
+
     }
 
     @Override
@@ -77,20 +82,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    class HeadViewHolder extends RecyclerView.ViewHolder {
-
-        public HeadViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
         @BindView(R.id.text_ingredient)
         TextView txtIngredient;
 
-        @BindView(R.id.text_quantity)
-        TextView txtQuantity;
+//        @BindView(R.id.text_quantity)
+//        TextView txtQuantity;
 
 
         public ViewHolder(View itemView) {
@@ -100,10 +99,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
 
         public void bind(Ingredient ingredient) {
             String ingredientText = ingredient.getIngredient();
-            txtIngredient.setText(String.format(Locale.US, "%s: ", Character.toUpperCase(ingredientText.charAt(0)) +
+            txtIngredient.setText(String.format(Locale.US, "%s %s ", getQuantityFormated(ingredient.getQuantity(),
+                    ingredient.getMeasure()), Character.toUpperCase(ingredientText.charAt(0)) +
                     ingredientText
                             .substring(1)));
-            txtQuantity.setText(getQuantityFormated(ingredient.getQuantity(), ingredient.getMeasure()));
+//            txtQuantity.setText(getQuantityFormated(ingredient.getQuantity(), ingredient.getMeasure()));
         }
     }
 }

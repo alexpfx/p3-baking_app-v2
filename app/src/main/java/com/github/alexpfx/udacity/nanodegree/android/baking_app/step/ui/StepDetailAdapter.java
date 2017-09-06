@@ -145,7 +145,7 @@ public class StepDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     class StepDetailViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.text_step)
+        @BindView(R.id.text_step_short_description)
         TextView txtStep;
 
         public StepDetailViewHolder(View view) {

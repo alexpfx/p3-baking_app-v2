@@ -13,6 +13,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -52,7 +53,7 @@ public class StepAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
         Step step = itemList.get(position);
-        vh.bind(step, onClickListener);
+        vh.bind(step, onClickListener, position, itemList.size());
 
     }
 
@@ -71,8 +72,12 @@ public class StepAdapter extends RecyclerView.Adapter {
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private static final String TAG = "ViewHolder";
-        @BindView(R.id.text_step)
+        @BindView(R.id.text_step_short_description)
         TextView txtShortDescription;
+
+        @BindView(R.id.text_step_of)
+        TextView txtStepOf;
+
         private View.OnClickListener onClickListener;
         private boolean selected;
 
@@ -82,13 +87,14 @@ public class StepAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Step step, View.OnClickListener onClickListener) {
+        public void bind(Step step, View.OnClickListener onClickListener, int index, int length) {
             this.onClickListener = onClickListener;
             txtShortDescription.setText(step.getShortDescription());
             txtShortDescription.setTag(step);
             txtShortDescription.setOnClickListener(this);
             setSelected(getAdapterPosition() == selectedPosition);
             txtShortDescription.setSelected(selected);
+            txtStepOf.setText(String.format(Locale.US, "%d / %d - ", index, length));
             Log.d(TAG, "bind: " + selectedPosition);
         }
 
