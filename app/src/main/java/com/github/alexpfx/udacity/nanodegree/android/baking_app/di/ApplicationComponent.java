@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
 
 import java.util.concurrent.Executor;
 
@@ -23,5 +24,6 @@ public interface ApplicationComponent {
     RecipesRepository recipesRepository();
     Boolean isTablet();
     Handler handler ();
+    GlideWrapper glideWrapper();
 
 }

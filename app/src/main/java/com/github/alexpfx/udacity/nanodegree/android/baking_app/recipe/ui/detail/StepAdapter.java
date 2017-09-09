@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.HeadingableRecycleAdapter;
 
 import java.util.List;
@@ -29,16 +31,18 @@ import butterknife.ButterKnife;
 public class StepAdapter extends HeadingableRecycleAdapter {
 
     public static final String TITLE = "Steps";
+    private final GlideWrapper glideWrapper;
     private List<Step> itemList;
     private Context context;
     private View.OnClickListener onClickListener;
     private int selectedPosition = -1;
 
     @Inject
-    public StepAdapter(Context context) {
+    public StepAdapter(Context context, GlideWrapper glideWrapper) {
         super(R.layout
                 .layout_generic_recyclerview_cardified_header, TITLE, context);
         this.context = context;
+        this.glideWrapper = glideWrapper;
     }
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
@@ -59,7 +63,7 @@ public class StepAdapter extends HeadingableRecycleAdapter {
 
     @Override
     public int itemCount() {
-        return itemList == null? 0: itemList.size();
+        return itemList == null ? 0 : itemList.size();
     }
 
 
@@ -74,6 +78,13 @@ public class StepAdapter extends HeadingableRecycleAdapter {
         @BindView(R.id.text_step_short_description)
         TextView txtShortDescription;
 
+
+        @BindView(R.id.image_step_has_video)
+        ImageView imgHasVideo;
+
+
+        @BindView(R.id.image_has_thumbnail)
+        ImageView imgHasThumbnail;
 
 
         private View.OnClickListener onClickListener;
@@ -92,9 +103,28 @@ public class StepAdapter extends HeadingableRecycleAdapter {
             itemView.setOnClickListener(this);
             itemView.setTag(step);
 
+            loadHasVideo(step);
+            loadHasThumbnail(step);
+
             String stepNumber = String.format(Locale.US, "%d / %d - ", index + 1, length);
 
             txtShortDescription.setText(stepNumber + step.getShortDescription());
+        }
+
+        private void loadHasThumbnail(Step step) {
+            if (step.getThumbnailURL() != null && !step.getThumbnailURL().isEmpty()) {
+                imgHasThumbnail.setImageResource(R.drawable.ic_image_black_24dp);
+            } else {
+                imgHasThumbnail.setImageResource(R.drawable.ic_broken_image_black_24dp);
+            }
+        }
+
+        private void loadHasVideo(Step step) {
+            if (step.getVideoURL() != null && !step.getVideoURL().isEmpty()) {
+                imgHasVideo.setImageResource(R.drawable.ic_videocam_black_24dp);
+            } else {
+                imgHasVideo.setImageResource(R.drawable.ic_videocam_off_black_24dp);
+            }
         }
 
 

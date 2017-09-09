@@ -72,6 +72,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         Bundle bundle = new Bundle();
         bundle.putParcelable("step", step);
         fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_step_detail, fragment)
+                .commit();
 //        getSupportFragmentManager().beginTransaction().replace(R.id.layout_step_container, fragment)
 //                .commit();
 

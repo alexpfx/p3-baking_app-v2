@@ -17,9 +17,11 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.datab
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDaoImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.executor.JobExecutor;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
 
 import java.util.concurrent.Executor;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -81,14 +83,36 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    Boolean isMultiPane(Context context){
+    Boolean isMultiPane(Context context) {
         return context.getResources().getBoolean(R.bool.isMultiPane);
     }
 
     @Singleton
     @Provides
-    Handler handler (){
+    Handler handler() {
         return new Handler(Looper.getMainLooper());
+    }
+
+
+    @Named("error")
+    @Singleton
+    @Provides
+    int errorPlaceHolder() {
+        return R.drawable.placeholder_no_image;
+    }
+
+    @Named("placeholder")
+    @Singleton
+    @Provides
+    int imagePlaceHolder() {
+        return R.drawable.placeholder_image;
+    }
+
+    @Singleton
+    @Provides
+    GlideWrapper glideWrapper(Context context, @Named("placeholder") int defaultImagePlaceHolder, @Named("error") int
+            defaultImageError) {
+        return new GlideWrapper(context, defaultImagePlaceHolder, defaultImageError);
     }
 
 }

@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.GridLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/space_normal"
+    app:columnCount="2"
     >
 
 
     <ImageView
-        android:id="@+id/image_play_video_step"
-        android:layout_width="@dimen/image_box_large"
-        android:layout_height="@dimen/image_box_large"
-        android:padding="@dimen/space_small"
-        android:layout_marginEnd="@dimen/space_small"
-        android:src="@drawable/ic_ondemand_video_black_24dp"
-        />
+        android:id="@+id/image_step_has_video"
+        android:layout_width="@dimen/image_box_small"
+        android:layout_height="@dimen/image_box_small"
 
+        tools:src="@drawable/ic_videocam_black_24dp"
+        android:alpha="0.6"
+        />
 
     <TextView
 
@@ -31,8 +30,24 @@
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/secondary_text"
-        tools:text="1/10 - short description"/>
-</LinearLayout>
+        tools:text="1/10 - short description"
+        app:layout_rowSpan="2"
+        android:layout_marginStart="@dimen/space_small"
+        />
+
+
+    <ImageView
+        android:id="@+id/image_has_thumbnail"
+        android:layout_width="@dimen/image_box_small"
+        android:layout_height="@dimen/image_box_small"
+        tools:src="@drawable/ic_broken_image_black_24dp"
+        android:alpha="0.6"
+        />
+
+
+
+
+</android.support.v7.widget.GridLayout>
 
     <!--
         <TextView

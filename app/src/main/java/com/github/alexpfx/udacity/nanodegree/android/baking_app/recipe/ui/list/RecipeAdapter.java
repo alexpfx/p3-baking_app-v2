@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +27,19 @@ import butterknife.ButterKnife;
  * Created by alexandre on 01/08/17.
  */
 
+@PerActivity
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     private static final String TAG = "RecipeAdapter";
     private List<Recipe> itemList = new ArrayList<>();
     private Context context;
     private View.OnClickListener listener;
+    GlideWrapper glideWrapper;
 
     @Inject
-    public RecipeAdapter(Context context) {
+    public RecipeAdapter(Context context, GlideWrapper glideWrapper) {
         this.context = context;
+        this.glideWrapper = glideWrapper;
     }
 
     public void setListener(View.OnClickListener listener) {
@@ -50,7 +53,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
             throw new IllegalStateException("must set the listener");
         }
         view.setOnClickListener(listener);
-        return new RecipeViewHolder(view);
+        return new RecipeViewHolder(view, glideWrapper);
     }
 
     @Override
@@ -84,19 +87,23 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_recipe_name)
     TextView txtRecipeName;
     View itemView;
+    private final GlideWrapper glideWrapper;
     @BindView(R.id.image_recipe)
     ImageView imgRecipe;
 
 
-    public RecipeViewHolder(View itemView) {
+    public RecipeViewHolder(View itemView, GlideWrapper glideWrapper) {
         super(itemView);
         this.itemView = itemView;
+        this.glideWrapper = glideWrapper;
+
 
         ButterKnife.bind(this, itemView);
 
     }
 
     public void bind(final Context context, final Recipe recipe) {
+
         String name = recipe.getName();
         txtRecipeName.setText(name);
         itemView.setTag(recipe);
@@ -121,14 +128,18 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void loadImage(Context context, Object model) {
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.placeholder_image);
-        requestOptions.error(R.drawable.placeholder_no_image);
-        requestOptions.centerCrop();
+        glideWrapper.loadInto(model, imgRecipe);
 
 
-        Glide.with(context)
-                .load(model).apply(requestOptions).into(imgRecipe);
+//        RequestOptions requestOptions = new RequestOptions();
+//        requestOptions.placeholder(R.drawable.placeholder_image);
+//        requestOptions.error(R.drawable.placeholder_no_image);
+//        requestOptions.centerCrop();
+//
+//
+//
+//        Glide.with(context)
+//                .load(model).apply(requestOptions).into(imgRecipe);
 
     }
 
