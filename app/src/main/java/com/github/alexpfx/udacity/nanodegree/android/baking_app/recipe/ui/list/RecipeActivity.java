@@ -12,24 +12,26 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationCo
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.DaggerRecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.StepActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity;
 
 
 public class RecipeActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnRecipeSelectListener {
 
     public static final String KEY_RECIPE_ID = "KEY_RECIPE_ID";
-    private static final String TAG = "RecipeActivity";
     private RecipeComponent recipeComponent;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_recipe);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_activity_recipe);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_action_name);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
     }
 
@@ -50,7 +52,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
 
     @Override
     public void onRecipeSelect(Recipe recipe) {
-        Intent intent = new Intent(getApplicationContext(), StepActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_RECIPE_ID, recipe.getId());
         intent.putExtras(bundle);

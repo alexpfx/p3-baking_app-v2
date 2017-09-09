@@ -2,8 +2,8 @@
 
     <dimen name="space_tiny">4dp</dimen>
     <dimen name="space_small">8dp</dimen>
-    <dimen name="space_normal">12dp</dimen>
-    <dimen name="space_large">20dp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="space_large">24dp</dimen>
     <dimen name="space_huge">32dp</dimen>
 
 

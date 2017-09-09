@@ -1,0 +1,14 @@
+ordem de prioridade
+
+
+
+- alterar layout de step_detail para funcionar sem recyclerview. apagar o código referente a recyclerview.
+- adicionar elementos de interface no step_detail: (step 1 de x)
+- criar widget
+- formatar step_item (ver curso material design antigo)..
+
+
+
+
+
+

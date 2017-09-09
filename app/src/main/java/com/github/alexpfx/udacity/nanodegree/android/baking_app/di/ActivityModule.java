@@ -2,11 +2,8 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -48,25 +45,15 @@ public class ActivityModule {
     @Provides
     @PerActivity
     BandwidthMeter bandwidthMeter (){
-        Handler handler = new Handler(Looper.getMainLooper());
 
-        BandwidthMeter.EventListener eventListener = new BandwidthMeter.EventListener() {
-            @Override
-            public void onBandwidthSample(int elapsedMs, long bytes, long bitrate) {
-                Log.d(TAG, "onBandwidthSample: "+elapsedMs);
-            }
-        };
-        DefaultBandwidthMeter defaultBandwidthMeter = new DefaultBandwidthMeter(handler, eventListener);
-
-
-        return defaultBandwidthMeter;
+        return new DefaultBandwidthMeter();
     }
 
 
     @Provides
     @PerActivity
-    TrackSelector providesTrackSelector() {
-        return new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(new DefaultBandwidthMeter()));
+    TrackSelector trackSelector(BandwidthMeter bandwidthMeter) {
+        return new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
     }
 
 

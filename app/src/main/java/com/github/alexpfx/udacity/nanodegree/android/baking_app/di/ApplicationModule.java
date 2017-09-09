@@ -81,8 +81,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    Boolean isTablet (Context context){
-        return context.getResources().getBoolean(R.bool.isTablet);
+    Boolean isMultiPane(Context context){
+        return context.getResources().getBoolean(R.bool.isMultiPane);
     }
 
     @Singleton

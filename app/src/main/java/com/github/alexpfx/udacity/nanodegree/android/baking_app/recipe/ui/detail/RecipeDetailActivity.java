@@ -3,8 +3,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.TransitionManager;
-import android.widget.FrameLayout;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -19,15 +17,15 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDeta
 
 import javax.inject.Inject;
 
-public class StepActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnStepSelectListener,
-        RecipeDetailFragment.OnRecipeIdRequested, StepDetailFragment.OnStepRequest {
+public class RecipeDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnStepSelectListener,
+        RecipeDetailFragment.OnRecipeIdRequested{
 
-    private static final String TAG = "StepActivity";
+
+    private static final String TAG = "RecipeDetailActivity";
 
     @Inject
     @PerActivity
-    Boolean isTablet;
-
+    Boolean isMultiPane;
     private RecipeComponent recipeComponent;
     private Step step;
 
@@ -35,23 +33,20 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step);
-
-        Toolbar toolbar = findViewById(R.id.toolbar_activity_recipe);
+        setContentView(R.layout.activity_recipe_detail);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initialize();
-        TransitionManager.beginDelayedTransition(new FrameLayout(getApplicationContext()));
 
-        if(!isTablet){
-            getSupportFragmentManager().beginTransaction().replace(R.id.layout_step_container, new RecipeDetailFragment())
-                    .commit();
+        if (savedInstanceState == null){
+            if (!isMultiPane) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container_step_detail, new RecipeDetailFragment())
+                        .commit();
+            }
         }
 
 
-    }
-
-    private int getContainerViewId() {
-        return !isTablet ? R.id.layout_step_container : R.id.step_detail_container;
     }
 
     @Override
@@ -64,7 +59,8 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
 
     @Override
     public void initialize() {
-        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this, StepActivity.class.getName()))
+        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this, RecipeDetailActivity.class
+                .getName()))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
         recipeComponent.inject(this);
     }
@@ -73,16 +69,12 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
     public void onStepSelect(Step step) {
         this.step = step;
         StepDetailFragment fragment = new StepDetailFragment();
-        int containerViewId = getContainerViewId();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("step", step);
+        fragment.setArguments(bundle);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.layout_step_container, fragment)
+//                .commit();
 
-        getSupportFragmentManager().beginTransaction().replace(containerViewId, fragment)
-                .commit();
-
-    }
-
-    @Override
-    public Step onStepRequest() {
-        return step;
     }
 
     @Override
@@ -90,4 +82,6 @@ public class StepActivity extends AppCompatActivity implements HasComponent<Reci
         Bundle extras = getIntent().getExtras();
         return extras.getInt(RecipeActivity.KEY_RECIPE_ID);
     }
+
+
 }

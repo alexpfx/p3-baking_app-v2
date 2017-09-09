@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,7 @@ public class RecipeDetailFragment extends Fragment {
             stepSelectListener.onStepSelect(step);
         }
     };
+    OnRecipeIdRequested onParameterRequested;
 
     @Nullable
     @Override
@@ -85,8 +87,8 @@ public class RecipeDetailFragment extends Fragment {
     private void setupRecycler(RecyclerView recyclerView, RecyclerView.Adapter adapter, LinearLayoutManager
             layoutManager) {
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager
-//                .getOrientation()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), layoutManager
+                .getOrientation()));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
     }
@@ -102,11 +104,9 @@ public class RecipeDetailFragment extends Fragment {
         }
     }
 
-    OnRecipeIdRequested onParameterRequested;
-
     public interface OnRecipeIdRequested {
-        Integer requestRecipeId ();
+        Integer requestRecipeId();
     }
-
+//110
 
 }

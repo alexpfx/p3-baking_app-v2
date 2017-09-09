@@ -70,8 +70,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     public void setItemList(List<Recipe> itemList) {
         this.itemList = itemList;
+
         notifyDataSetChanged();
     }
+
+
 
 }
 

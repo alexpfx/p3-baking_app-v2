@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.GenericHeaderViewHolder;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.HeadingableRecycleAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,17 +23,15 @@ import butterknife.ButterKnife;
 /**
  * Created by alexandre on 13/08/17.
  */
-
 @PerActivity
-public class IngredientsAdapter extends RecyclerView.Adapter {
+public class IngredientsAdapter extends HeadingableRecycleAdapter {
     public static final String TITLE = "Ingredients";
     private List<Ingredient> itemList;
 
-    private Context context;
 
     @Inject
     public IngredientsAdapter(Context context) {
-        this.context = context;
+        super(R.layout.layout_generic_recyclerview_cardified_header, TITLE, context);
     }
 
     public void setItemList(List<Ingredient> itemList) {
@@ -41,36 +39,18 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        if (viewType == 0) {
-            return new GenericHeaderViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_generic_recyclerview_cardified_header, parent,
-                    false));
-        }
-
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_ingredient, parent, false));
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return new ViewHolder(LayoutInflater.from(context()).inflate(R.layout.item_ingredient, parent, false));
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return position == 0 ? 0 : 1;
+    public void onAddViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ViewHolder vh = (ViewHolder) holder;
+        vh.bind(itemList.get(position));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder) {
-            ViewHolder vh = (ViewHolder) holder;
-            vh.bind(itemList.get(position));
-        }else if (holder instanceof GenericHeaderViewHolder) {
-            GenericHeaderViewHolder vh = (GenericHeaderViewHolder) holder;
-            vh.bind(TITLE);
-        }
-
-
-    }
-
-    @Override
-    public int getItemCount() {
+    public int itemCount() {
         return itemList == null ? 0 : itemList.size();
     }
 
@@ -84,26 +64,20 @@ public class IngredientsAdapter extends RecyclerView.Adapter {
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "ViewHolder";
         @BindView(R.id.text_ingredient)
         TextView txtIngredient;
 
-//        @BindView(R.id.text_quantity)
-//        TextView txtQuantity;
-
-
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Ingredient ingredient) {
+        void bind(Ingredient ingredient) {
             String ingredientText = ingredient.getIngredient();
             txtIngredient.setText(String.format(Locale.US, "%s %s ", getQuantityFormated(ingredient.getQuantity(),
                     ingredient.getMeasure()), Character.toUpperCase(ingredientText.charAt(0)) +
                     ingredientText
                             .substring(1)));
-//            txtQuantity.setText(getQuantityFormated(ingredient.getQuantity(), ingredient.getMeasure()));
         }
     }
 }

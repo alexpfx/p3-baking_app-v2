@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.HeadingableRecycleAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,10 +26,9 @@ import butterknife.ButterKnife;
  */
 
 @PerActivity
-public class StepAdapter extends RecyclerView.Adapter {
+public class StepAdapter extends HeadingableRecycleAdapter {
 
-
-    private static final String TAG = "StepAdapter";
+    public static final String TITLE = "Steps";
     private List<Step> itemList;
     private Context context;
     private View.OnClickListener onClickListener;
@@ -36,6 +36,8 @@ public class StepAdapter extends RecyclerView.Adapter {
 
     @Inject
     public StepAdapter(Context context) {
+        super(R.layout
+                .layout_generic_recyclerview_cardified_header, TITLE, context);
         this.context = context;
     }
 
@@ -44,23 +46,20 @@ public class StepAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_step, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_step, parent, false));
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override // onBindViewHolder
+    public void onAddViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
         Step step = itemList.get(position);
         vh.bind(step, onClickListener, position, itemList.size());
-
     }
 
-
     @Override
-    public int getItemCount() {
-        return (itemList == null ? 0 : itemList.size());
+    public int itemCount() {
+        return itemList == null? 0: itemList.size();
     }
 
 
@@ -75,8 +74,7 @@ public class StepAdapter extends RecyclerView.Adapter {
         @BindView(R.id.text_step_short_description)
         TextView txtShortDescription;
 
-        @BindView(R.id.text_step_of)
-        TextView txtStepOf;
+
 
         private View.OnClickListener onClickListener;
         private boolean selected;
@@ -84,18 +82,19 @@ public class StepAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             ButterKnife.bind(this, itemView);
         }
 
         public void bind(Step step, View.OnClickListener onClickListener, int index, int length) {
             this.onClickListener = onClickListener;
-            txtShortDescription.setText(step.getShortDescription());
-            txtShortDescription.setTag(step);
-            txtShortDescription.setOnClickListener(this);
-            setSelected(getAdapterPosition() == selectedPosition);
-            txtShortDescription.setSelected(selected);
-            txtStepOf.setText(String.format(Locale.US, "%d / %d - ", index, length));
-            Log.d(TAG, "bind: " + selectedPosition);
+
+            itemView.setOnClickListener(this);
+            itemView.setTag(step);
+
+            String stepNumber = String.format(Locale.US, "%d / %d - ", index + 1, length);
+
+            txtShortDescription.setText(stepNumber + step.getShortDescription());
         }
 
 
@@ -111,5 +110,7 @@ public class StepAdapter extends RecyclerView.Adapter {
             this.selected = selected;
         }
     }
+
+
 }
 

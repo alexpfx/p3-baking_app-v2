@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +75,6 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     }
 
     private void initInjections() {
-        Log.d(TAG, "initInjections: "+getActivity());
         ((HasComponent<RecipeComponent>) getActivity()).getComponent().inject(this);
     }
 
@@ -88,6 +86,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
         repository.recipes(new RecipesRepositoryImpl.Callback() {
             @Override
             public void onRecipesReceived(final List<Recipe> recipes) {
+
                 adapter.setItemList(recipes);
             }
         });

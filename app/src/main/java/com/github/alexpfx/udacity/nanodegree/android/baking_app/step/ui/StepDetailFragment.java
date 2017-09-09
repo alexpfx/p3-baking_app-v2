@@ -20,6 +20,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
@@ -27,17 +28,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StepDetailFragment extends Fragment implements StepDetailAdapter.OnStepLoadListener {
+public class StepDetailFragment extends Fragment {
 
 
-    @PerActivity
-    @Inject
-    StepDetailAdapter stepDetailAdapter;
     @PerActivity
     @Inject
     RecipesRepository recipesRepository;
@@ -54,21 +53,20 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
     @Inject
     PlayerEventListener playerEventListener;
 
+    @BindView(R.id.video_player_view)
+    SimpleExoPlayerView simpleExoPlayerView;
 
-    private Step step;
-    private List<Step> steps;
-    private OnStepRequest onStepRequest;
+
+    private List<Step> stepList;
 
 
     public StepDetailFragment() {
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnStepRequest) {
-            onStepRequest = (OnStepRequest) context;
-        }
     }
 
     @Override
@@ -76,30 +74,27 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
+
         ButterKnife.bind(this, view);
 
+        simpleExoPlayerView.setPlayer(player);
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
 
-        step = onStepRequest.onStepRequest();
+        Bundle arguments = getArguments();
+        Step step = arguments.getParcelable("step");
 
         if (step != null) {
-            steps = recipesRepository.stepsByRecipe(step.getRecipeId());
-            onStepLoad(step);
-            setupRecyclerView();
+            stepList = recipesRepository.stepsByRecipe(step.getRecipeId());
+            loadStep(step);
         }
 
 
         return view;
     }
 
-    private void setupRecyclerView() {
-        stepDetailAdapter.setStepList(steps, steps.indexOf(step));
-        stepDetailAdapter.setOnStepLoadListener(this);
-    }
 
-    @Override
-    public void onStepLoad(Step step) {
+    public void loadStep(Step step) {
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
             return;
         }
@@ -109,11 +104,14 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
 
     private void playVideoUrl(String videoURL) {
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(videoURL), new DefaultDataSourceFactory
-                (getContext(), Util.getUserAgent(getContext(), "recipePlayer")), new DefaultExtractorsFactory(),
+                (getActivity(), Util.getUserAgent(getContext(), "recipePlayer")), new DefaultExtractorsFactory(),
                 null, null);
 
         player.prepare(mediaSource, true, false);
         player.setPlayWhenReady(true);
+        mediaSessionCompat.setActive(true);
+
+
         player.addListener(playerEventListener);
     }
 
@@ -148,10 +146,6 @@ public class StepDetailFragment extends Fragment implements StepDetailAdapter.On
         player.stop();
         player.release();
         player = null;
-    }
-
-    public interface OnStepRequest {
-        Step onStepRequest();
     }
 
 }

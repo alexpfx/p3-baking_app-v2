@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".recipe.ui.detail.StepActivity"
+            android:name=".recipe.ui.detail.RecipeDetailActivity"
             android:label="@string/title_activity_step"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

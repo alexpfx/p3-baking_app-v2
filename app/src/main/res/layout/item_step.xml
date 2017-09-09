@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.v7.widget.GridLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:columnCount="3"
+    android:layout_margin="@dimen/space_normal"
     >
-
-    <TextView
-        android:id="@+id/text_step_of"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_columnWeight="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="1 / 7"
-        app:layout_gravity="fill"
-        />
-
-    <android.support.v4.widget.Space
-
-        />
-    <TextView
-
-        android:id="@+id/text_step_short_description"
-        android:layout_width="00dp"
-        app:layout_columnWeight="1"
-        android:layout_height="wrap_content"
-        android:background="@drawable/step_item_select_state"
-        android:clickable="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="recipe introduction"
-        app:layout_gravity="fill"
-        />
 
 
     <ImageView
-
         android:id="@+id/image_play_video_step"
-        android:layout_width="@dimen/image_box_normal"
-        android:layout_height="@dimen/image_box_normal"
-
+        android:layout_width="@dimen/image_box_large"
+        android:layout_height="@dimen/image_box_large"
+        android:padding="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_small"
         android:src="@drawable/ic_ondemand_video_black_24dp"
         />
 
+
     <TextView
-        android:id="@+id/text_step_description"
+
+        android:id="@+id/text_step_short_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_step_of"
-        app:layout_gravity="fill"
+        android:fontFamily="sans-serif"
+        android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="recipe description"
-        />
+        android:textColor="@color/secondary_text"
+        tools:text="1/10 - short description"/>
+</LinearLayout>
+
+    <!--
+        <TextView
+            android:id="@+id/text_step_of"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginTop="@dimen/space_normal"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/secondary_text"
+            tools:text="1 / 7"
+
+            />
 
 
-</android.support.v7.widget.GridLayout>
+        <ImageView
+
+            android:id="@+id/image_play_video_step"
+            android:layout_width="@dimen/image_box_normal"
+            android:layout_height="@dimen/image_box_normal"
+            android:src="@drawable/ic_ondemand_video_black_24dp"
+
+            />
+
+        <TextView
+            android:id="@+id/text_step_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_step_of"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_gravity="fill"
+            tools:text="recipe description"
+            />
+
+    -->
+
