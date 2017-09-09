@@ -17,6 +17,11 @@
     </style>
 
 
+    <style name="RaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">?colorControlHighlight</item>
+        <item name="colorControlNormal">?colorControlNormal</item>
+
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

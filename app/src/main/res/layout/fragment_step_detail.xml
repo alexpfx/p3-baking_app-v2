@@ -3,88 +3,183 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDetailFragment">
+            android:background="@color/white"
+            tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDetailFragment"
+    >
 
-    <LinearLayout
+    <android.support.v7.widget.GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-                android:id="@+id/video_player_view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/card_height_huge"
-                android:visibility="visible"
-                />
-
-            <!--<ImageView-->
-                <!--android:visibility="invisible"-->
-                <!--android:id="@+id/step_detail_image"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--tools:src="@drawable/placeholder_image"/>-->
-
-        </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
-
+        android:paddingTop="@dimen/space_normal"
+        app:columnCount="3"
+        >
 
         <TextView
 
-            android:id="@+id/step_description_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center"
-            android:background="@drawable/step_item_select_state"
-            android:gravity="start"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="recipe introduction"
+            android:id="@+id/text_step_number"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginStart="@dimen/space_normal"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_columnSpan="1"
+            app:layout_gravity="left|center_vertical"
+            tools:text="1 / 10"
 
             />
 
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:tools="http://schemas.android.com/tools"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-            >
+        <Button
+            android:id="@+id/btn_previous"
+            style="?borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/space_normal"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:text="@string/previous"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/colorPrimary"
+            app:layout_gravity="right"
+            />
 
-            <ImageButton
-                android:id="@+id/btn_previous"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/image_box_large"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:contentDescription="@string/previous"
-                android:src="@drawable/ic_navigate_before_black_24dp"
+
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_normal"
+            android:text="@string/next"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/white"
+            />
+
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/video_player_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_box_large"
+            android:layout_marginBottom="@dimen/space_normal"
+            app:layout_columnSpan="3"
+            app:layout_columnWeight="1"
+
+            />
+
+
+        <ImageView
+            android:id="@+id/image_thumbnail"
+            android:layout_height="@dimen/image_box_normal"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:scaleType="centerCrop"
+            android:visibility="visible"
+            app:layout_columnSpan="3"
+            app:layout_columnWeight="1"
+            tools:src="@drawable/placeholder_image"
+            />
+
+
+        <TextView
+            android:id="@+id/text_step_description"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:background="@drawable/step_item_select_state"
+            android:gravity="start"
+            android:paddingEnd="@dimen/space_normal"
+            android:paddingStart="@dimen/space_normal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_columnSpan="3"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
+            tools:text="recipe introduction"
+            />
+
+
+    </android.support.v7.widget.GridLayout>
+
+
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                    android:id="@+id/video_player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/card_height_huge"
+                    android:visibility="visible"
+                    />
+
+
+
+                &lt;!&ndash;<ImageView&ndash;&gt;
+                    &lt;!&ndash;android:visibility="invisible"&ndash;&gt;
+                    &lt;!&ndash;android:id="@+id/step_detail_image"&ndash;&gt;
+                    &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                    &lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;
+                    &lt;!&ndash;tools:src="@drawable/placeholder_image"/>&ndash;&gt;
+
+            </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
+
+
+            <TextView
+
+                android:id="@+id/step_description_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:background="@drawable/step_item_select_state"
+                android:gravity="start"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="recipe introduction"
 
                 />
 
 
-            <ImageButton
-                android:id="@+id/btn_next"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/image_box_large"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:contentDescription="@string/next"
-                android:src="@drawable/ic_navigate_next_black_24dp"
-                />
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                >
+
+                <ImageButton
+                    android:id="@+id/btn_previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/image_box_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:contentDescription="@string/previous"
+                    android:src="@drawable/ic_navigate_before_black_24dp"
+
+                    />
 
 
-        </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/image_box_large"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:contentDescription="@string/next"
+                    android:src="@drawable/ic_navigate_next_black_24dp"
+                    />
 
 
-    </LinearLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    -->
 
 </ScrollView>

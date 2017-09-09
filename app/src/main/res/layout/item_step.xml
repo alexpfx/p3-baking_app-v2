@@ -2,8 +2,8 @@
 
 
 <android.support.v7.widget.GridLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,11 +14,10 @@
 
     <ImageView
         android:id="@+id/image_step_has_video"
-        android:layout_width="@dimen/image_box_small"
-        android:layout_height="@dimen/image_box_small"
-
-        tools:src="@drawable/ic_videocam_black_24dp"
+        android:layout_width="@dimen/icon_box_small"
+        android:layout_height="@dimen/icon_box_small"
         android:alpha="0.6"
+        tools:src="@drawable/ic_videocam_black_24dp"
         />
 
     <TextView
@@ -26,25 +25,23 @@
         android:id="@+id/text_step_short_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_small"
         android:fontFamily="sans-serif"
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/secondary_text"
-        tools:text="1/10 - short description"
         app:layout_rowSpan="2"
-        android:layout_marginStart="@dimen/space_small"
+        tools:text="1/10 - short description"
         />
 
 
     <ImageView
         android:id="@+id/image_has_thumbnail"
-        android:layout_width="@dimen/image_box_small"
-        android:layout_height="@dimen/image_box_small"
-        tools:src="@drawable/ic_broken_image_black_24dp"
+        android:layout_width="@dimen/icon_box_small"
+        android:layout_height="@dimen/icon_box_small"
         android:alpha="0.6"
+        tools:src="@drawable/ic_broken_image_black_24dp"
         />
-
-
 
 
 </android.support.v7.widget.GridLayout>
@@ -66,8 +63,8 @@
         <ImageView
 
             android:id="@+id/image_play_video_step"
-            android:layout_width="@dimen/image_box_normal"
-            android:layout_height="@dimen/image_box_normal"
+            android:layout_width="@dimen/icon_box_normal"
+            android:layout_height="@dimen/icon_box_normal"
             android:src="@drawable/ic_ondemand_video_black_24dp"
 
             />

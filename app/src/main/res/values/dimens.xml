@@ -13,10 +13,13 @@
     <dimen name="card_height_large">192dp</dimen>
     <dimen name="card_height_huge">224dp</dimen>
 
-    <dimen name="image_box_small">32dp</dimen>
-    <dimen name="image_box_normal">48dp</dimen>
-    <dimen name="image_box_large">56dp</dimen>
+    <dimen name="icon_box_small">32dp</dimen>
+    <dimen name="icon_box_normal">48dp</dimen>
+    <dimen name="icon_box_large">56dp</dimen>
 
+    <dimen name="image_box_small">128dp</dimen>
+    <dimen name="image_box_normal">192dp</dimen>
+    <dimen name="image_box_large">256dp</dimen>
 
     <dimen name="elevation_tiny">2dp</dimen>
     <dimen name="elevation_small">4dp</dimen>

@@ -4,6 +4,7 @@
     <string name="title_activity_step">StepActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="introduction">Introduction</string>
     <string name="title_activity_step_detail">StepDetailActivity</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
