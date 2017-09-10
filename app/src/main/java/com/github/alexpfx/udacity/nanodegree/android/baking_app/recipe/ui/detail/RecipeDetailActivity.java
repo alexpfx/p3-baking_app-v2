@@ -1,8 +1,10 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -17,6 +19,9 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDeta
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnStepSelectListener,
         RecipeDetailFragment.OnRecipeIdRequested{
 
@@ -29,16 +34,21 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     private RecipeComponent recipeComponent;
     private Step step;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+        ButterKnife.bind(this);
+
         initialize();
 
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         if (savedInstanceState == null){
@@ -94,5 +104,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         return extras.getString(RecipeActivity.KEY_RECIPE_NAME);
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -14,6 +14,9 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.Dagger
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class RecipeActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnRecipeSelectListener {
 
@@ -21,19 +24,17 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     public static final String KEY_RECIPE_NAME = "KEY_RECIPE_NAME";
     private RecipeComponent recipeComponent;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_action_name);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-//        getSupportActionBar().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baking1,
-// null));
 
     }
 

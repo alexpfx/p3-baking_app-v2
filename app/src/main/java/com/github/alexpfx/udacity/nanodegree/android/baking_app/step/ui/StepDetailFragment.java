@@ -4,8 +4,8 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +22,14 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,54 +43,41 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StepDetailFragment extends Fragment {
+public class StepDetailFragment extends Fragment implements ExtractorMediaSource.EventListener {
 
 
+    private static final String TAG = "StepDetailFragment";
     @PerActivity
     @Inject
     RecipesRepository recipesRepository;
-
     @PerActivity
     @Inject
     SimpleExoPlayer player;
-
-    @PerActivity
-    @Inject
-    MediaSessionCompat mediaSessionCompat;
-
-    @PerActivity
-    @Inject
-    PlayerEventListener playerEventListener;
-
-
     @Singleton
     @Inject
     GlideWrapper glideWrapper;
-
     @BindView(R.id.video_player_view)
     SimpleExoPlayerView simpleExoPlayerView;
-
-
     @BindView(R.id.text_step_description)
     TextView txtDescription;
-
     @BindView(R.id.text_step_number)
     TextView txtStepNumber;
-
     @BindView(R.id.image_thumbnail)
     ImageView imgThumbnail;
-
     @BindView(R.id.btn_next)
     Button btnNext;
-
     @BindView(R.id.btn_previous)
     Button btnPrev;
+    @Inject
+    @PerActivity
+    HttpDataSource.Factory httpDataSourceFactory;
+
+    @Inject
+    @PerActivity
+    ExtractorsFactory extractorsFactory;
 
     private int stepIndex;
-
-
     private List<Step> stepList;
-
 
     public StepDetailFragment() {
 
@@ -112,8 +100,6 @@ public class StepDetailFragment extends Fragment {
         component.inject(this);
 
         simpleExoPlayerView.setPlayer(player);
-        simpleExoPlayerView.requestFocus();
-
 
         Bundle arguments = getArguments();
         Step step = arguments.getParcelable("step");
@@ -128,8 +114,9 @@ public class StepDetailFragment extends Fragment {
         return view;
     }
 
-
     public void loadStep(Step step) {
+
+
         getActivity().setTitle(step.getShortDescription());
         txtDescription.setText(step.getDescription());
         int size = stepList.size();
@@ -142,13 +129,12 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void showStepNumber() {
-        if (stepIndex == 0){
+        if (stepIndex == 0) {
             txtStepNumber.setText(getResources().getString(R.string.introduction));
-        }else {
+        } else {
             txtStepNumber.setText(String.format(Locale.US, " %d of %d ", stepIndex, stepList.size() - 1));
         }
     }
-
 
     private void updateButtonVisibility(Button btn, boolean visible) {
         btn.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
@@ -164,31 +150,23 @@ public class StepDetailFragment extends Fragment {
         glideWrapper.loadInto(step.getThumbnailURL(), imgThumbnail);
     }
 
-    private static final String TAG = "StepDetailFragment";
-
-
-
     private void playVideoIfAvailable(Step step) {
         simpleExoPlayerView.setVisibility(View.INVISIBLE);
         player.stop();
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
             simpleExoPlayerView.setVisibility(View.GONE);
-            Log.d(TAG, "playVideoIfAvailable: "+stepIndex);
+            Log.d(TAG, "playVideoIfAvailable: " + stepIndex);
             return;
         }
         simpleExoPlayerView.setVisibility(View.VISIBLE);
-        playVideoUrl(step.getVideoURL());
+        preparePlayer(step.getVideoURL());
     }
 
-    private void playVideoUrl(String videoURL) {
-        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(videoURL), new DefaultDataSourceFactory
-                (getActivity(), Util.getUserAgent(getContext(), "recipePlayer")), new DefaultExtractorsFactory(),
-                null, null);
-        player.prepare(mediaSource, true, false);
-        player.setPlayWhenReady(true);
-        mediaSessionCompat.setActive(true);
-
-        player.addListener(playerEventListener);
+    private void preparePlayer(String videoUrl) {
+        player.stop();
+        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(videoUrl), httpDataSourceFactory,
+                extractorsFactory, new Handler(), this);
+        player.prepare(videoSource, true, false);
     }
 
 
@@ -209,7 +187,6 @@ public class StepDetailFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
-        mediaSessionCompat.setActive(false);
 
     }
 
@@ -238,4 +215,8 @@ public class StepDetailFragment extends Fragment {
         player = null;
     }
 
+    @Override
+    public void onLoadError(IOException error) {
+        Log.e(TAG, "onLoadError: " + error.getMessage());
+    }
 }

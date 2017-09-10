@@ -17,6 +17,7 @@
         <activity
             android:name=".recipe.ui.detail.RecipeDetailActivity"
             android:label="@string/title_activity_step"
+            android:parentActivityName=".recipe.ui.list.RecipeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".recipe.ui.list.RecipeActivity"
