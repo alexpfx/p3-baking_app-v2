@@ -1,10 +1,7 @@
 ordem de prioridade
 
-- parar o vídeo ao trocar de step
-- step detail: mostrar toolbar. (ver possibilidade de mostrar o passo na toolbar).
 - botao voltar no step detail deve retornar a tela anterior, mas esta retornando a tela Recipe List
-- no step item está mostrando um passo a mais (1 de 10) (tirar o passo deste local)
-- melhorar formatação do layout da tela Recipe Details.
+- step detail: mostrar toolbar. (ver possibilidade de mostrar o passo na toolbar).
 - criar widget
 - testes com expresso
 

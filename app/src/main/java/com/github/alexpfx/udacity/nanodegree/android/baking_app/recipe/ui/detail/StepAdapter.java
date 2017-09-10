@@ -16,7 +16,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrap
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.HeadingableRecycleAdapter;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -82,14 +81,7 @@ public class StepAdapter extends HeadingableRecycleAdapter {
         @BindView(R.id.image_step_has_video)
         ImageView imgHasVideo;
 
-
-        @BindView(R.id.image_has_thumbnail)
-        ImageView imgHasThumbnail;
-
-
         private View.OnClickListener onClickListener;
-        private boolean selected;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -104,20 +96,10 @@ public class StepAdapter extends HeadingableRecycleAdapter {
             itemView.setTag(step);
 
             loadHasVideo(step);
-            loadHasThumbnail(step);
 
-            String stepNumber = String.format(Locale.US, "%d / %d - ", index + 1, length);
-
-            txtShortDescription.setText(stepNumber + step.getShortDescription());
+            txtShortDescription.setText(step.getShortDescription());
         }
 
-        private void loadHasThumbnail(Step step) {
-            if (step.getThumbnailURL() != null && !step.getThumbnailURL().isEmpty()) {
-                imgHasThumbnail.setImageResource(R.drawable.ic_image_black_24dp);
-            } else {
-                imgHasThumbnail.setImageResource(R.drawable.ic_broken_image_black_24dp);
-            }
-        }
 
         private void loadHasVideo(Step step) {
             if (step.getVideoURL() != null && !step.getVideoURL().isEmpty()) {
@@ -136,9 +118,6 @@ public class StepAdapter extends HeadingableRecycleAdapter {
             notifyDataSetChanged();
         }
 
-        public void setSelected(boolean selected) {
-            this.selected = selected;
-        }
     }
 
 

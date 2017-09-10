@@ -18,6 +18,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail
 public class RecipeActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnRecipeSelectListener {
 
     public static final String KEY_RECIPE_ID = "KEY_RECIPE_ID";
+    public static final String KEY_RECIPE_NAME = "KEY_RECIPE_NAME";
     private RecipeComponent recipeComponent;
 
 
@@ -30,8 +31,9 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_action_name);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        getSupportActionBar().setBackgroundDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.baking1,
+// null));
 
     }
 
@@ -55,8 +57,10 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_RECIPE_ID, recipe.getId());
+        bundle.putString(KEY_RECIPE_NAME, recipe.getName());
         intent.putExtras(bundle);
 
         startActivity(intent);
     }
 }
+

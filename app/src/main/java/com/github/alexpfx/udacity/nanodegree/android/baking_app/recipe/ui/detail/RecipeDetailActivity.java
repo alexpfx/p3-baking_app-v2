@@ -34,14 +34,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+        initialize();
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initialize();
+
 
         if (savedInstanceState == null){
             if (!isMultiPane) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container_step_detail, new RecipeDetailFragment())
+                        .add(R.id.container_step_detail, new RecipeDetailFragment(), "recipe_detail")
                         .commit();
             }
         }
@@ -72,7 +75,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         Bundle bundle = new Bundle();
         bundle.putParcelable("step", step);
         fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_step_detail, fragment)
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_step_detail, fragment, "step_detail").addToBackStack("recipe_detail")
                 .commit();
 //        getSupportFragmentManager().beginTransaction().replace(R.id.layout_step_container, fragment)
 //                .commit();
@@ -83,6 +86,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     public Integer requestRecipeId() {
         Bundle extras = getIntent().getExtras();
         return extras.getInt(RecipeActivity.KEY_RECIPE_ID);
+    }
+
+    @Override
+    public String requestRecipeName() {
+        Bundle extras = getIntent().getExtras();
+        return extras.getString(RecipeActivity.KEY_RECIPE_NAME);
     }
 
 

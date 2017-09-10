@@ -1,44 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              app:columnCount="2"
-
-            android:layout_margin="@dimen/space_normal"
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginEnd="@dimen/space_normal"
+             android:layout_marginStart="@dimen/space_normal"
+             android:orientation="horizontal"
     >
-
-    <ImageView
-        android:id="@+id/img_ingredient_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/space_normal"
-        android:src="@drawable/ic_pen"/>
-
-    <!--<TextView-->
-    <!--android:id="@+id/text_quantity"-->
-    <!--android:layout_width="0dp"-->
-    <!--app:layout_columnWeight="1"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-    <!--tools:text="1000 kg"-->
-    <!--android:gravity="end"-->
-
-    <!--/>-->
 
 
     <TextView
         android:id="@+id/text_ingredient"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:text="Nononono nonono ononono nononoononono nononoononono "
-
+        tools:text="2 CUP Granulated Sugar"
         />
 
 
-</LinearLayout>
+</FrameLayout>

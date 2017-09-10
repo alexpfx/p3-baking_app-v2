@@ -7,7 +7,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_normal"
+    android:layout_marginEnd="@dimen/space_normal"
+    android:layout_marginStart="@dimen/space_normal"
+    android:layout_marginTop="@dimen/space_normal"
     app:columnCount="2"
     >
 
@@ -17,6 +19,7 @@
         android:layout_width="@dimen/icon_box_small"
         android:layout_height="@dimen/icon_box_small"
         android:alpha="0.6"
+        android:tint="@color/colorAccent"
         tools:src="@drawable/ic_videocam_black_24dp"
         />
 
@@ -32,15 +35,6 @@
         android:textColor="@color/secondary_text"
         app:layout_rowSpan="2"
         tools:text="1/10 - short description"
-        />
-
-
-    <ImageView
-        android:id="@+id/image_has_thumbnail"
-        android:layout_width="@dimen/icon_box_small"
-        android:layout_height="@dimen/icon_box_small"
-        android:alpha="0.6"
-        tools:src="@drawable/ic_broken_image_black_24dp"
         />
 
 

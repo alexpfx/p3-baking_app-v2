@@ -10,6 +10,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
+
     <fragment
         android:id="@+id/fragment_recipe_list"
         android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeListFragment"

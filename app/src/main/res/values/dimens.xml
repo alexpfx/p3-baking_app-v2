@@ -6,6 +6,8 @@
     <dimen name="space_large">24dp</dimen>
     <dimen name="space_huge">32dp</dimen>
 
+    <dimen name="app_bar_normal">56dp</dimen>
+    <dimen name="app_bar_expanded">128dp</dimen>
 
     <dimen name="card_height_tiny">32dp</dimen>
     <dimen name="card_height_small">64dp</dimen>
@@ -21,11 +23,10 @@
     <dimen name="image_box_normal">192dp</dimen>
     <dimen name="image_box_large">256dp</dimen>
 
-    <dimen name="elevation_tiny">2dp</dimen>
-    <dimen name="elevation_small">4dp</dimen>
-    <dimen name="elevation_normal">6dp</dimen>
-    <dimen name="elevation_large">8dp</dimen>
-    <dimen name="elevation_huge">10dp</dimen>
+    <dimen name="elevation_small">2dp</dimen>
+    <dimen name="elevation_normal">4dp</dimen>
+    <dimen name="elevation_large">6dp</dimen>
+    <dimen name="elevation_huge">8dp</dimen>
 
 
     <dimen name="radius_small">1dp</dimen>

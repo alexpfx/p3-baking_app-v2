@@ -1,7 +1,15 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +62,11 @@ public class IngredientsAdapter extends HeadingableRecycleAdapter {
         return itemList == null ? 0 : itemList.size();
     }
 
-    private String getQuantityFormated(double quantity, String measure) {
+    private String getQuantityFormated(double quantity) {
         if (quantity == (long) quantity) {
-            return String.format(Locale.US, "%s %s", String.valueOf(quantity), measure);
+            return String.format(Locale.US, "%s", String.valueOf((long) quantity));
         } else {
-            return String.format(Locale.US, "%.1f %s", quantity, measure);
+            return String.format(Locale.US, "%.1f", quantity);
         }
     }
 
@@ -73,11 +81,31 @@ public class IngredientsAdapter extends HeadingableRecycleAdapter {
         }
 
         void bind(Ingredient ingredient) {
-            String ingredientText = ingredient.getIngredient();
-            txtIngredient.setText(String.format(Locale.US, "%s %s ", getQuantityFormated(ingredient.getQuantity(),
-                    ingredient.getMeasure()), Character.toUpperCase(ingredientText.charAt(0)) +
-                    ingredientText
-                            .substring(1)));
+            txtIngredient.setText(
+                    TextUtils.concat(
+                            getQuantity(ingredient.getQuantity()),
+                            getMeasure (ingredient.getMeasure()),
+                            getIngredient(ingredient.getIngredient())));
+        }
+
+        private CharSequence getMeasure(String measure) {
+            return measure + "  ";
+        }
+
+        private Spannable getQuantity (double quantity){
+            String quantityText = getQuantityFormated(quantity);
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(quantityText);
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+            spannableStringBuilder.setSpan(styleSpan, 0, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return spannableStringBuilder.append(" ");
+        }
+        private Spannable getIngredient (String ingredient){
+            String camelCase = Character.toUpperCase(ingredient.charAt(0)) + ingredient.substring(1);
+            ForegroundColorSpan colorSpan = new ForegroundColorSpan(ContextCompat.getColor(context(), R.color
+                    .colorAccent));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(camelCase);
+            spannableStringBuilder.setSpan(colorSpan, 0, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return spannableStringBuilder.append(" ");
         }
     }
 }

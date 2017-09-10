@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">p3-baking_app-v2</string>
+    <string name="app_name">Baking App</string>
     <string name="title_activity_recipe">Baking App</string>
     <string name="title_activity_step">StepActivity</string>
 

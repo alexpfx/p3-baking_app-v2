@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +112,7 @@ public class StepDetailFragment extends Fragment {
         component.inject(this);
 
         simpleExoPlayerView.setPlayer(player);
+        simpleExoPlayerView.requestFocus();
 
 
         Bundle arguments = getArguments();
@@ -128,6 +130,7 @@ public class StepDetailFragment extends Fragment {
 
 
     public void loadStep(Step step) {
+        getActivity().setTitle(step.getShortDescription());
         txtDescription.setText(step.getDescription());
         int size = stepList.size();
         showStepNumber();
@@ -161,9 +164,16 @@ public class StepDetailFragment extends Fragment {
         glideWrapper.loadInto(step.getThumbnailURL(), imgThumbnail);
     }
 
+    private static final String TAG = "StepDetailFragment";
+
+
+
     private void playVideoIfAvailable(Step step) {
+        simpleExoPlayerView.setVisibility(View.INVISIBLE);
+        player.stop();
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
             simpleExoPlayerView.setVisibility(View.GONE);
+            Log.d(TAG, "playVideoIfAvailable: "+stepIndex);
             return;
         }
         simpleExoPlayerView.setVisibility(View.VISIBLE);
@@ -174,7 +184,6 @@ public class StepDetailFragment extends Fragment {
         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(videoURL), new DefaultDataSourceFactory
                 (getActivity(), Util.getUserAgent(getContext(), "recipePlayer")), new DefaultExtractorsFactory(),
                 null, null);
-
         player.prepare(mediaSource, true, false);
         player.setPlayWhenReady(true);
         mediaSessionCompat.setActive(true);

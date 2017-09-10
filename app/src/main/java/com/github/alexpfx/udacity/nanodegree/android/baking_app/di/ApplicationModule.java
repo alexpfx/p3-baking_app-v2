@@ -97,8 +97,8 @@ public class ApplicationModule {
     @Named("error")
     @Singleton
     @Provides
-    int errorPlaceHolder() {
-        return R.drawable.placeholder_no_image;
+    int errorImage() {
+        return R.drawable.error_image;
     }
 
     @Named("placeholder")

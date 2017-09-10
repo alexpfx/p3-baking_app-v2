@@ -21,6 +21,7 @@ import dagger.Provides;
  */
 @Module
 public class ActivityModule {
+    private static final String TAG = "ActivityModule";
     private final Activity activity;
     private String mediaSessionTag;
 
@@ -39,14 +40,15 @@ public class ActivityModule {
         return activity;
     }
 
-
-    private static final String TAG = "ActivityModule";
-
+    //new Player
     @Provides
     @PerActivity
-    BandwidthMeter bandwidthMeter (){
+    SimpleExoPlayer exoplayer(Activity context, TrackSelector trackSelector) {
+        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+        player.setPlayWhenReady(true);
 
-        return new DefaultBandwidthMeter();
+
+        return player;
     }
 
 
@@ -59,15 +61,17 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    SimpleExoPlayer exoplayer(Activity context, TrackSelector trackSelector) {
-        SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
-        return player;
+    BandwidthMeter bandwidthMeter() {
+        return new DefaultBandwidthMeter();
     }
 
+    //new Player
+
+    //prepare Player
 
     @PerActivity
     @Provides
-    PlaybackStateCompat.Builder builder (){
+    PlaybackStateCompat.Builder builder() {
         return new PlaybackStateCompat.Builder();
     }
 
@@ -75,15 +79,16 @@ public class ActivityModule {
     @PerActivity
     PlaybackStateCompat playbackStateCompat(PlaybackStateCompat.Builder builder) {
         return builder.setActions(PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat
-                .ACTION_PAUSE | PlaybackStateCompat.STATE_SKIPPING_TO_PREVIOUS | PlaybackStateCompat.ACTION_PLAY_PAUSE).build();
+                .ACTION_PAUSE | PlaybackStateCompat.STATE_SKIPPING_TO_PREVIOUS | PlaybackStateCompat
+                .ACTION_PLAY_PAUSE).build();
     }
 
 
     @Provides
     @PerActivity
-    MediaSessionCompat.Callback sessionCallback (final SimpleExoPlayer player){
+    MediaSessionCompat.Callback sessionCallback(final SimpleExoPlayer player) {
 
-        return new MediaSessionCompat.Callback(){
+        return new MediaSessionCompat.Callback() {
             @Override
             public void onPlay() {
                 player.setPlayWhenReady(true);

@@ -6,7 +6,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationCo
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationModule;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.DaggerApplicationComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
-import com.squareup.leakcanary.LeakCanary;
 
 
 /**
@@ -20,10 +19,10 @@ public class App extends Application implements HasComponent<ApplicationComponen
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)){
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)){
+//            return;
+//        }
+//        LeakCanary.install(this);
     }
 
     @Override
