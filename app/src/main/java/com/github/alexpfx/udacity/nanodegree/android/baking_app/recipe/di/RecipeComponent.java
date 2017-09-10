@@ -6,7 +6,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailFragment;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeListFragment;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui.StepDetailFragment;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail.StepDetailFragment;
 
 import dagger.Component;
 

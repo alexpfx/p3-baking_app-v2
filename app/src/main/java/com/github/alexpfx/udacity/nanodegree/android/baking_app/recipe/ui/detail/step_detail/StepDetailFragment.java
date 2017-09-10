@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.step.ui;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail;
 
 
 import android.content.Context;
