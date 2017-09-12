@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,6 +65,10 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     TextView txtStepNumber;
     @BindView(R.id.image_thumbnail)
     ImageView imgThumbnail;
+
+    @BindView(R.id.image_video_placeholder)
+    ImageView imgVideoPlaceHolder;
+
     @BindView(R.id.btn_next)
     Button btnNext;
     @BindView(R.id.btn_previous)
@@ -83,6 +88,14 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
 
     }
 
+    public static StepDetailFragment newInstance(Step step) {
+        StepDetailFragment fragment = new StepDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("step", step);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -91,6 +104,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
@@ -110,13 +124,20 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
             loadStep(step);
         }
 
-
         return view;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+
+        }
+    }
+
     public void loadStep(Step step) {
-
-
+        player.stop();
         getActivity().setTitle(step.getShortDescription());
         txtDescription.setText(step.getDescription());
         int size = stepList.size();
@@ -151,13 +172,12 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void playVideoIfAvailable(Step step) {
-        simpleExoPlayerView.setVisibility(View.INVISIBLE);
-        player.stop();
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
-            simpleExoPlayerView.setVisibility(View.GONE);
-            Log.d(TAG, "playVideoIfAvailable: " + stepIndex);
+            simpleExoPlayerView.setVisibility(View.INVISIBLE);
+            imgVideoPlaceHolder.setVisibility(View.VISIBLE);
             return;
         }
+        imgVideoPlaceHolder.setVisibility(View.INVISIBLE);
         simpleExoPlayerView.setVisibility(View.VISIBLE);
         preparePlayer(step.getVideoURL());
     }
@@ -219,4 +239,6 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     public void onLoadError(IOException error) {
         Log.e(TAG, "onLoadError: " + error.getMessage());
     }
+
+
 }

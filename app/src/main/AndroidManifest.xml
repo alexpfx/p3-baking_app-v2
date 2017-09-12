@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.alexpfx.udacity.nanodegree.android.baking_app">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.github.alexpfx.udacity.nanodegree.android.baking_app">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".App"
@@ -13,22 +14,41 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:node="replace">
         <activity
             android:name=".recipe.ui.detail.RecipeDetailActivity"
             android:label="@string/title_activity_step"
             android:parentActivityName=".recipe.ui.list.RecipeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".recipe.ui.list.RecipeActivity"
             android:label="@string/title_activity_recipe"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".recipe.ui.detail.step_detail.StepDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".recipe.ui.detail.RecipeDetailActivity">
+        </activity>
+
+        <receiver android:name=".BakingAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widget_provider_info"/>
+        </receiver>
+
+        <service android:name=".recipe.RecipeIngredientsIntentService"/>
     </application>
 
 </manifest>

@@ -15,25 +15,29 @@
 
 
     <ImageView
+
         android:id="@+id/image_step_has_video"
         android:layout_width="@dimen/icon_box_small"
         android:layout_height="@dimen/icon_box_small"
         android:alpha="0.6"
         android:tint="@color/colorAccent"
         tools:src="@drawable/ic_videocam_black_24dp"
+
         />
 
     <TextView
 
         android:id="@+id/text_step_short_description"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_small"
         android:layout_marginStart="@dimen/space_small"
         android:fontFamily="sans-serif"
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/secondary_text"
-        app:layout_rowSpan="2"
+        app:layout_gravity="fill"
+        app:layout_rowWeight="1"
         tools:text="1/10 - short description"
         />
 

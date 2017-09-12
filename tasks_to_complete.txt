@@ -1,7 +1,8 @@
 ordem de prioridade
 
-- botao voltar no step detail deve retornar a tela anterior, mas esta retornando a tela Recipe List
-- step detail: mostrar toolbar. (ver possibilidade de mostrar o passo na toolbar).
+
+- ao rotacionar deve continuar o video de onde parou
+- quando no tablet, selecionar step deve pintar background
 - criar widget
 - testes com expresso
 

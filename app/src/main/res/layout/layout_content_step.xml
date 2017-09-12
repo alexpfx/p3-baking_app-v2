@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity"
-    tools:showIn="@layout/layout_step_content">
+    tools:showIn="@layout/layout_step_container">
 
 </android.support.constraint.ConstraintLayout>

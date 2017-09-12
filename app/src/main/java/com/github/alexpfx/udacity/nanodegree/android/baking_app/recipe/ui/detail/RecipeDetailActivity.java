@@ -1,6 +1,9 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +17,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.DaggerRecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.ToolbarUtils;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail.StepDetailActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail.StepDetailFragment;
 
 import javax.inject.Inject;
@@ -22,39 +26,41 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent>, OnStepSelectListener,
-        RecipeDetailFragment.OnRecipeIdRequested{
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity.KEY_RECIPE_ID;
+
+public class RecipeDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent>,
+        OnStepSelectListener {
 
 
     private static final String TAG = "RecipeDetailActivity";
 
+
     @Inject
     @PerActivity
     Boolean isMultiPane;
-    private RecipeComponent recipeComponent;
-    private Step step;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+    private RecipeComponent recipeComponent;
+    private Step step;
+    private int recipeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         ButterKnife.bind(this);
-
         initialize();
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ToolbarUtils.setupToolbar(this, toolbar);
 
-
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             if (!isMultiPane) {
+                int recipeId = getRecipeId();
+                Bundle bundle = new Bundle();
+                bundle.putInt(KEY_RECIPE_ID, recipeId);
+                RecipeDetailFragment recipeDetailFragment = RecipeDetailFragment.newInstance(bundle);
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container_step_detail, new RecipeDetailFragment(), "recipe_detail")
+                        .add(R.id.container_step, recipeDetailFragment, "recipe_detail")
                         .commit();
             }
         }
@@ -72,7 +78,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
 
     @Override
     public void initialize() {
-        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this, RecipeDetailActivity.class
+        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this,
+                RecipeDetailActivity.class
                 .getName()))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
         recipeComponent.inject(this);
@@ -81,36 +88,39 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     @Override
     public void onStepSelect(Step step) {
         this.step = step;
-        StepDetailFragment fragment = new StepDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("step", step);
-        fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_step_detail, fragment, "step_detail").addToBackStack("recipe_detail")
-                .commit();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.layout_step_container, fragment)
-//                .commit();
+        StepDetailFragment fragment = StepDetailFragment.newInstance(step);
 
+        if (isMultiPane) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_step, fragment, "step_detail")
+                    .addToBackStack("recipe_detail")
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, StepDetailActivity.class);
+            intent.putExtra(StepDetailActivity.KEY_STEP, step);
+            startActivityForResult(intent, 100);
+        }
     }
 
     @Override
-    public Integer requestRecipeId() {
-        Bundle extras = getIntent().getExtras();
-        return extras.getInt(RecipeActivity.KEY_RECIPE_ID);
-    }
-
-    @Override
-    public String requestRecipeName() {
-        Bundle extras = getIntent().getExtras();
-        return extras.getString(RecipeActivity.KEY_RECIPE_NAME);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100){
+            setIntent(data);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public int getRecipeId() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        return pref.getInt(KEY_RECIPE_ID, -1);
     }
 }

@@ -1,11 +1,14 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,9 @@ import javax.inject.Singleton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity.KEY_RECIPE_ID;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity.KEY_RECIPE_NAME;
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -57,7 +63,20 @@ public class RecipeDetailFragment extends Fragment {
             stepSelectListener.onStepSelect(step);
         }
     };
-    OnRecipeIdRequested onParameterRequested;
+    private int recipeId;
+
+    public static RecipeDetailFragment newInstance (Bundle arguments){
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        int recipeId = getRecipeId();
+        Log.d(TAG, "onCreate: recipeId"+recipeId);
+    }
 
     @Nullable
     @Override
@@ -68,7 +87,7 @@ public class RecipeDetailFragment extends Fragment {
 
         initializeInjections();
 
-        int recipeId = onParameterRequested.requestRecipeId();
+        int recipeId = getRecipeId();
 
         List<Step> steps = repository.stepsByRecipe(recipeId);
         List<Ingredient> ingredients = repository.ingredientsByRecipe(recipeId);
@@ -79,7 +98,8 @@ public class RecipeDetailFragment extends Fragment {
 
         initializeRecyclerViews();
 
-        String recipeName = onParameterRequested.requestRecipeName();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String recipeName = preferences.getString(KEY_RECIPE_NAME, "foo");
         getActivity().setTitle(recipeName);
 
         return view;
@@ -113,15 +133,14 @@ public class RecipeDetailFragment extends Fragment {
         if (context instanceof OnStepSelectListener) {
             stepSelectListener = (OnStepSelectListener) context;
         }
-        if (context instanceof OnRecipeIdRequested) {
-            onParameterRequested = (OnRecipeIdRequested) context;
-        }
     }
 
-    public interface OnRecipeIdRequested {
-        Integer requestRecipeId();
-        String requestRecipeName ();
+    public int getRecipeId() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return pref.getInt(KEY_RECIPE_ID, -1);
+
     }
+
 
 //110
 

@@ -1,31 +1,31 @@
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <RelativeLayout
+    <android.support.v7.widget.GridLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/space_normal"
+        app:columnCount="3"
         >
 
         <TextView
 
             android:id="@+id/text_step_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/btn_next"
-            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/space_normal"
             android:layout_marginStart="@dimen/space_normal"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
+            app:layout_gravity="left|center_vertical"
             tools:text="1 / 10"
 
             />
@@ -35,13 +35,13 @@
             android:id="@+id/btn_previous"
             style="?borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/space_normal"
             android:layout_marginStart="@dimen/space_normal"
-            android:layout_toStartOf="@id/btn_next"
             android:text="@string/previous"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@color/colorPrimary"
+            app:layout_gravity="right"
             />
 
 
@@ -49,8 +49,7 @@
             android:id="@+id/btn_next"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/space_normal"
             android:layout_marginEnd="@dimen/space_normal"
             android:text="@string/next"
@@ -58,25 +57,21 @@
             android:textColor="@color/white"
             />
 
+
         <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
-            android:id="@+id/exo_player_aspect_ratio"
-            android:layout_width="match_parent"
             android:layout_height="@dimen/image_box_normal"
-            android:layout_below="@id/btn_next"
             android:layout_marginBottom="@dimen/space_normal"
+            app:layout_columnSpan="3"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
             >
-            <ImageView
-                android:id="@+id/image_video_placeholder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible"
-                android:src="@drawable/video_placeholder"
-                />
+
 
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                 android:id="@+id/video_player_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 />
 
 
@@ -84,31 +79,30 @@
 
         <ImageView
             android:id="@+id/image_thumbnail"
-            android:layout_width="match_parent"
             android:layout_height="@dimen/image_box_normal"
-            android:layout_below="@id/exo_player_aspect_ratio"
             android:layout_marginBottom="@dimen/space_normal"
             android:scaleType="centerCrop"
             android:visibility="visible"
+            app:layout_columnSpan="3"
+            app:layout_columnWeight="1"
             tools:src="@drawable/placeholder_image"
-
             />
 
 
         <TextView
             android:id="@+id/text_step_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_thumbnail"
             android:layout_marginBottom="@dimen/space_normal"
             android:background="@drawable/step_item_select_state"
             android:gravity="start"
             android:paddingEnd="@dimen/space_normal"
             android:paddingStart="@dimen/space_normal"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_columnSpan="3"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill_horizontal"
             tools:text="recipe introduction"
             />
 
 
-    </RelativeLayout>
+    </android.support.v7.widget.GridLayout>
 </android.support.v4.widget.NestedScrollView>
