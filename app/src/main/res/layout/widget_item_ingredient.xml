@@ -32,10 +32,10 @@
         android:id="@+id/text_ingredient_measure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_ingredient"
-        android:layout_marginStart="@dimen/space_tiny"
         android:layout_toEndOf="@id/text_ingredient_quantity"
+        android:layout_below="@id/text_ingredient"
         android:fontFamily="sans-serif"
+        android:layout_marginStart="@dimen/space_tiny"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="2"
         />

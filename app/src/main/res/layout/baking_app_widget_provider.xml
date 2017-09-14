@@ -1,35 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#fff"
                 android:padding="@dimen/widget_margin">
 
 
-    <ImageView
+    <Button
+        android:layout_marginStart="@dimen/space_small"
         android:id="@+id/widget_image_widget_icon"
         android:layout_width="@dimen/icon_box_normal"
         android:layout_height="@dimen/icon_box_normal"
         android:layout_alignParentStart="true"
-        android:src="@mipmap/ic_launcher"
+        android:background="@mipmap/ic_launcher"
 
 
         />
 
 
     <TextView
-        android:id="@+id/widget_text_app_title"
+        android:id="@+id/widget_text_ingredient_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/widget_image_widget_icon"
-        android:layout_centerHorizontal="true"
         android:layout_margin="8dp"
         android:layout_toEndOf="@id/widget_image_widget_icon"
         android:layout_toRightOf="@id/widget_image_widget_icon"
-        android:gravity="center"
+        android:gravity="start"
+        android:layout_marginStart="@dimen/space_small"
         android:text="@string/app_name"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-        android:textColor="@color/textColorPrimary"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/textColorSecondary"
         android:textStyle="bold|italic"/>
 
     <FrameLayout
@@ -37,18 +37,23 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/widget_image_widget_icon"
-        android:layout_margin="@dimen/space_tiny"
+        android:layout_marginEnd="@dimen/space_small"
+        android:layout_marginStart="@dimen/space_small"
         android:background="@color/accent"
         />
 
 
-    <TextView
-        android:id="@+id/widget_text_ingredient_list"
+    <ListView
+        android:id="@+id/widget_list_ingredients"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/line_separator"
-        android:layout_margin="@dimen/space_small"
-        android:textColor="@color/black"
-        tools:text="bla bla"/>
+        android:paddingEnd="@dimen/space_small"
+        android:paddingStart="@dimen/space_small"
+        >
+
+
+    </ListView>
+
 
 </RelativeLayout>

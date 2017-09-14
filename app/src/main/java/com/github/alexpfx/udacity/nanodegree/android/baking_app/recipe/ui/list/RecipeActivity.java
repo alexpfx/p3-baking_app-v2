@@ -30,7 +30,6 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     public static final String KEY_RECIPE_ID = "KEY_RECIPE_ID";
     public static final String KEY_RECIPE_NAME = "KEY_RECIPE_NAME";
     private static final String TAG = "RecipeActivity";
-    public static final String KEY_WIDGET_RECIPE_ID = "KEY_WIDGET_RECIPE_ID";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private RecipeComponent recipeComponent;
@@ -41,7 +40,6 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         setContentView(R.layout.activity_recipe);
         ButterKnife.bind(this);
         ToolbarUtils.setupToolbarWithLogo(this, toolbar, R.drawable.ic_action_name);
-
     }
 
     @Override
@@ -64,11 +62,10 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Log.d(TAG, "onRecipeSelect: " + recipe);
         Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.d(TAG, "onRecipeSelect: "+recipe.getId());
+        Log.d(TAG, "onRecipeSelect: " + recipe.getId());
         preferences.edit()
                 .putInt(KEY_RECIPE_ID, recipe.getId())
                 .putString(KEY_RECIPE_NAME, recipe.getName())
-                .putInt(KEY_WIDGET_RECIPE_ID, recipe.getId())
                 .apply();
 
         startActivity(intent);
@@ -84,7 +81,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_item_widget_settings:
                 openWidgetSettings();
                 return true;

@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.BakingAppWidgetProvider;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.BakingAppWidgetProvider;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppOpenHelper;
@@ -34,8 +34,6 @@ public class RecipeIngredientsIntentService extends IntentService {
             ".extra" +
             ".RECIPE_ID";
     private static final String TAG = "RecipeIngredientsIntent";
-
-
 
 
     public RecipeIngredientsIntentService() {
@@ -73,12 +71,14 @@ public class RecipeIngredientsIntentService extends IntentService {
     private void handleActionPopulateIngredientList(int recipeId) {
         IngredientDao ingredientDao = new IngredientDaoImpl(new BakingAppOpenHelper(getBaseContext()));
         List<Ingredient> ingredients = ingredientDao.getAll(recipeId);
-        Log.d(TAG, "handleActionPopulateIngredientList: "+ingredients);
+        Log.d(TAG, "handleActionPopulateIngredientList: " + ingredients);
 
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingAppWidgetProvider.class));
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_text_ingredient_list);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_ingredients);
+
+//        BakingAppWidgetProvider.updateIngredientList(this, appWidgetManager, appWidgetIds, ingredients);
 
     }
 
