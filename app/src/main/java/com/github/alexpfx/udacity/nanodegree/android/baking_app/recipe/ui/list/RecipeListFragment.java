@@ -21,6 +21,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.Recipe
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,9 +37,11 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     @BindView(R.id.recycler_recipe_list)
     RecyclerView recycler;
 
+    @Singleton
     @Inject
     RecipeAdapter adapter;
 
+    @Singleton
     @Inject
     RecipesRepository repository;
 

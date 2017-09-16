@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
@@ -19,6 +20,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.DaggerRecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.ToolbarUtils;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.WidgetSettingsActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity;
 
 import butterknife.BindView;
@@ -40,6 +42,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         setContentView(R.layout.activity_recipe);
         ButterKnife.bind(this);
         ToolbarUtils.setupToolbarWithLogo(this, toolbar, R.drawable.ic_action_name);
+
     }
 
     @Override
@@ -62,6 +65,9 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Log.d(TAG, "onRecipeSelect: " + recipe);
         Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Toast.makeText(this, "pref: "+preferences.getBoolean("showbass", false), Toast.LENGTH_SHORT).show();
+
         Log.d(TAG, "onRecipeSelect: " + recipe.getId());
         preferences.edit()
                 .putInt(KEY_RECIPE_ID, recipe.getId())
@@ -75,6 +81,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
+
         return true;
     }
 
@@ -90,8 +97,8 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     }
 
     private void openWidgetSettings() {
-
-
+        Intent intent = new Intent(this, WidgetSettingsActivity.class);
+        startActivity(intent);
     }
 }
 

@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.RecipeIngredientsIntentService;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
 
 /**
@@ -22,7 +20,8 @@ public class BakingAppWidgetProvider extends AppWidgetProvider {
 
     private int getRecipeId(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getInt(RecipeActivity.KEY_RECIPE_ID, -1);
+        String recipeIdString = preferences.getString(context.getResources().getString(R.string.pref_recipe_id_key), "-1");
+        return Integer.parseInt(recipeIdString);
     }
 
     @Override
@@ -30,7 +29,6 @@ public class BakingAppWidgetProvider extends AppWidgetProvider {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
 
         int recipeId = getRecipeId(context);
-        Log.d(TAG, "onUpdate: "+recipeId);
 
         RecipeIngredientsIntentService.startActionPopulateIngredientList(context, recipeId);
 
@@ -46,7 +44,7 @@ public class BakingAppWidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
         }
-        super.onUpdate(context,appWidgetManager, appWidgetIds);
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
 
     }
 

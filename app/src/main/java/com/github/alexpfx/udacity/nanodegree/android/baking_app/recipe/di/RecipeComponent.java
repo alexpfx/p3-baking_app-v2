@@ -3,6 +3,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ActivityModule;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ApplicationComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.WidgetSettingsFragment;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailFragment;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail.StepDetailActivity;
@@ -23,4 +24,7 @@ public interface RecipeComponent {
     void inject (RecipeDetailFragment recipeDetailFragment);
     void inject(RecipeDetailActivity recipeDetailActivity);
     void inject (StepDetailActivity stepDetailActivity);
+
+
+    void inject(WidgetSettingsFragment widgetSettingsFragment);
 }

@@ -1,9 +1,12 @@
 ordem de prioridade
 
+1. teste offline, tablet e fone.
+2. teste preference screen, tab e fone.
+3. refatorar arquivo de propriedades e chaves para padronizar ids, labels e keys.
+4. widget deve obter key.
 
 - ao rotacionar deve continuar o video de onde parou
 - quando no tablet, selecionar step deve pintar background
-- criar widget
 - testes com expresso
 
 
