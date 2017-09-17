@@ -13,6 +13,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepo
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.UpdateIngredientsIntentService;
 
 import java.util.List;
 
@@ -103,9 +104,18 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
             return;
         }
 
+
         String value = sharedPreferences.getString(preference.getKey(), "");
         setPreferenceSummary(preference, value);
 
+        String title = (String) preference.getSummary();
+
+        notifyWidget(title);
+
+    }
+
+    private void notifyWidget(String recipeName) {
+        UpdateIngredientsIntentService.startUpdateIngredientsIntentService(getContext(), recipeName);
     }
 
 

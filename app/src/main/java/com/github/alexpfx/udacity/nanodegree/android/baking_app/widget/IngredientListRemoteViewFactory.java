@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -13,7 +14,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppOpenHelper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDaoImpl;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
 
 import java.util.List;
 
@@ -48,7 +48,12 @@ public class IngredientListRemoteViewFactory implements RemoteViewsService.Remot
 
     @Override
     public void onDataSetChanged() {
-        recipeId = PreferenceManager.getDefaultSharedPreferences(context).getInt(RecipeActivity.KEY_RECIPE_ID, -1);
+
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String value = defaultSharedPreferences.getString(context.getString(R.string.pref_recipe_id_key), "");
+
+        recipeId = Integer.parseInt(value);
+        Log.d(TAG, "onDataSetChanged: "+recipeId);
         List<Ingredient> ingredients = ingredientDao.getAll(recipeId);
         if (ingredients == null || ingredients.isEmpty()) {
             return;
@@ -68,10 +73,16 @@ public class IngredientListRemoteViewFactory implements RemoteViewsService.Remot
 
     @Override
     public RemoteViews getViewAt(int position) {
+
+
+
+
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_item_ingredient);
+
         remoteViews.setTextViewText(R.id.text_ingredient, items.getIngredient(position));
         remoteViews.setTextViewText(R.id.text_ingredient_measure, items.getMeasure(position));
         remoteViews.setTextViewText(R.id.text_ingredient_quantity, items.getQuantity(position));
+
         return remoteViews;
     }
 

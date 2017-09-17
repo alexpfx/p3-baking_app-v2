@@ -43,6 +43,15 @@
             android:launchMode="singleTop"
             android:parentActivityName=".recipe.ui.list.RecipeActivity"/>
 
+        <receiver android:name=".widget.ingredient.IngredientListWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ingredient_list_widget_provider_info"/>
+        </receiver>
+
         <receiver android:name=".widget.BakingAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -53,7 +62,8 @@
                 android:resource="@xml/baking_app_widget_provider_info"/>
         </receiver>
 
-        <service android:name=".widget.RecipeIngredientsIntentService"/>
+
+        <service android:name=".widget.UpdateIngredientsIntentService"/>
         <service
             android:name=".widget.IngredientsWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>

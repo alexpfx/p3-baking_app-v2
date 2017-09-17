@@ -1,16 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#fff"
-                android:padding="@dimen/widget_margin">
+                android:background="@color/colorPrimary"
+                android:padding="@dimen/widget_margin"
+    >
 
 
     <Button
-        android:layout_marginStart="@dimen/space_small"
         android:id="@+id/widget_image_widget_icon"
         android:layout_width="@dimen/icon_box_normal"
         android:layout_height="@dimen/icon_box_normal"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/space_small"
         android:background="@mipmap/ic_launcher"
 
 
@@ -26,11 +28,10 @@
         android:layout_toEndOf="@id/widget_image_widget_icon"
         android:layout_toRightOf="@id/widget_image_widget_icon"
         android:gravity="start"
-        android:layout_marginStart="@dimen/space_small"
         android:text="@string/app_name"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/textColorSecondary"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead.Inverse"
         android:textStyle="bold|italic"/>
+
 
     <FrameLayout
         android:id="@+id/line_separator"
@@ -39,17 +40,27 @@
         android:layout_below="@id/widget_image_widget_icon"
         android:layout_marginEnd="@dimen/space_small"
         android:layout_marginStart="@dimen/space_small"
-        android:background="@color/accent"
+        android:background="@color/white"
         />
 
+    <TextView
+        android:id="@+id/widget_text_recipe_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_separator"
+        tools:text="Nutella Pie"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead.Inverse"
+        android:layout_margin="8dp"
+        />
 
     <ListView
         android:id="@+id/widget_list_ingredients"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/line_separator"
+        android:layout_below="@id/widget_text_recipe_name"
         android:paddingEnd="@dimen/space_small"
         android:paddingStart="@dimen/space_small"
+        android:background="@color/white"
         >
 
 

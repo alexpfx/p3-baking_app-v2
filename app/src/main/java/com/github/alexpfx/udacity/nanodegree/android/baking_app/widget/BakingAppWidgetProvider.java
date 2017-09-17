@@ -28,10 +28,6 @@ public class BakingAppWidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
 
-        int recipeId = getRecipeId(context);
-
-        RecipeIngredientsIntentService.startActionPopulateIngredientList(context, recipeId);
-
         Intent intent = new Intent(context, RecipeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_image_widget_icon, pendingIntent);
