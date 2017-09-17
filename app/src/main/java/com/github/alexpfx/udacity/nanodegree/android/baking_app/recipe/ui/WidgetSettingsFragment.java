@@ -13,7 +13,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepo
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.UpdateIngredientsIntentService;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.ingredient.UpdateIngredientsIntentService;
 
 import java.util.List;
 

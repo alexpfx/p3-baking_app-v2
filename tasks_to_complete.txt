@@ -1,9 +1,11 @@
 ordem de prioridade
 
-1. teste offline, tablet e fone.
-2. teste preference screen, tab e fone.
-3. refatorar arquivo de propriedades e chaves para padronizar ids, labels e keys.
-4. widget deve obter key.
+1. refatorar / mover classes em pacotes.
+2. teste passo a passo versao para tablet e para fone.
+3. teste passo a passo widget.
+4. teste passo a passo aplicacao sem dados e offline.
+5. testes funcionais.
+
 
 - ao rotacionar deve continuar o video de onde parou
 - quando no tablet, selecionar step deve pintar background

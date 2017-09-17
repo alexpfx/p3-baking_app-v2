@@ -9,7 +9,6 @@ import android.widget.RemoteViews;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.IngredientsWidgetService;
 
 /**
  * Created by alexandre on 16/09/17.

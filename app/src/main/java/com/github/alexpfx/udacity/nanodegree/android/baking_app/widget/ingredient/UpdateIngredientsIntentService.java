@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app.widget;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.ingredient;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.ingredient.IngredientListWidgetProvider;
 
 /**
  * Created by alexandre on 15/09/17.
