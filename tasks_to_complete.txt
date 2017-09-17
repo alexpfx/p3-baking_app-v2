@@ -1,10 +1,21 @@
 ordem de prioridade
 
+/1
 1. refatorar / mover classes em pacotes.
 2. teste passo a passo versao para tablet e para fone.
+
+/1
 3. teste passo a passo widget.
 4. teste passo a passo aplicacao sem dados e offline.
-5. testes funcionais.
+
+5. suportar app offline
+
+
+/3
+6. testes funcionais.
+
+/3
+7. suportar rotação
 
 
 - ao rotacionar deve continuar o video de onde parou

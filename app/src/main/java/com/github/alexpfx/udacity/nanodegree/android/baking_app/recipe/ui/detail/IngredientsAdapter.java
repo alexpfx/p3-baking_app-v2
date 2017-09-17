@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.IngredientSpanableListHolder;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.IngredientSpanableListHolder;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.HeadingableRecycleAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.HeadingableRecycleAdapter;
 
 import java.util.List;
 

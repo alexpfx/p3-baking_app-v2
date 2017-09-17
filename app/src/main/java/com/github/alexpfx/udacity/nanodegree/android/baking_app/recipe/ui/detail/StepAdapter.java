@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.HeadingableRecycleAdapter;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.HeadingableRecycleAdapter;
 
 import java.util.List;
 

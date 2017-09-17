@@ -1,4 +1,4 @@
-package com.github.alexpfx.udacity.nanodegree.android.baking_app;
+package com.github.alexpfx.udacity.nanodegree.android.baking_app.util;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -10,6 +10,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 
 import java.util.List;

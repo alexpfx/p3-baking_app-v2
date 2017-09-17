@@ -17,7 +17,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.datab
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.StepDaoImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.executor.JobExecutor;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 
 import java.util.concurrent.Executor;
 

@@ -20,7 +20,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepo
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.GlideWrapper;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;

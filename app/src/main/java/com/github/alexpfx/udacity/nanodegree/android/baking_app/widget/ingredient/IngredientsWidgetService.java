@@ -8,12 +8,12 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.IngredientSpanableListHolder;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppOpenHelper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDaoImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.IngredientSpanableListHolder;
 
 import java.util.List;
 
@@ -61,10 +61,9 @@ public class IngredientsWidgetService extends RemoteViewsService {
         public void onDataSetChanged() {
 
             SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            String value = defaultSharedPreferences.getString(context.getString(R.string.pref_recipe_id_key), "");
+            String value = defaultSharedPreferences.getString(context.getString(R.string.pref_recipe_id_key), "-1");
 
             recipeId = Integer.parseInt(value);
-            Log.d(TAG, "onDataSetChanged: " + recipeId);
             List<Ingredient> ingredients = ingredientDao.getAll(recipeId);
             if (ingredients == null || ingredients.isEmpty()) {
                 return;
@@ -79,7 +78,7 @@ public class IngredientsWidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            return items.size();
+            return items == null ? 0 : items.size();
         }
 
         @Override
