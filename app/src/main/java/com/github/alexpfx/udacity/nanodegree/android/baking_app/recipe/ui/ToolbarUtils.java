@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 public class ToolbarUtils {
 
-    public static void setupToolbarWithLogo (AppCompatActivity activity, Toolbar toolbar, @DrawableRes int resLogo){
+    public static void setupToolbarWithLogo(AppCompatActivity activity, Toolbar toolbar, @DrawableRes int resLogo) {
         setupToolbar(activity, toolbar, false, false);
         activity.getSupportActionBar().setDisplayUseLogoEnabled(true);
         activity.getSupportActionBar().setLogo(resLogo);

@@ -22,12 +22,12 @@ import butterknife.ButterKnife;
 
 public class StepDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent> {
     public static final String KEY_STEP = "step";
+    private static final String TAG = "StepDetailActivity";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private RecipeComponent recipeComponent;
     private Step step;
 
-    private static final String TAG = "StepDetailActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

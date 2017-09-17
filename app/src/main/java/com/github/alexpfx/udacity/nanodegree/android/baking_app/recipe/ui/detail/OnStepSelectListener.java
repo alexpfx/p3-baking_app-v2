@@ -7,5 +7,5 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
  */
 
 public interface OnStepSelectListener {
-    void onStepSelect (Step step);
+    void onStepSelect(Step step);
 }

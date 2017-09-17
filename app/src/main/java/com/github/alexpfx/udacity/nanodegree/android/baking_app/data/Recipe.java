@@ -14,13 +14,17 @@ import java.util.List;
 
 public class Recipe implements Parcelable {
 
-    public Recipe(int id, String name, int servings, String image) {
-        this.id = id;
-        this.name = name;
-        this.servings = servings;
-        this.image = image;
-    }
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
+        }
 
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
     @SerializedName("id")
     private int id;
 
@@ -38,6 +42,23 @@ public class Recipe implements Parcelable {
 
     @SerializedName("steps")
     private List<Step> steps;
+
+    public Recipe(int id, String name, int servings, String image) {
+        this.id = id;
+        this.name = name;
+        this.servings = servings;
+        this.image = image;
+    }
+
+    protected Recipe(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.servings = in.readInt();
+        this.image = in.readString();
+        this.ingredients = new ArrayList<>();
+        in.readList(this.ingredients, Ingredient.class.getClassLoader());
+        this.steps = in.createTypedArrayList(Step.CREATOR);
+    }
 
     public int getId() {
         return id;
@@ -87,7 +108,6 @@ public class Recipe implements Parcelable {
         this.steps = steps;
     }
 
-
     @Override
     public String toString() {
         return "Recipe{" +
@@ -114,26 +134,4 @@ public class Recipe implements Parcelable {
         dest.writeList(this.ingredients);
         dest.writeTypedList(this.steps);
     }
-
-    protected Recipe(Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        this.servings = in.readInt();
-        this.image = in.readString();
-        this.ingredients = new ArrayList<>();
-        in.readList(this.ingredients, Ingredient.class.getClassLoader());
-        this.steps = in.createTypedArrayList(Step.CREATOR);
-    }
-
-    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel source) {
-            return new Recipe(source);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
 }

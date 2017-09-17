@@ -20,8 +20,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepo
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -130,7 +130,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
 
         }

@@ -80,7 +80,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     public void initialize() {
         recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this,
                 RecipeDetailActivity.class
-                .getName()))
+                        .getName()))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
         recipeComponent.inject(this);
     }
@@ -104,7 +104,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100){
+        if (requestCode == 100) {
             setIntent(data);
         }
     }

@@ -66,7 +66,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        Toast.makeText(this, "pref: "+preferences.getBoolean("showbass", false), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "pref: " + preferences.getBoolean("showbass", false), Toast.LENGTH_SHORT).show();
 
         Log.d(TAG, "onRecipeSelect: " + recipe.getId());
         preferences.edit()

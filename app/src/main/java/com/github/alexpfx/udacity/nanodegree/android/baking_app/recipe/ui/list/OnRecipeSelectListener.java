@@ -7,6 +7,6 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
  */
 
 public interface OnRecipeSelectListener {
-    void onRecipeSelect (Recipe recipe);
+    void onRecipeSelect(Recipe recipe);
 }
 

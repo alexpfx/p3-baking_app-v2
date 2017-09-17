@@ -14,20 +14,22 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.*;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract
+        .IngredientsEntry;
 
 /**
  * Created by alexandre on 06/08/17.
  */
 @Singleton
 public class IngredientDaoImpl implements IngredientDao {
+    private static final String TAG = "IngredientDaoImpl";
     private SQLiteOpenHelper openHelper;
+
 
     @Inject
     public IngredientDaoImpl(SQLiteOpenHelper openHelper) {
         this.openHelper = openHelper;
     }
-
 
     @Override
     public void bulkInsert(List<Ingredient> ingredients) {
@@ -43,7 +45,6 @@ public class IngredientDaoImpl implements IngredientDao {
         }
     }
 
-    private static final String TAG = "IngredientDaoImpl";
     @Override
     public List<Ingredient> getAll(int recipeId) {
         SQLiteDatabase db = openHelper.getReadableDatabase();
@@ -53,12 +54,12 @@ public class IngredientDaoImpl implements IngredientDao {
         if (!cursor.moveToFirst()) {
             return Collections.EMPTY_LIST;
         }
-        Log.d(TAG, "getAll: "+cursor.getCount());
+        Log.d(TAG, "getAll: " + cursor.getCount());
         List<Ingredient> ingredients = new ArrayList<>();
         do {
             Ingredient ingredient = MappingUtil.toIngredient(cursor);
             ingredients.add(ingredient);
-        }while (cursor.moveToNext());
+        } while (cursor.moveToNext());
         return ingredients;
     }
 

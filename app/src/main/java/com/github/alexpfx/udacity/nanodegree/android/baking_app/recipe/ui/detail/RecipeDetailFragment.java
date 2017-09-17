@@ -65,7 +65,7 @@ public class RecipeDetailFragment extends Fragment {
     };
     private int recipeId;
 
-    public static RecipeDetailFragment newInstance (Bundle arguments){
+    public static RecipeDetailFragment newInstance(Bundle arguments) {
         RecipeDetailFragment fragment = new RecipeDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -75,7 +75,7 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int recipeId = getRecipeId();
-        Log.d(TAG, "onCreate: recipeId"+recipeId);
+        Log.d(TAG, "onCreate: recipeId" + recipeId);
     }
 
     @Nullable

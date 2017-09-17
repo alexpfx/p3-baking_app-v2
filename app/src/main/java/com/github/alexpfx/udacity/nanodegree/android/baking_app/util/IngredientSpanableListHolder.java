@@ -35,7 +35,7 @@ public class IngredientSpanableListHolder {
         return formatIngredient(ingredients.get(index).getIngredient());
     }
 
-    public int size(){
+    public int size() {
         return ingredients.size();
     }
 

@@ -8,8 +8,10 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.IngredientsEntry;
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.RecipeEntry;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract
+        .IngredientsEntry;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract
+        .RecipeEntry;
 import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.StepEntry;
 
 /**
@@ -27,7 +29,7 @@ public final class MappingUtil {
         return new Recipe(id, name, servings, image);
     }
 
-    public static Step toStep (Cursor cursor){
+    public static Step toStep(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(StepEntry._ID));
         String shortDescription = cursor.getString(cursor.getColumnIndex(StepEntry.COLUMN_SHORT_DESCRIPTION));
         String description = cursor.getString(cursor.getColumnIndex(StepEntry.COLUMN_DESCRIPTION));
@@ -37,7 +39,7 @@ public final class MappingUtil {
         return new Step(id, shortDescription, description, videoUrl, thumbUrl, recipeId);
     }
 
-    public static Ingredient toIngredient (Cursor cursor){
+    public static Ingredient toIngredient(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(IngredientsEntry._ID));
         String name = cursor.getString(cursor.getColumnIndex(IngredientsEntry.COLUMN_INGREDIENT));
         String measure = cursor.getString(cursor.getColumnIndex(IngredientsEntry.COLUMN_MEASURE));
@@ -59,7 +61,7 @@ public final class MappingUtil {
         return vc;
     }
 
-    public static ContentValues toContentValues(Ingredient ingredient){
+    public static ContentValues toContentValues(Ingredient ingredient) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(IngredientsEntry._ID, ingredient.getId());
         contentValues.put(IngredientsEntry.COLUMN_INGREDIENT, ingredient.getIngredient());
@@ -69,7 +71,7 @@ public final class MappingUtil {
         return contentValues;
     }
 
-    public static ContentValues toContentValues (Step step){
+    public static ContentValues toContentValues(Step step) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(StepEntry._ID, step.getId());
         contentValues.put(StepEntry.COLUMN_DESCRIPTION, step.getDescription());
@@ -80,8 +82,8 @@ public final class MappingUtil {
 //        Log.d(TAG, "toContentValues: "+step.getThumbnailURL());
 
         String videoURL = step.getVideoURL();
-        if (videoURL != null && !videoURL.isEmpty() && !videoURL.endsWith(".mp4")){
-            Log.d(TAG, "toContentValues: "+ videoURL);
+        if (videoURL != null && !videoURL.isEmpty() && !videoURL.endsWith(".mp4")) {
+            Log.d(TAG, "toContentValues: " + videoURL);
         }
         return contentValues;
     }

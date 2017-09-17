@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface StepDao {
 
-    int insert (Step step);
+    int insert(Step step);
 
 
     List<Step> getAll(int recipeId);

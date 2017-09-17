@@ -15,6 +15,6 @@ public interface RecipeDao {
 
     void bulkInsert(List<Recipe> recipes);
 
-    boolean isEmpty ();
+    boolean isEmpty();
 
 }

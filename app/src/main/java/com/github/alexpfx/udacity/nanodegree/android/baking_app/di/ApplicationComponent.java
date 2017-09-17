@@ -19,11 +19,16 @@ import dagger.Component;
 @Singleton
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
-    Context context ();
-    Executor executor ();
+    Context context();
+
+    Executor executor();
+
     RecipesRepository recipesRepository();
+
     Boolean isTablet();
-    Handler handler ();
+
+    Handler handler();
+
     GlideWrapper glideWrapper();
 
 }

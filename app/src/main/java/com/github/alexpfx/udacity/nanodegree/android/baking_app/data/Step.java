@@ -10,23 +10,55 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Step implements Parcelable {
 
+    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel source) {
+            return new Step(source);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
     @SerializedName("id")
     private int id;
-
     @SerializedName("shortDescription")
     private String shortDescription;
-
     @SerializedName("description")
     private String description;
-
     @SerializedName("videoURL")
     private String videoURL;
-
     @SerializedName("thumbnailURL")
     private String thumbnailURL;
-
     private Integer recipeId;
 
+    public Step() {
+    }
+
+    public Step(int id, String shortDescription, String description, String videoURL, String thumbnailURL, Integer
+            recipeId) {
+        this.id = id;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+        this.recipeId = recipeId;
+    }
+
+    public Step(String shortDescription, String description) {
+        this.shortDescription = shortDescription;
+        this.description = description;
+    }
+
+    protected Step(Parcel in) {
+        this.id = in.readInt();
+        this.shortDescription = in.readString();
+        this.description = in.readString();
+        this.videoURL = in.readString();
+        this.thumbnailURL = in.readString();
+        this.recipeId = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
 
     public int getId() {
         return id;
@@ -68,7 +100,6 @@ public class Step implements Parcelable {
         this.thumbnailURL = thumbnailURL;
     }
 
-
     @Override
     public String toString() {
         return "Step{" +
@@ -89,25 +120,6 @@ public class Step implements Parcelable {
         this.recipeId = recipeId;
     }
 
-
-    public Step() {
-    }
-
-    public Step(int id, String shortDescription, String description, String videoURL, String thumbnailURL, Integer recipeId) {
-        this.id = id;
-        this.shortDescription = shortDescription;
-        this.description = description;
-        this.videoURL = videoURL;
-        this.thumbnailURL = thumbnailURL;
-        this.recipeId = recipeId;
-    }
-
-    public Step(String shortDescription, String description) {
-        this.shortDescription = shortDescription;
-        this.description = description;
-    }
-
-
     @Override
     public int describeContents() {
         return 0;
@@ -122,27 +134,6 @@ public class Step implements Parcelable {
         dest.writeString(this.thumbnailURL);
         dest.writeValue(this.recipeId);
     }
-
-    protected Step(Parcel in) {
-        this.id = in.readInt();
-        this.shortDescription = in.readString();
-        this.description = in.readString();
-        this.videoURL = in.readString();
-        this.thumbnailURL = in.readString();
-        this.recipeId = (Integer) in.readValue(Integer.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
-        @Override
-        public Step createFromParcel(Parcel source) {
-            return new Step(source);
-        }
-
-        @Override
-        public Step[] newArray(int size) {
-            return new Step[size];
-        }
-    };
 
     @Override
     public boolean equals(Object o) {

@@ -12,8 +12,7 @@ public interface IngredientDao {
     void bulkInsert(List<Ingredient> ingredients);
 
 
-    List<Ingredient> getAll (int recipeId);
-
+    List<Ingredient> getAll(int recipeId);
 
 
 }

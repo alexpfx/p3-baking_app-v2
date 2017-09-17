@@ -31,10 +31,10 @@ import butterknife.ButterKnife;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     private static final String TAG = "RecipeAdapter";
+    GlideWrapper glideWrapper;
     private List<Recipe> itemList = new ArrayList<>();
     private Context context;
     private View.OnClickListener listener;
-    GlideWrapper glideWrapper;
 
     @Inject
     public RecipeAdapter(Context context, GlideWrapper glideWrapper) {
@@ -78,16 +78,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
     }
 
 
-
 }
 
 class RecipeViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = "RecipeViewHolder";
+    private final GlideWrapper glideWrapper;
     @BindView(R.id.text_recipe_name)
     TextView txtRecipeName;
     View itemView;
-    private final GlideWrapper glideWrapper;
     @BindView(R.id.image_recipe)
     ImageView imgRecipe;
 

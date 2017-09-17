@@ -67,18 +67,16 @@ public class ActivityModule {
     }
 
 
-
-
     @Provides
     @PerActivity
-    HttpDataSource.Factory httpDataSourceFactory (Activity context){
+    HttpDataSource.Factory httpDataSourceFactory(Activity context) {
         return new DefaultHttpDataSourceFactory(Util.getUserAgent(context, "baking_app"));
     }
 
 
     @Provides
     @PerActivity
-    ExtractorsFactory extractorsFactory (){
+    ExtractorsFactory extractorsFactory() {
         return new DefaultExtractorsFactory();
     }
 

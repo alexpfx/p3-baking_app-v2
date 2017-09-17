@@ -44,11 +44,9 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     @Singleton
     @Inject
     RecipesRepository repository;
-
-    private OnRecipeSelectListener recipeSelectListener;
-
     @Inject
     boolean isTablet;
+    private OnRecipeSelectListener recipeSelectListener;
 
     public RecipeListFragment() {
 

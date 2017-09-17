@@ -13,6 +13,32 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/space_normal"
         >
+        <Button
+            android:id="@+id/btn_next"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_normal"
+            android:text="@string/next"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/btn_previous"
+            style="?borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_normal"
+            android:layout_marginStart="@dimen/space_normal"
+            android:layout_toStartOf="@id/btn_next"
+            android:text="@string/previous"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@color/colorPrimary"
+            />
+
+
 
         <TextView
 
@@ -31,32 +57,7 @@
             />
 
 
-        <Button
-            android:id="@+id/btn_previous"
-            style="?borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_normal"
-            android:layout_marginStart="@dimen/space_normal"
-            android:layout_toStartOf="@id/btn_next"
-            android:text="@string/previous"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            android:textColor="@color/colorPrimary"
-            />
 
-
-        <Button
-            android:id="@+id/btn_next"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/space_normal"
-            android:layout_marginEnd="@dimen/space_normal"
-            android:text="@string/next"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            android:textColor="@color/white"
-            />
 
         <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
             android:id="@+id/exo_player_aspect_ratio"

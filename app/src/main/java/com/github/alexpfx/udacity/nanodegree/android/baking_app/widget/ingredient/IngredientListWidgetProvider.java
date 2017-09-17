@@ -14,13 +14,20 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.R
  * Created by alexandre on 16/09/17.
  */
 
-public class IngredientListWidgetProvider extends AppWidgetProvider{
+public class IngredientListWidgetProvider extends AppWidgetProvider {
+
+    public static void updateRecipeName(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds,
+                                        String name) {
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
+        remoteViews.setTextViewText(R.id.widget_text_recipe_name, name);
+        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
 
-        PendingIntent launchAppPendingIntent = createLaunchAppPendingIntent (context);
+        PendingIntent launchAppPendingIntent = createLaunchAppPendingIntent(context);
         remoteViews.setOnClickPendingIntent(R.id.widget_image_widget_icon, launchAppPendingIntent);
 
 
@@ -28,12 +35,6 @@ public class IngredientListWidgetProvider extends AppWidgetProvider{
 
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-    }
-
-    public static void updateRecipeName (Context context, AppWidgetManager appWidgetManager, int [] appWidgetIds, String name){
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget_provider);
-        remoteViews.setTextViewText(R.id.widget_text_recipe_name, name);
-        appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }
 
     private PendingIntent createLaunchAppPendingIntent(Context context) {

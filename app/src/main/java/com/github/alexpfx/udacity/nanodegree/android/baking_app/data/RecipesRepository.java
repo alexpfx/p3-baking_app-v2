@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface RecipesRepository {
     void recipes(RecipesRepositoryImpl.Callback callback);
-    List<Step> stepsByRecipe (int recipeId);
-    List<Ingredient> ingredientsByRecipe (int recipeId);
+
+    List<Step> stepsByRecipe(int recipeId);
+
+    List<Ingredient> ingredientsByRecipe(int recipeId);
 }

@@ -27,12 +27,13 @@ public class App extends Application implements HasComponent<ApplicationComponen
 
     @Override
     public void initialize() {
-        applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+        applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this))
+                .build();
     }
 
     @Override
     public ApplicationComponent getComponent() {
-        if (applicationComponent == null){
+        if (applicationComponent == null) {
             initialize();
         }
         return applicationComponent;
