@@ -3,10 +3,12 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -26,7 +28,6 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private RecipeComponent recipeComponent;
-    private Step step;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +38,18 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
         ToolbarUtils.setupToolbar(this, toolbar);
 
         if (savedInstanceState == null) {
-            step = getIntent().getExtras().getParcelable(KEY_STEP);
+            Step step = getIntent().getExtras().getParcelable(KEY_STEP);
             StepDetailFragment fragment = StepDetailFragment.newInstance(step);
             getSupportFragmentManager().beginTransaction().add(R.id.container_step, fragment).addToBackStack
                     (null).commit();
         }
 
+
     }
 
     @Override
     public void initialize() {
-        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this,
-                StepDetailActivity.class
-                        .getName()))
+        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
     }
 
@@ -81,14 +81,18 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
     }
 
     private void setSystemVisibilityByOrientation(Configuration newConfig) {
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            hideSystemUI();
-            getSupportActionBar().hide();
-        } else {
-            recreate();
-            getSupportActionBar().show();
-            showSystemUI();
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar == null) {
+            return;
         }
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            hideSystemUI();
+//            supportActionBar.hide();
+//        } else {
+//            recreate();
+//            supportActionBar.show();
+//            showSystemUI();
+//        }
     }
 
     private void hideSystemUI() {
@@ -108,6 +112,13 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
 
     private void showSystemUI() {
         getWindow().getDecorView().setSystemUiVisibility(0);
+    }
+
+
+    @Override
+    public void setTitle(CharSequence title) {
+        TextView txtToolbarTitle = toolbar.findViewById(R.id.text_toolbar_title);
+        txtToolbarTitle.setText(title);
     }
 
 

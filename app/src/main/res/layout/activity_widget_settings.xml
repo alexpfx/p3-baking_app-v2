@@ -8,6 +8,7 @@
     tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.WidgetSettingsActivity">
 
     <include layout="@layout/layout_toolbar"/>
+
     <fragment
         android:id="@+id/fragment_widget_settings"
         android:name="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.WidgetSettingsFragment"

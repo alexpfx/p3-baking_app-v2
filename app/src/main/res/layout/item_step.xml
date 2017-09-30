@@ -11,6 +11,7 @@
     android:layout_marginStart="@dimen/space_normal"
     android:layout_marginTop="@dimen/space_normal"
     app:columnCount="2"
+    android:focusable="true"
     >
 
 
@@ -22,7 +23,7 @@
         android:alpha="0.6"
         android:tint="@color/colorAccent"
         tools:src="@drawable/ic_videocam_black_24dp"
-
+        android:contentDescription="@string/content_description_step_has_video_or_not"
         />
 
     <TextView

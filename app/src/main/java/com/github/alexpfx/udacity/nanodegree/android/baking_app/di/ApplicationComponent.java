@@ -3,7 +3,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 import android.content.Context;
 import android.os.Handler;
 
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 
 import java.util.concurrent.Executor;
@@ -23,7 +23,7 @@ public interface ApplicationComponent {
 
     Executor executor();
 
-    RecipesRepository recipesRepository();
+    BakingRepository recipesRepository();
 
     Boolean isTablet();
 

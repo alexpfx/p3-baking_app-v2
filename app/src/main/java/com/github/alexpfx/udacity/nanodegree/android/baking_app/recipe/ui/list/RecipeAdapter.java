@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
     private static final String TAG = "RecipeAdapter";
-    GlideWrapper glideWrapper;
+    private GlideWrapper glideWrapper;
     private List<Recipe> itemList = new ArrayList<>();
     private Context context;
     private View.OnClickListener listener;
@@ -109,9 +109,9 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         String image = recipe.getImage();
         if (!TextUtils.isEmpty(image)) {
-            loadImage(context, recipe.getImage());
+            loadImage(recipe.getImage());
         } else {
-            loadImage(context, getImageFromResource(context, recipe.getName()));
+            loadImage(getImageFromResource(context, recipe.getName()));
         }
 
     }
@@ -126,7 +126,7 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
         return name.replaceAll("\\s+", "").toLowerCase();
     }
 
-    private void loadImage(Context context, Object model) {
+    private void loadImage(Object model) {
         glideWrapper.loadInto(model, imgRecipe);
 
 

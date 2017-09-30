@@ -8,6 +8,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
@@ -32,16 +33,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         OnStepSelectListener {
 
 
-    private static final String TAG = "RecipeDetailActivity";
-
-
     @Inject
     @PerActivity
     Boolean isMultiPane;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private RecipeComponent recipeComponent;
-    private Step step;
     private int recipeId;
 
     @Override
@@ -52,6 +49,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         initialize();
 
         ToolbarUtils.setupToolbar(this, toolbar);
+
+        setTitle(getString(R.string.app_name));
 
         if (savedInstanceState == null) {
             if (!isMultiPane) {
@@ -69,6 +68,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
     }
 
     @Override
+    public void setTitle(CharSequence title) {
+        TextView txtToolbarTitle = toolbar.findViewById(R.id.text_toolbar_title);
+        txtToolbarTitle.setText(title);
+    }
+
+    @Override
     public RecipeComponent getComponent() {
         if (recipeComponent == null) {
             initialize();
@@ -78,16 +83,13 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
 
     @Override
     public void initialize() {
-        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this,
-                RecipeDetailActivity.class
-                        .getName()))
+        recipeComponent = DaggerRecipeComponent.builder().activityModule(new ActivityModule(this))
                 .applicationComponent(((HasComponent<ApplicationComponent>) getApplication()).getComponent()).build();
         recipeComponent.inject(this);
     }
 
     @Override
     public void onStepSelect(Step step) {
-        this.step = step;
         StepDetailFragment fragment = StepDetailFragment.newInstance(step);
 
         if (isMultiPane) {
@@ -97,17 +99,10 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         } else {
             Intent intent = new Intent(this, StepDetailActivity.class);
             intent.putExtra(StepDetailActivity.KEY_STEP, step);
-            startActivityForResult(intent, 100);
+            startActivity(intent);
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            setIntent(data);
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,7 +114,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements HasCompon
         return super.onOptionsItemSelected(item);
     }
 
-    public int getRecipeId() {
+    private int getRecipeId() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         return pref.getInt(KEY_RECIPE_ID, -1);
     }

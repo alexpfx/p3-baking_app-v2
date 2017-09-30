@@ -5,6 +5,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.ActivityModule;
@@ -21,6 +22,9 @@ public class WidgetSettingsActivity extends AppCompatActivity implements HasComp
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.text_toolbar_title)
+    TextView txtToolbarTitle;
+
     private RecipeComponent recipeComponent;
 
     @Override
@@ -28,8 +32,9 @@ public class WidgetSettingsActivity extends AppCompatActivity implements HasComp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_settings);
         ButterKnife.bind(this);
+        ButterKnife.bind(this, toolbar);
         ToolbarUtils.setupToolbar(this, toolbar, true, true);
-        toolbar.setTitle(getString(R.string.pref_screen_title_widget_setup));
+        txtToolbarTitle.setText(getString(R.string.pref_screen_title_widget_setup));
 
     }
 

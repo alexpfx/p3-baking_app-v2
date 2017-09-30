@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.Log;
+import android.support.v7.preference.PreferenceManager;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.widget.ingredient.UpdateIngredientsIntentService;
@@ -24,13 +24,13 @@ import javax.inject.Singleton;
  * Created by alexandre on 14/09/17.
  */
 
-public class WidgetSettingsFragment extends PreferenceFragmentCompat implements RecipesRepositoryImpl.Callback,
-        Preference.OnPreferenceChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class WidgetSettingsFragment extends PreferenceFragmentCompat implements BakingRepositoryImpl
+        .Callback<List<Recipe>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "WidgetSettingsFragment";
     @Singleton
     @Inject
-    RecipesRepository repository;
+    BakingRepository repository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,9 +61,10 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
     }
 
     @Override
-    public void onRecipesReceived(List<Recipe> recipes) {
+    public void onReceive(List<Recipe> recipes) {
         if (recipes == null) {
             //show there is no recipes and return
+            return;
         }
 
         CharSequence[] entries, entriesValues;
@@ -79,23 +80,16 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
 
         String prefKey = getString(R.string.pref_recipe_id_key);
         ListPreference pref = (ListPreference) findPreference(prefKey);
-        Log.d(TAG, "onRecipesReceived: ");
         pref.setEntries(entries);
         pref.setEntryValues(entriesValues);
 
-        pref.setOnPreferenceChangeListener(this);
-
-        SharedPreferences defaultSharedPreferences = getPreferenceManager().getDefaultSharedPreferences(getContext());
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+//
 
         onSharedPreferenceChanged(defaultSharedPreferences, prefKey);
 
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-        return true;
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -104,18 +98,15 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
             return;
         }
 
-
         String value = sharedPreferences.getString(preference.getKey(), "");
         setPreferenceSummary(preference, value);
 
-        String title = (String) preference.getSummary();
-
-        notifyWidget(title);
+        notifyWidget();
 
     }
 
-    private void notifyWidget(String recipeName) {
-        UpdateIngredientsIntentService.startUpdateIngredientsIntentService(getContext(), recipeName);
+    private void notifyWidget() {
+        UpdateIngredientsIntentService.startUpdateIngredientsIntentService(getContext());
     }
 
 
@@ -132,4 +123,6 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
         }
 
     }
+
+
 }

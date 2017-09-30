@@ -6,6 +6,7 @@
                                                  tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity">
 
     <include layout="@layout/layout_toolbar"/>
+
     <include layout="@layout/layout_step_container"/>
 
 </android.support.design.widget.CoordinatorLayout>

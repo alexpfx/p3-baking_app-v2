@@ -2,7 +2,6 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
@@ -50,7 +49,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     private static final String TAG = "StepDetailFragment";
     @PerActivity
     @Inject
-    RecipesRepository recipesRepository;
+    BakingRepository bakingRepository;
     @PerActivity
     @Inject
     SimpleExoPlayer player;
@@ -119,7 +118,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
         Step step = arguments.getParcelable("step");
 
         if (step != null) {
-            stepList = recipesRepository.stepsByRecipe(step.getRecipeId());
+            stepList = bakingRepository.stepsByRecipe(step.getRecipeId());
             stepIndex = stepList.indexOf(step);
             loadStep(step);
         }
@@ -127,16 +126,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
         return view;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-
-        }
-    }
-
-    public void loadStep(Step step) {
+    private void loadStep(Step step) {
         player.stop();
         getActivity().setTitle(step.getShortDescription());
         txtDescription.setText(step.getDescription());
@@ -191,7 +181,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
 
 
     @OnClick(R.id.btn_next)
-    public void onNextClick(View view) {
+    public void onNextClick() {
         stepIndex++;
         loadStep(stepList.get(stepIndex));
     }
@@ -226,11 +216,10 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
         }
     }
 
-    public void releasePlayer() {
+    private void releasePlayer() {
         if (player == null) {
             return;
         }
-        player.stop();
         player.release();
         player = null;
     }

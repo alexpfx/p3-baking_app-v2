@@ -2,9 +2,13 @@
 <android.support.design.widget.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:theme="@style/AppTheme.AppBarOverlay"
+    app:elevation="@dimen/elevation_normal"
+    android:elevation="@dimen/elevation_normal"
+    android:background="@color/white"
     >
 
     <android.support.v7.widget.Toolbar
@@ -14,6 +18,19 @@
         android:background="?attr/colorPrimary"
         app:layout_scrollFlags="enterAlways|scroll"
 
-        />
+
+        >
+
+        <TextView
+            android:id="@+id/text_toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small"
+            tools:text="title"
+            />
+
+    </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.AppBarLayout>

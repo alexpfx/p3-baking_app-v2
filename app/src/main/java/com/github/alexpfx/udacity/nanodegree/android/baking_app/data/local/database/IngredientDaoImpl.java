@@ -52,7 +52,7 @@ public class IngredientDaoImpl implements IngredientDao {
                 IngredientsEntry.ALL_COLUMNS,
                 IngredientsEntry.COLUMN_RECIPE_ID + " = ?", new String[]{String.valueOf(recipeId)}, null, null, null);
         if (!cursor.moveToFirst()) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         Log.d(TAG, "getAll: " + cursor.getCount());
         List<Ingredient> ingredients = new ArrayList<>();

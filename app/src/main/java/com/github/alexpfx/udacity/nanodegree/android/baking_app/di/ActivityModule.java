@@ -25,12 +25,6 @@ import dagger.Provides;
 public class ActivityModule {
     private static final String TAG = "ActivityModule";
     private final Activity activity;
-    private String mediaSessionTag;
-
-    public ActivityModule(Activity activity, String mediaSessionTag) {
-        this.activity = activity;
-        this.mediaSessionTag = mediaSessionTag;
-    }
 
     public ActivityModule(Activity activity) {
         this.activity = activity;

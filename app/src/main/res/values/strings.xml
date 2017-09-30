@@ -23,7 +23,9 @@
     <string name="pref_recipe_id_key">pref_recipe_id</string>
 
     <string name="pref_screen_title_widget_setup">Widget Config</string>
-
+    <string name="content_description_video_placeholder">Video placeholder</string>
+    <string name="content_description_thumbnail">Thumbnail</string>
+    <string name="content_description_step_has_video_or_not">Has video or not</string>
 
 
 </resources>

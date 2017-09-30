@@ -7,13 +7,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_height_huge"
-
     android:layout_marginBottom="0dp"
-
     app:cardCornerRadius="@dimen/radius_small"
     app:cardElevation="@dimen/elevation_small"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
+    android:focusable="true"
+    android:clickable="true"
 
 
     >
@@ -42,6 +42,7 @@
             android:alpha="0.9"
             android:gravity="start|center_vertical"
             android:paddingStart="@dimen/space_normal"
+            android:paddingEnd="@dimen/space_normal"
 
             android:shadowDx="1"
             android:shadowDy="1"

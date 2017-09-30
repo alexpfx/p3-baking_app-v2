@@ -24,10 +24,6 @@ public class StepDaoImpl implements StepDao {
         this.sqLiteOpenHelper = sqLiteOpenHelper;
     }
 
-    @Override
-    public int insert(Step step) {
-        return 0;
-    }
 
     @Override
     public List<Step> getAll(int recipeId) {

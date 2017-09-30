@@ -2,8 +2,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
                 android:padding="@dimen/widget_margin"
+                android:background="@color/white"
     >
 
 
@@ -29,8 +29,9 @@
         android:layout_toRightOf="@id/widget_image_widget_icon"
         android:gravity="start"
         android:text="@string/app_name"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead.Inverse"
-        android:textStyle="bold|italic"/>
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+
+        />
 
 
     <FrameLayout
@@ -40,24 +41,15 @@
         android:layout_below="@id/widget_image_widget_icon"
         android:layout_marginEnd="@dimen/space_small"
         android:layout_marginStart="@dimen/space_small"
-        android:background="@color/white"
+        android:background="@color/colorAccent"
         />
 
-    <TextView
-        android:id="@+id/widget_text_recipe_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/line_separator"
-        tools:text="Nutella Pie"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead.Inverse"
-        android:layout_margin="8dp"
-        />
 
     <ListView
         android:id="@+id/widget_list_ingredients"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/widget_text_recipe_name"
+        android:layout_below="@id/line_separator"
         android:paddingEnd="@dimen/space_small"
         android:paddingStart="@dimen/space_small"
         android:background="@color/white"

@@ -12,9 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 
@@ -43,7 +42,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
 
     @Singleton
     @Inject
-    RecipesRepository repository;
+    BakingRepository repository;
     @Inject
     boolean isTablet;
     private OnRecipeSelectListener recipeSelectListener;
@@ -84,13 +83,20 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
         recycler.setAdapter(adapter);
         adapter.setListener(this);
 
-        repository.recipes(new RecipesRepositoryImpl.Callback() {
+        repository.recipes(new BakingRepository.Callback<List<Recipe>>() {
             @Override
-            public void onRecipesReceived(final List<Recipe> recipes) {
-
-                adapter.setItemList(recipes);
+            public void onReceive(List<Recipe> data) {
+                adapter.setItemList(data);
             }
         });
+
+//        repository.recipes(new BakingRepositoryImpl.Callback() {
+//            @Override
+//            public void onRecipesReceived(final List<Recipe> recipes) {
+//
+//                adapter.setItemList(recipes);
+//            }
+//        });
     }
 
     @Override
@@ -102,7 +108,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
         recipeSelectListener.onRecipeSelect(recipe);
     }
 
-    public RecyclerView.LayoutManager getLayoutManager() {
+    private RecyclerView.LayoutManager getLayoutManager() {
         return (isTablet) ?
                 new GridLayoutManager(getContext(), 3) :
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

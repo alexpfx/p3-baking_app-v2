@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
@@ -48,12 +49,11 @@ public class RecipeDetailFragment extends Fragment {
 
     @Singleton
     @Inject
-    RecipesRepository repository;
+    BakingRepository repository;
 
     @PerActivity
     @Inject
     StepAdapter stepAdapter;
-
 
     OnStepSelectListener stepSelectListener;
     View.OnClickListener onItemRecipeClick = new View.OnClickListener() {
@@ -99,10 +99,14 @@ public class RecipeDetailFragment extends Fragment {
         initializeRecyclerViews();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String recipeName = preferences.getString(KEY_RECIPE_NAME, "foo");
-        getActivity().setTitle(recipeName);
-
+        String recipeName = preferences.getString(KEY_RECIPE_NAME, "");
+        setTitle(recipeName);
         return view;
+    }
+
+    public void setTitle (CharSequence title){
+        FragmentActivity activity = getActivity();
+        activity.setTitle(title);
     }
 
     private void initializeRecyclerViews() {

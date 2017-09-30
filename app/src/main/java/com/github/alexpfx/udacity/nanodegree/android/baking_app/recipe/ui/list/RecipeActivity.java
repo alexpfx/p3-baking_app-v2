@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
@@ -41,8 +41,14 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         ButterKnife.bind(this);
-        ToolbarUtils.setupToolbarWithLogo(this, toolbar, R.drawable.ic_action_name);
+        ToolbarUtils.setupToolbar(this, toolbar, false, false);
+        setTitle(getString(R.string.app_name));
+    }
 
+    @Override
+    public void setTitle(CharSequence title) {
+        TextView txtToolbarTitle = toolbar.findViewById(R.id.text_toolbar_title);
+        txtToolbarTitle.setText(title);
     }
 
     @Override
@@ -65,8 +71,6 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Log.d(TAG, "onRecipeSelect: " + recipe);
         Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        Toast.makeText(this, "pref: " + preferences.getBoolean("showbass", false), Toast.LENGTH_SHORT).show();
 
         Log.d(TAG, "onRecipeSelect: " + recipe.getId());
         preferences.edit()
@@ -100,5 +104,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Intent intent = new Intent(this, WidgetSettingsActivity.class);
         startActivity(intent);
     }
+
+
 }
 

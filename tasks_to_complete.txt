@@ -1,7 +1,9 @@
 ordem de prioridade
 
+
+1. acesso a dados deve ser por intermédio do repository.
+
 /1
-1. refatorar / mover classes em pacotes.
 2. teste passo a passo versao para tablet e para fone.
 
 /1
@@ -28,3 +30,7 @@ ordem de prioridade
 
 
 
+
+--- erros:
+
+algumas vezes nao esta aparecendo o nome da receita no widget.

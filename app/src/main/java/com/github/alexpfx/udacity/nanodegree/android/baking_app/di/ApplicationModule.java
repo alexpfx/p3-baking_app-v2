@@ -7,8 +7,8 @@ import android.os.Looper;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.App;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepository;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.RecipesRepositoryImpl;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepositoryImpl;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppOpenHelper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDao;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.IngredientDaoImpl;
@@ -53,7 +53,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    RecipesRepository repository(RecipesRepositoryImpl recipesRepository) {
+    BakingRepository repository(BakingRepositoryImpl recipesRepository) {
         return recipesRepository;
     }
 

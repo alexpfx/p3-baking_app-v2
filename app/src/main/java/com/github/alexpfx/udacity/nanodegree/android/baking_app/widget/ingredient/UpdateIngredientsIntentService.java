@@ -17,18 +17,19 @@ public class UpdateIngredientsIntentService extends IntentService {
 
 
     private static final String ACTION_UPDATE_RECIPE_LIST = "ACTION_UPDATE_RECIPE_LIST";
-    private static final String EXTRA_RECIPE_NAME = "EXTRA_RECIPE_NAME";
 
     public UpdateIngredientsIntentService() {
         super("UpdateIngredientsIntentService");
     }
 
-    public static void startUpdateIngredientsIntentService(Context context, String recipeName) {
+    public static void startUpdateIngredientsIntentService(Context context) {
         Intent intent = new Intent(context, UpdateIngredientsIntentService.class);
+
         intent.setAction(ACTION_UPDATE_RECIPE_LIST);
-        intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
+
         context.startService(intent);
     }
+
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
@@ -38,20 +39,17 @@ public class UpdateIngredientsIntentService extends IntentService {
 
         String action = intent.getAction();
         if (ACTION_UPDATE_RECIPE_LIST.equals(action)) {
-            handleActionUpdateIngredientList(intent.getStringExtra(EXTRA_RECIPE_NAME));
+            handleActionUpdateIngredientList();
         }
 
 
     }
 
-    private void handleActionUpdateIngredientList(String recipeName) {
+    private void handleActionUpdateIngredientList() {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,
                 IngredientListWidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_ingredients);
-        IngredientListWidgetProvider.updateRecipeName(this, appWidgetManager, appWidgetIds, recipeName);
-
-
     }
 }

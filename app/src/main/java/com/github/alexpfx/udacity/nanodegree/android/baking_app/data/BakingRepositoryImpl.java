@@ -21,7 +21,7 @@ import retrofit2.Response;
  * Created by alexandre on 18/07/17.
  */
 @Singleton
-public class RecipesRepositoryImpl implements RecipesRepository {
+public class BakingRepositoryImpl implements BakingRepository {
 
     private final RecipeService recipeService;
     private final Executor executor;
@@ -31,8 +31,8 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     private Handler uiThread;
 
     @Inject
-    public RecipesRepositoryImpl(RecipeService recipeService, Executor executor,
-                                 RecipeDao recipeDao, IngredientDao ingredientDao, StepDao stepDao, Handler uiThread
+    public BakingRepositoryImpl(RecipeService recipeService, Executor executor,
+                                RecipeDao recipeDao, IngredientDao ingredientDao, StepDao stepDao, Handler uiThread
     ) {
         this.recipeService = recipeService;
         this.executor = executor;
@@ -43,7 +43,7 @@ public class RecipesRepositoryImpl implements RecipesRepository {
     }
 
     @Override
-    public void recipes(final Callback callback) {
+    public void recipes(final Callback<List<Recipe>> callback) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -51,13 +51,44 @@ public class RecipesRepositoryImpl implements RecipesRepository {
                 uiThread.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onRecipesReceived(recipeDao.getAll());
+                        callback.onReceive(recipeDao.getAll());
                     }
                 });
             }
         });
 
     }
+
+    @Override
+    public void recipe(final int recipeId, final Callback<Recipe> callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                refresh();
+                callback.onReceive(recipeDao.get(recipeId));
+            }
+        });
+    }
+
+    @Override
+    public void ingredients(final int recipeId, final Callback<List<Ingredient>> callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                refresh();
+                uiThread.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onReceive(ingredientDao.getAll(recipeId));
+
+                    }
+                });
+
+            }
+        });
+
+    }
+
 
     @Override
     public List<Step> stepsByRecipe(int recipeId) {
@@ -86,6 +117,9 @@ public class RecipesRepositoryImpl implements RecipesRepository {
         List<Recipe> recipes = response.body();
         recipeDao.bulkInsert(recipes);
 
+        if (recipes == null) {
+            return;
+        }
         for (Recipe recipe : recipes) {
             insertSteps(recipe, recipe.getSteps());
             insertIngredients(recipe, recipe.getIngredients());
@@ -108,10 +142,6 @@ public class RecipesRepositoryImpl implements RecipesRepository {
         }
         stepDao.bulkInsert(steps);
 
-    }
-
-    public interface Callback {
-        void onRecipesReceived(List<Recipe> recipes);
     }
 
 
