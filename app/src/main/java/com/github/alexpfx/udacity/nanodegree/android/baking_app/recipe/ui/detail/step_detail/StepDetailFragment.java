@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
@@ -21,6 +23,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.NetworkUtils;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -72,6 +75,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     Button btnNext;
     @BindView(R.id.btn_previous)
     Button btnPrev;
+
     @Inject
     @PerActivity
     HttpDataSource.Factory httpDataSourceFactory;
@@ -84,6 +88,8 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     private List<Step> stepList;
 
     public StepDetailFragment() {
+
+        setRetainInstance(true);
 
     }
 
@@ -163,13 +169,28 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
 
     private void playVideoIfAvailable(Step step) {
         if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
-            simpleExoPlayerView.setVisibility(View.INVISIBLE);
-            imgVideoPlaceHolder.setVisibility(View.VISIBLE);
+            hidePlayer();
             return;
         }
+        if (!NetworkUtils.isNetworkAvailable(getContext())) {
+            hidePlayer();
+            Toast.makeText(getContext(), TextUtils.concat(getString(R.string.message_network_unavailable), ": ",
+                    getString(R.string.message_video_cannot_played)), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        showPlayer();
+        preparePlayer(step.getVideoURL());
+    }
+
+    private void showPlayer() {
         imgVideoPlaceHolder.setVisibility(View.INVISIBLE);
         simpleExoPlayerView.setVisibility(View.VISIBLE);
-        preparePlayer(step.getVideoURL());
+    }
+
+    private void hidePlayer() {
+        simpleExoPlayerView.setVisibility(View.INVISIBLE);
+        imgVideoPlaceHolder.setVisibility(View.VISIBLE);
     }
 
     private void preparePlayer(String videoUrl) {
