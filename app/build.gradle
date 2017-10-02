@@ -44,6 +44,13 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:3.0.1'){
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: '*'
+
+
+    }
+
     // https://mvnrepository.com/artifact/org.hamcrest/hamcrest-integration
     testCompile group: 'org.hamcrest', name: 'hamcrest-integration', version: '1.3'
 

@@ -21,7 +21,8 @@ import butterknife.ButterKnife;
 
 public class StepDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent> {
     public static final String KEY_STEP = "step";
-    private static final String TAG = "StepDetailActivity";
+    public static final String TAG_STEP_DETAIL = "step_detail";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private RecipeComponent recipeComponent;
@@ -37,7 +38,7 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
         if (savedInstanceState == null) {
             Step step = getIntent().getExtras().getParcelable(KEY_STEP);
             StepDetailFragment fragment = StepDetailFragment.newInstance(step);
-            getSupportFragmentManager().beginTransaction().add(R.id.container_step, fragment, "step_detail")
+            getSupportFragmentManager().beginTransaction().add(R.id.container_step, fragment, TAG_STEP_DETAIL)
                     .commit();
         }
 
@@ -67,7 +68,6 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

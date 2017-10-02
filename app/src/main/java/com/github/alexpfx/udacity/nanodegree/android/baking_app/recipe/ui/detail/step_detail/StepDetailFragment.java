@@ -179,6 +179,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
             return;
         }
 
+        simpleExoPlayerView.setTag(step.getId());
         showPlayer();
         preparePlayer(step.getVideoURL());
     }

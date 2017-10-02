@@ -43,6 +43,8 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     @BindView(R.id.recycler_recipe_list)
     RecyclerView recycler;
 
+
+
     @Singleton
     @Inject
     RecipeAdapter adapter;

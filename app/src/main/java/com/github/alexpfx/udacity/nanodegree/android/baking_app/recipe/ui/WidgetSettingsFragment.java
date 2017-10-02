@@ -39,7 +39,6 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
 
-
     }
 
     @Override
@@ -61,7 +60,6 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
     }
-
 
 
     @Override
@@ -88,13 +86,10 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
         }
 
 
-
-
         pref.setEntries(entries);
         pref.setEntryValues(entriesValues);
 
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//
 
         onSharedPreferenceChanged(defaultSharedPreferences, prefKey);
 
