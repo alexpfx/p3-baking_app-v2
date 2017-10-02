@@ -8,5 +8,4 @@
     android:text="@string/message_content_cannot_loaded"
     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
     android:visibility="visible"
-    android:background="@color/white"
     />

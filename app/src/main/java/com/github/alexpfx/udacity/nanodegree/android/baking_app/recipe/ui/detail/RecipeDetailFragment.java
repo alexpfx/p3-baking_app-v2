@@ -71,8 +71,7 @@ public class RecipeDetailFragment extends Fragment {
     };
 
     public static RecipeDetailFragment newInstance() {
-        RecipeDetailFragment fragment = new RecipeDetailFragment();
-        return fragment;
+        return new RecipeDetailFragment();
     }
 
     @Override
@@ -172,8 +171,7 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     public Recipe getRecipe() {
-        Recipe recipe = getArguments().getParcelable(RecipeActivity.KEY_RECIPE);
-        return recipe;
+        return getArguments().getParcelable(RecipeActivity.KEY_RECIPE);
     }
 
 

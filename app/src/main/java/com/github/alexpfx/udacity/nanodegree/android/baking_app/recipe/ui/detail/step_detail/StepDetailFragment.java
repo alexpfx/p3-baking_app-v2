@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail;
 
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -99,11 +98,6 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
         bundle.putParcelable("step", step);
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
     }
 
     @Override

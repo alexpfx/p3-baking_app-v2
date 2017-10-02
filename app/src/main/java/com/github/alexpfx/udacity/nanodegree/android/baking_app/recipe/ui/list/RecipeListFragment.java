@@ -59,7 +59,6 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     TextView textRecipesCannotLoaded;
 
     private OnRecipeSelectListener recipeSelectListener;
-    private RecyclerView.LayoutManager layoutManager;
     private BroadcastReceiver networkStatusChanged = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -108,7 +107,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     }
 
     private void setupRecycler() {
-        layoutManager = getLayoutManager();
+        RecyclerView.LayoutManager layoutManager = getLayoutManager();
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
         adapter.setListener(this);

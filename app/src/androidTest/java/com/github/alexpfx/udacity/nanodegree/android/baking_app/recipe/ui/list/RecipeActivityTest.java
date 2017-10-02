@@ -105,7 +105,7 @@ public class RecipeActivityTest {
 
         SystemClock.sleep(1000);
 
-        onView(allOf(withId(R.id.video_player_view), withTagValue(is((Object) Integer.valueOf(5))))).check(matches
+        onView(allOf(withId(R.id.video_player_view), withTagValue(is((Object) 5)))).check(matches
                 (isDisplayed()));
 
 
