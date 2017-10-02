@@ -1,6 +1,7 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,11 +31,15 @@ import butterknife.ButterKnife;
 @PerActivity
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
 
+
+
     private static final String TAG = "RecipeAdapter";
     private GlideWrapper glideWrapper;
     private List<Recipe> itemList = new ArrayList<>();
     private Context context;
     private View.OnClickListener listener;
+    private String key_adapter_index = "key_adapter_index";
+
 
     @Inject
     public RecipeAdapter(Context context, GlideWrapper glideWrapper) {
@@ -56,12 +61,31 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
         return new RecipeViewHolder(view, glideWrapper);
     }
 
+    int lastIndex = 0;
+
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: " + position);
+        lastIndex = holder.getAdapterPosition();
         Recipe recipe = itemList.get(position);
         holder.bind(context, recipe);
     }
+
+    public void onPause (Bundle bundle){
+        if (bundle != null){
+            bundle.putInt(key_adapter_index, lastIndex);
+        }
+    }
+
+    public void onResume (Bundle bundle){
+        if (bundle != null && bundle.containsKey(key_adapter_index)){
+            lastIndex = bundle.getInt(key_adapter_index, 0);
+            Log.d(TAG, "onResume: "+lastIndex);
+
+
+        }
+    }
+
+
 
     @Override
     public int getItemCount() {
@@ -96,10 +120,10 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
         this.itemView = itemView;
         this.glideWrapper = glideWrapper;
 
-
         ButterKnife.bind(this, itemView);
-
     }
+
+
 
     public void bind(final Context context, final Recipe recipe) {
 

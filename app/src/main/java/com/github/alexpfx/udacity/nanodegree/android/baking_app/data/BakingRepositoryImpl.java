@@ -100,8 +100,13 @@ public class BakingRepositoryImpl implements BakingRepository {
         return ingredientDao.getAll(recipeId);
     }
 
+    @Override
+    public boolean hasData (){
+        return !recipeDao.isEmpty();
+    }
+
     private void refresh() {
-        if (recipeDao.isEmpty()) {
+        if (!hasData()) {
             try {
                 Call<List<Recipe>> allRecipes = recipeService.getAllRecipes();
                 Response<List<Recipe>> response = allRecipes.execute();

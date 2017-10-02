@@ -6,6 +6,7 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
@@ -35,8 +36,9 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+
+
 
     }
 
@@ -60,13 +62,20 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
         component.inject(this);
     }
 
+
+
     @Override
     public void onReceive(List<Recipe> recipes) {
-        if (recipes == null) {
-            //show there is no recipes and return
+        String prefKey = getString(R.string.pref_recipe_id_key);
+        ListPreference pref = (ListPreference) findPreference(prefKey);
+
+        if (recipes == null || recipes.isEmpty()) {
+            Toast.makeText(getContext(), getString(R.string.message_content_cannot_loaded), Toast.LENGTH_LONG).show();
+            pref.setEnabled(false);
             return;
         }
 
+        pref.setEnabled(true);
         CharSequence[] entries, entriesValues;
         int size = recipes.size();
         entries = new CharSequence[size];
@@ -78,8 +87,9 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
             entriesValues[i] = String.valueOf(recipe.getId());
         }
 
-        String prefKey = getString(R.string.pref_recipe_id_key);
-        ListPreference pref = (ListPreference) findPreference(prefKey);
+
+
+
         pref.setEntries(entries);
         pref.setEntryValues(entriesValues);
 

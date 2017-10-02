@@ -1,36 +1,8 @@
-ordem de prioridade
 
-
-1. acesso a dados deve ser por intermédio do repository.
-
-/1
-2. teste passo a passo versao para tablet e para fone.
-
-/1
-3. teste passo a passo widget.
-4. teste passo a passo aplicacao sem dados e offline.
-
-5. suportar app offline
-
-
-/3
-6. testes funcionais.
-
-/3
-7. suportar rotação
-
-
-- ao rotacionar deve continuar o video de onde parou
-- quando no tablet, selecionar step deve pintar background
-- testes com expresso
-
-
-
-
-
-
-
-
---- erros:
-
-algumas vezes nao esta aparecendo o nome da receita no widget.
+App correctly preserves and restores user or app state, that is , student uses a bundle to save app state and restores it via onSaveInstanceState/onRestoreInstanceState. For example,
+When a list item is selected, it remains selected on rotation.
+When an activity is displayed, the same activity appears on rotation.
+User text input is preserved on rotation.
+Maintains list items positions on device rotation.
+When the app is resumed after the device wakes from sleep (locked) state, the app returns the user to the exact state in which it was last used.
+When the app is relaunched from Home or All Apps, the app restores the app state as closely as possible to the previous state.
