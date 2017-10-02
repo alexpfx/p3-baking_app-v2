@@ -28,6 +28,7 @@
     <dimen name="elevation_large">6dp</dimen>
     <dimen name="elevation_huge">8dp</dimen>
 
+    <dimen name="text_size_error">16sp</dimen>
 
     <dimen name="radius_small">1dp</dimen>
     <dimen name="radius_normal">2dp</dimen>

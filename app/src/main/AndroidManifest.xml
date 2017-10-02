@@ -3,9 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.github.alexpfx.udacity.nanodegree.android.baking_app">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -21,6 +20,7 @@
             android:name=".recipe.ui.detail.RecipeDetailActivity"
             android:label="@string/title_activity_step"
             android:parentActivityName=".recipe.ui.list.RecipeActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".recipe.ui.list.RecipeActivity"

@@ -64,10 +64,14 @@ public class StepAdapter extends HeadingableRecycleAdapter {
 
     public void setItemList(List<Step> itemList) {
         this.itemList = itemList;
+        notifyDataSetChanged();
     }
 
 
+
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
 
         private static final String TAG = "ViewHolder";
         @BindView(R.id.text_step_short_description)

@@ -1,26 +1,29 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -29,9 +32,6 @@ import javax.inject.Singleton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity.KEY_RECIPE_ID;
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeActivity.KEY_RECIPE_NAME;
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -55,6 +55,12 @@ public class RecipeDetailFragment extends Fragment {
     @Inject
     StepAdapter stepAdapter;
 
+    @BindView(R.id.layout_content_cannot_loaded)
+    View viewErrorMsg;
+
+    @BindView(R.id.recipe_detail_content)
+    View viewContent;
+
     OnStepSelectListener stepSelectListener;
     View.OnClickListener onItemRecipeClick = new View.OnClickListener() {
         @Override
@@ -63,19 +69,23 @@ public class RecipeDetailFragment extends Fragment {
             stepSelectListener.onStepSelect(step);
         }
     };
-    private int recipeId;
 
-    public static RecipeDetailFragment newInstance(Bundle arguments) {
-        RecipeDetailFragment fragment = new RecipeDetailFragment();
-        fragment.setArguments(arguments);
-        return fragment;
+    public static RecipeDetailFragment newInstance() {
+        return new RecipeDetailFragment();
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        int recipeId = getRecipeId();
-        Log.d(TAG, "onCreate: recipeId" + recipeId);
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Nullable
@@ -86,25 +96,41 @@ public class RecipeDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         initializeInjections();
+        initializeRecyclerViews();
+        return view;
+    }
 
-        int recipeId = getRecipeId();
 
-        List<Step> steps = repository.stepsByRecipe(recipeId);
-        List<Ingredient> ingredients = repository.ingredientsByRecipe(recipeId);
+    public void loadRecipe (Recipe recipe){
+        List<Step> steps = repository.stepsByRecipe(recipe.getId());
+        List<Ingredient> ingredients = repository.ingredientsByRecipe(recipe.getId());
+
+        if (steps.isEmpty() || ingredients.isEmpty()){
+            hideContent();
+            return;
+        }
+
+        showContent ();
 
         ingredientsAdapter.setItemList(ingredients);
         stepAdapter.setItemList(steps);
         stepAdapter.setOnClickListener(onItemRecipeClick);
+        setTitle(recipe.getName());
 
-        initializeRecyclerViews();
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String recipeName = preferences.getString(KEY_RECIPE_NAME, "");
-        setTitle(recipeName);
-        return view;
     }
 
-    public void setTitle (CharSequence title){
+    private void showContent() {
+        viewContent.setVisibility(View.VISIBLE);
+        viewErrorMsg.setVisibility(View.GONE);
+    }
+
+    private void hideContent() {
+        viewErrorMsg.setVisibility(View.VISIBLE);
+        viewContent.setVisibility(View.GONE);
+    }
+
+
+    public void setTitle(CharSequence title) {
         FragmentActivity activity = getActivity();
         activity.setTitle(title);
     }
@@ -139,10 +165,13 @@ public class RecipeDetailFragment extends Fragment {
         }
     }
 
-    public int getRecipeId() {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        return pref.getInt(KEY_RECIPE_ID, -1);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onRecipeReceived(Recipe recipe) {
+        loadRecipe(recipe);
+    }
 
+    public Recipe getRecipe() {
+        return getArguments().getParcelable(RecipeActivity.KEY_RECIPE);
     }
 
 

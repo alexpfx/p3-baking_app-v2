@@ -14,6 +14,12 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+    <string name="message_network_unavailable">Network is unavailable</string>
+    <string name="message_video_cannot_played">Video cannot be played</string>
+    <string name="message_content_cannot_loaded">Content cannot be loaded, check internet connection</string>
+    <string name="message_recipe_detail_cannot_loaded">Recipe detail cannot be loaded, check internet connection</string>
+    <string name="message_step_detail_cannot_loaded">Step detail cannot be loaded, check internet connection</string>
+
     <string name="title_activity_widget_settings">Widget Setup</string>
 
 
@@ -26,6 +32,8 @@
     <string name="content_description_video_placeholder">Video placeholder</string>
     <string name="content_description_thumbnail">Thumbnail</string>
     <string name="content_description_step_has_video_or_not">Has video or not</string>
+
+    <string name="test_cheesecake">Cheesecake</string>
 
 
 </resources>

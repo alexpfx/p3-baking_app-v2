@@ -1,13 +1,10 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
@@ -24,7 +21,8 @@ import butterknife.ButterKnife;
 
 public class StepDetailActivity extends AppCompatActivity implements HasComponent<RecipeComponent> {
     public static final String KEY_STEP = "step";
-    private static final String TAG = "StepDetailActivity";
+    public static final String TAG_STEP_DETAIL = "step_detail";
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private RecipeComponent recipeComponent;
@@ -40,8 +38,8 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
         if (savedInstanceState == null) {
             Step step = getIntent().getExtras().getParcelable(KEY_STEP);
             StepDetailFragment fragment = StepDetailFragment.newInstance(step);
-            getSupportFragmentManager().beginTransaction().add(R.id.container_step, fragment).addToBackStack
-                    (null).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.container_step, fragment, TAG_STEP_DETAIL)
+                    .commit();
         }
 
 
@@ -69,49 +67,6 @@ public class StepDetailActivity extends AppCompatActivity implements HasComponen
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setSystemVisibilityByOrientation(newConfig);
-
-
-    }
-
-    private void setSystemVisibilityByOrientation(Configuration newConfig) {
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar == null) {
-            return;
-        }
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            hideSystemUI();
-//            supportActionBar.hide();
-//        } else {
-//            recreate();
-//            supportActionBar.show();
-//            showSystemUI();
-//        }
-    }
-
-    private void hideSystemUI() {
-        // Set the IMMERSIVE flag.
-        // Set the content to appear under the system bars so that the content
-        // doesn't resize when the system bars hide and show.
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        );
-
-    }
-
-    private void showSystemUI() {
-        getWindow().getDecorView().setSystemUiVisibility(0);
     }
 
 

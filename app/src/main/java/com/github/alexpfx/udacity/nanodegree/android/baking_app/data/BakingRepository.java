@@ -17,6 +17,8 @@ public interface BakingRepository {
 
     List<Ingredient> ingredientsByRecipe(int recipeId);
 
+    boolean hasData();
+
     interface Callback<T> {
         void onReceive(T data);
     }

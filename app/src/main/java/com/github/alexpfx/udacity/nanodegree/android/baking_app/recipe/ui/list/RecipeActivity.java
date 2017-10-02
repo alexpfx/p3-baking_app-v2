@@ -1,12 +1,9 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +20,8 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.Toolba
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.WidgetSettingsActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +30,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
 
     public static final String KEY_RECIPE_ID = "KEY_RECIPE_ID";
     public static final String KEY_RECIPE_NAME = "KEY_RECIPE_NAME";
+    public static final String KEY_RECIPE = "KEY_RECIPE_NAME";
     private static final String TAG = "RecipeActivity";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -40,10 +40,14 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
         ButterKnife.bind(this);
         ToolbarUtils.setupToolbar(this, toolbar, false, false);
+
         setTitle(getString(R.string.app_name));
+
     }
+
 
     @Override
     public void setTitle(CharSequence title) {
@@ -68,16 +72,9 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
 
     @Override
     public void onRecipeSelect(Recipe recipe) {
-        Log.d(TAG, "onRecipeSelect: " + recipe);
-        Intent intent = new Intent(getBaseContext(), RecipeDetailActivity.class);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        EventBus.getDefault().postSticky(recipe);
 
-        Log.d(TAG, "onRecipeSelect: " + recipe.getId());
-        preferences.edit()
-                .putInt(KEY_RECIPE_ID, recipe.getId())
-                .putString(KEY_RECIPE_NAME, recipe.getName())
-                .apply();
-
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
         startActivity(intent);
     }
 
@@ -104,6 +101,7 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
         Intent intent = new Intent(this, WidgetSettingsActivity.class);
         startActivity(intent);
     }
+
 
 
 }

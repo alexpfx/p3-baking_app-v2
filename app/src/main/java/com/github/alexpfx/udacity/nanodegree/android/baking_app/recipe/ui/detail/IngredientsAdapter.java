@@ -36,6 +36,7 @@ public class IngredientsAdapter extends HeadingableRecycleAdapter {
 
     public void setItemList(List<Ingredient> itemList) {
         spanableListHolder = new IngredientSpanableListHolder(itemList, context());
+        notifyDataSetChanged();
     }
 
     @Override
@@ -51,7 +52,7 @@ public class IngredientsAdapter extends HeadingableRecycleAdapter {
 
     @Override
     public int itemCount() {
-        return spanableListHolder.size();
+        return spanableListHolder == null? 0: spanableListHolder.size();
     }
 
 
