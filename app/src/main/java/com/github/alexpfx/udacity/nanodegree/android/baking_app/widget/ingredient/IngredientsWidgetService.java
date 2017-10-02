@@ -71,7 +71,7 @@ public class IngredientsWidgetService extends RemoteViewsService {
             final CountDownLatch latch = new CountDownLatch(2);
 
             SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            String value = defaultSharedPreferences.getString(context.getString(R.string.pref_recipe_id_key), "-1");
+            String value = defaultSharedPreferences.getString(context.getString(R.string.pref_recipe_id_key), "1");
 
             recipeId = Integer.parseInt(value);
             repository.recipe(recipeId, new BakingRepository.Callback<Recipe>() {
