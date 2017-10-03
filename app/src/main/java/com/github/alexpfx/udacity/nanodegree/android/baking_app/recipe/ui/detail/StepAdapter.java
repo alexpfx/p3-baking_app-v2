@@ -2,6 +2,7 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class StepAdapter extends HeadingableRecycleAdapter {
 
 
         private void loadHasVideo(Step step) {
-            if (step.getVideoURL() != null && !step.getVideoURL().isEmpty()) {
+            if (!TextUtils.isEmpty(step.getVideoURL())){
                 imgHasVideo.setImageResource(R.drawable.ic_videocam_black_24dp);
             } else {
                 imgHasVideo.setImageResource(R.drawable.ic_videocam_off_black_24dp);

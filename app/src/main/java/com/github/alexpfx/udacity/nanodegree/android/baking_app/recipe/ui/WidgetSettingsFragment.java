@@ -69,6 +69,7 @@ public class WidgetSettingsFragment extends PreferenceFragmentCompat implements 
 
         if (recipes == null || recipes.isEmpty()) {
             Toast.makeText(getContext(), getString(R.string.message_content_cannot_loaded), Toast.LENGTH_LONG).show();
+
             pref.setEnabled(false);
             return;
         }

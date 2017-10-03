@@ -1,7 +1,6 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -69,22 +68,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
         Recipe recipe = itemList.get(position);
         holder.bind(context, recipe);
     }
-
-    public void onPause (Bundle bundle){
-        if (bundle != null){
-            bundle.putInt(key_adapter_index, lastIndex);
-        }
-    }
-
-    public void onResume (Bundle bundle){
-        if (bundle != null && bundle.containsKey(key_adapter_index)){
-            lastIndex = bundle.getInt(key_adapter_index, 0);
-            Log.d(TAG, "onResume: "+lastIndex);
-
-
-        }
-    }
-
 
 
     @Override

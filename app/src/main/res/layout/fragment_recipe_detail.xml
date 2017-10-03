@@ -6,6 +6,7 @@
                                             android:paddingEnd="@dimen/space_small"
                                             android:paddingStart="@dimen/space_small"
                                             tools:context="com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.RecipeDetailFragment"
+                                            android:id="@+id/nestedScrollView"
     >
 
     <FrameLayout

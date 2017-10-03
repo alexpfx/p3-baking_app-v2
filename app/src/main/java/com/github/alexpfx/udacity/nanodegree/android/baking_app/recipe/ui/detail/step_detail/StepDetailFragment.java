@@ -4,6 +4,8 @@ package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detai
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
@@ -42,28 +43,31 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StepDetailFragment extends Fragment implements ExtractorMediaSource.EventListener {
 
-
+    public static final String KEY_STEP_INDEX = "KEY_STEP_INDEX";
     private static final String TAG = "StepDetailFragment";
     @PerActivity
     @Inject
     BakingRepository bakingRepository;
+
     @PerActivity
     @Inject
     SimpleExoPlayer player;
+
     @Singleton
     @Inject
     GlideWrapper glideWrapper;
+
     @BindView(R.id.video_player_view)
     SimpleExoPlayerView simpleExoPlayerView;
+
     @BindView(R.id.text_step_description)
     TextView txtDescription;
+
     @BindView(R.id.text_step_number)
     TextView txtStepNumber;
+
     @BindView(R.id.image_thumbnail)
     ImageView imgThumbnail;
 
@@ -72,6 +76,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
 
     @BindView(R.id.btn_next)
     Button btnNext;
+
     @BindView(R.id.btn_previous)
     Button btnPrev;
 
@@ -101,9 +106,23 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            stepIndex = savedInstanceState.getInt(KEY_STEP_INDEX);
+            loadStep(stepList.get(stepIndex));
+        }
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_STEP_INDEX, stepIndex);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
@@ -136,7 +155,6 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
         updateButtonVisibility(btnPrev, stepIndex > 0);
         playVideoIfAvailable(step);
         showImageIfAvailable(step);
-
     }
 
     private void showStepNumber() {
@@ -152,7 +170,7 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void showImageIfAvailable(Step step) {
-        if (step.getThumbnailURL() == null || step.getThumbnailURL().isEmpty()) {
+        if (TextUtils.isEmpty(step.getThumbnailURL())) {
             imgThumbnail.setVisibility(View.GONE);
             return;
         }
@@ -162,14 +180,15 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void playVideoIfAvailable(Step step) {
-        if (step.getVideoURL() == null || step.getVideoURL().isEmpty()) {
+        if (TextUtils.isEmpty(step.getVideoURL())) {
             hidePlayer();
             return;
         }
         if (!NetworkUtils.isNetworkAvailable(getContext())) {
             hidePlayer();
-            Toast.makeText(getContext(), TextUtils.concat(getString(R.string.message_network_unavailable), ": ",
-                    getString(R.string.message_video_cannot_played)), Toast.LENGTH_LONG).show();
+            View mainView = getActivity().findViewById(android.R.id.content);
+            Snackbar.make(mainView, TextUtils.concat(getString(R.string.message_network_unavailable), ": ",
+                    getString(R.string.message_video_cannot_played)), Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -213,7 +232,6 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
-
     }
 
     @Override
