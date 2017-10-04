@@ -14,18 +14,17 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
  */
 public class App extends Application implements HasComponent<ApplicationComponent> {
 
-    private ApplicationComponent applicationComponent;
     private final boolean clearPrefs = false;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (clearPrefs){ // used to test widget default when no default recipe was selected in Widget Config.
+        if (clearPrefs) { // used to test widget default when no default recipe was selected in Widget Config.
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().clear().apply();
         }
 
     }
-
 
 
     @Override

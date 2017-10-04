@@ -33,19 +33,13 @@ import javax.inject.Singleton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * 1. Implementar onClick que abrirá RecipeDetailFragment.
- * 2.
- */
 public class RecipeListFragment extends Fragment implements View.OnClickListener, BakingRepository
         .Callback<List<Recipe>> {
 
-    public static final String RECYCLER_STATE = "recycler_state";
     private static final String TAG = "RecipeListFragment";
+
     @BindView(R.id.recycler_recipe_list)
     RecyclerView recycler;
-
-
 
     @PerActivity
     @Inject
@@ -54,6 +48,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     @Singleton
     @Inject
     BakingRepository repository;
+
     @Inject
     boolean isTablet;
 
@@ -81,8 +76,6 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     public RecipeListFragment() {
         setRetainInstance(true);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

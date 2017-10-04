@@ -52,7 +52,7 @@ public class IngredientsAdapter extends HeadingableRecycleAdapter {
 
     @Override
     public int itemCount() {
-        return spanableListHolder == null? 0: spanableListHolder.size();
+        return spanableListHolder == null ? 0 : spanableListHolder.size();
     }
 
 

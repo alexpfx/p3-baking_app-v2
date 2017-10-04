@@ -226,9 +226,9 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void preparePlayer(String videoUrl) {
-        Log.d(TAG, "preparePlayer: "+exoplayerManager);
-        Log.d(TAG, "preparePlayer: currentPositon: "+currentPosition);
-        if (exoplayerManager == null){
+        Log.d(TAG, "preparePlayer: " + exoplayerManager);
+        Log.d(TAG, "preparePlayer: currentPositon: " + currentPosition);
+        if (exoplayerManager == null) {
             exoplayerManager = new ExoplayerManager(getContext(), simpleExoPlayerView);
             exoplayerManager.initializePlayer(currentWindowIndex, currentPosition, playWhenReady);
         }
@@ -245,9 +245,9 @@ public class StepDetailFragment extends Fragment {
 
     private void resetPlayerStatus() {
         Log.d(TAG, "resetPlayerStatus: ");
-        if (exoplayerManager != null){
+        if (exoplayerManager != null) {
 
-            exoplayerManager.stop ();
+            exoplayerManager.stop();
 
         }
         currentWindowIndex = 0;
@@ -303,7 +303,7 @@ public class StepDetailFragment extends Fragment {
 
     private void releasePlayer() {
         Log.d(TAG, "releasePlayer: ");
-        if (exoplayerManager!= null){
+        if (exoplayerManager != null) {
             exoplayerManager.releasePlayer();
         }
         exoplayerManager = null;

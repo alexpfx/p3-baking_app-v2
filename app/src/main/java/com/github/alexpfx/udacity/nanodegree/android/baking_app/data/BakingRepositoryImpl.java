@@ -101,7 +101,7 @@ public class BakingRepositoryImpl implements BakingRepository {
     }
 
     @Override
-    public boolean hasData (){
+    public boolean hasData() {
         return !recipeDao.isEmpty();
     }
 

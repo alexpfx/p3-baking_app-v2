@@ -59,9 +59,10 @@ public class IngredientsWidgetService extends RemoteViewsService {
 
         @Override
         public void onCreate() {
-            ApplicationComponent componente = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule
+            ApplicationComponent componente = DaggerApplicationComponent.builder().applicationModule(new
+                    ApplicationModule
                     ((App) getApplication())).build();
-            if (repository == null){
+            if (repository == null) {
                 repository = componente.recipesRepository();
             }
         }

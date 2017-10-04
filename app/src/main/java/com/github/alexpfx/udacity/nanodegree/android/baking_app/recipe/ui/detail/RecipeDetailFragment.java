@@ -101,16 +101,16 @@ public class RecipeDetailFragment extends Fragment {
     }
 
 
-    public void loadRecipe (Recipe recipe){
+    public void loadRecipe(Recipe recipe) {
         List<Step> steps = repository.stepsByRecipe(recipe.getId());
         List<Ingredient> ingredients = repository.ingredientsByRecipe(recipe.getId());
 
-        if (steps.isEmpty() || ingredients.isEmpty()){
+        if (steps.isEmpty() || ingredients.isEmpty()) {
             hideContent();
             return;
         }
 
-        showContent ();
+        showContent();
 
         ingredientsAdapter.setItemList(ingredients);
         stepAdapter.setItemList(steps);

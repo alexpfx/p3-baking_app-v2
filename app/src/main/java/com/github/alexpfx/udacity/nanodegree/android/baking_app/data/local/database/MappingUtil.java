@@ -7,8 +7,10 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Ingredient;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Step;
 
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.IngredientsEntry;
-import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.RecipeEntry;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract
+        .IngredientsEntry;
+import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract
+        .RecipeEntry;
 import static com.github.alexpfx.udacity.nanodegree.android.baking_app.data.local.database.BakingAppContract.StepEntry;
 
 /**

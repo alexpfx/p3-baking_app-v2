@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface BakingRepository {
 
-    void recipes(BakingRepositoryImpl.Callback <List<Recipe>> callback);
+    void recipes(BakingRepositoryImpl.Callback<List<Recipe>> callback);
 
     void recipe(int recipeId, Callback<Recipe> callback);
 

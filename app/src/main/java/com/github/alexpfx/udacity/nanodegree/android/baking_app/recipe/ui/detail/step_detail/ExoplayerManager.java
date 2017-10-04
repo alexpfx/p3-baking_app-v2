@@ -59,7 +59,7 @@ public class ExoplayerManager {
 
     }
 
-    public void playMedia (String mediaUrl){
+    public void playMedia(String mediaUrl) {
         MediaSource mediaSource = buildMediaSource(Uri.parse(mediaUrl));
         player.prepare(mediaSource, true, false);
     }
@@ -73,10 +73,9 @@ public class ExoplayerManager {
         return player == null ? 0 : player.getCurrentWindowIndex();
     }
 
-    public boolean getPlayWhenReady (){
-        return player == null ? true: player.getPlayWhenReady();
+    public boolean getPlayWhenReady() {
+        return player == null ? true : player.getPlayWhenReady();
     }
-
 
 
     public void releasePlayer() {
@@ -104,7 +103,7 @@ public class ExoplayerManager {
     }
 
     public void stop() {
-        if (player != null){
+        if (player != null) {
             player.stop();
         }
     }

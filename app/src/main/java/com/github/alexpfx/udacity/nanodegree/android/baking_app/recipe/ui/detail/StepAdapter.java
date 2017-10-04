@@ -69,8 +69,6 @@ public class StepAdapter extends HeadingableRecycleAdapter {
     }
 
 
-
-
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
@@ -103,7 +101,7 @@ public class StepAdapter extends HeadingableRecycleAdapter {
 
 
         private void loadHasVideo(Step step) {
-            if (!TextUtils.isEmpty(step.getVideoURL())){
+            if (!TextUtils.isEmpty(step.getVideoURL())) {
                 imgHasVideo.setImageResource(R.drawable.ic_videocam_black_24dp);
             } else {
                 imgHasVideo.setImageResource(R.drawable.ic_videocam_off_black_24dp);

@@ -25,6 +25,6 @@ public interface ApplicationComponent {
 
     GlideWrapper glideWrapper();
 
-    RecipeAdapter recipeAdapter ();
+    RecipeAdapter recipeAdapter();
 
 }

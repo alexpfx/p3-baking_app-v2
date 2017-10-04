@@ -57,11 +57,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
         return new RecipeViewHolder(view, glideWrapper);
     }
 
-    int lastIndex = 0;
-
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-        lastIndex = holder.getAdapterPosition();
         Recipe recipe = itemList.get(position);
         holder.bind(context, recipe);
     }
@@ -102,7 +99,6 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         ButterKnife.bind(this, itemView);
     }
-
 
 
     public void bind(final Context context, final Recipe recipe) {

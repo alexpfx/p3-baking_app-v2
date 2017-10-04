@@ -103,6 +103,5 @@ public class RecipeActivity extends AppCompatActivity implements HasComponent<Re
     }
 
 
-
 }
 
