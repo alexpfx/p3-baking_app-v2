@@ -28,7 +28,7 @@ ext {
     daggerVersion = '2.11'
     schematicVersion = '0.7.0'
     butterKnifeVersion = '8.7.0'
-    exoPlayerVersion = 'r2.5.1'
+    exoPlayerVersion = 'r2.5.3'
     supportVersion = '26.1.0'
     glideVersion = '4.0.0'
 }

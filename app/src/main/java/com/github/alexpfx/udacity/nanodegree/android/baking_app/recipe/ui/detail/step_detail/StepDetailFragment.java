@@ -1,9 +1,7 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.detail.step_detail;
 
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -24,15 +22,11 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.NetworkUtils;
-import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,17 +37,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class StepDetailFragment extends Fragment implements ExtractorMediaSource.EventListener {
+public class StepDetailFragment extends Fragment {
 
     public static final String KEY_STEP_INDEX = "KEY_STEP_INDEX";
+    public static final String KEY_CURRENT_POSITION = "KEY_CURRENT_POSITION";
+    public static final String KEY_CURRENT_WINDOW_INDEX = "KEY_CURRENT_WINDOW_INDEX";
+
+    public static final String KEY_PLAY_WHEN_READY = "KEY_PLAY_WHEN_READY";
     private static final String TAG = "StepDetailFragment";
     @PerActivity
     @Inject
     BakingRepository bakingRepository;
-
-    @PerActivity
-    @Inject
-    SimpleExoPlayer player;
 
     @Singleton
     @Inject
@@ -80,6 +74,8 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     @BindView(R.id.btn_previous)
     Button btnPrev;
 
+    ExoplayerManager exoplayerManager;
+
     @Inject
     @PerActivity
     HttpDataSource.Factory httpDataSourceFactory;
@@ -89,11 +85,15 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     ExtractorsFactory extractorsFactory;
 
     private int stepIndex;
+
     private List<Step> stepList;
+    private long currentPosition;
+    private int currentWindowIndex;
+    private boolean playWhenReady = true;
 
     public StepDetailFragment() {
 
-        setRetainInstance(true);
+//        setRetainInstance(true);
 
     }
 
@@ -107,22 +107,51 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onActivityCreated: ");
         if (savedInstanceState != null) {
             stepIndex = savedInstanceState.getInt(KEY_STEP_INDEX);
-            loadStep(stepList.get(stepIndex));
+            currentPosition = savedInstanceState.getLong(KEY_CURRENT_POSITION);
+            currentWindowIndex = savedInstanceState.getInt(KEY_CURRENT_WINDOW_INDEX);
+            playWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY);
+
         }
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewStateRestored: ");
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState: ");
         outState.putInt(KEY_STEP_INDEX, stepIndex);
+        currentPosition = exoplayerManager.getCurrentPosition();
+        outState.putLong(KEY_CURRENT_POSITION, currentPosition);
+
+        currentWindowIndex = exoplayerManager.getCurrentWindowIndex();
+        outState.putInt(KEY_CURRENT_WINDOW_INDEX, currentWindowIndex);
+
+        playWhenReady = exoplayerManager.getPlayWhenReady();
+        outState.putBoolean(KEY_PLAY_WHEN_READY, playWhenReady);
+
         super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
@@ -131,22 +160,20 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
         RecipeComponent component = ((HasComponent<RecipeComponent>) getActivity()).getComponent();
         component.inject(this);
 
-        simpleExoPlayerView.setPlayer(player);
-
         Bundle arguments = getArguments();
+
         Step step = arguments.getParcelable("step");
 
-        if (step != null) {
+        if (step != null && stepList == null) {
             stepList = bakingRepository.stepsByRecipe(step.getRecipeId());
             stepIndex = stepList.indexOf(step);
-            loadStep(step);
         }
 
         return view;
     }
 
     private void loadStep(Step step) {
-        player.stop();
+        Log.d(TAG, "loadStep: ");
         getActivity().setTitle(step.getShortDescription());
         txtDescription.setText(step.getDescription());
         int size = stepList.size();
@@ -208,34 +235,69 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     }
 
     private void preparePlayer(String videoUrl) {
-        player.stop();
-        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(videoUrl), httpDataSourceFactory,
-                extractorsFactory, new Handler(), this);
-        player.prepare(videoSource, true, false);
+        Log.d(TAG, "preparePlayer: "+exoplayerManager);
+        Log.d(TAG, "preparePlayer: currentPositon: "+currentPosition);
+        if (exoplayerManager == null){
+            exoplayerManager = new ExoplayerManager(getContext(), simpleExoPlayerView);
+            exoplayerManager.initializePlayer(currentWindowIndex, currentPosition, playWhenReady);
+        }
+        exoplayerManager.playMedia(videoUrl);
     }
 
 
     @OnClick(R.id.btn_next)
     public void onNextClick() {
         stepIndex++;
-        loadStep(stepList.get(stepIndex));
+        resetPlayerStatus();
+        loadCurrentStep();
+    }
+
+    private void resetPlayerStatus() {
+        Log.d(TAG, "resetPlayerStatus: ");
+        if (exoplayerManager != null){
+
+            exoplayerManager.stop ();
+
+        }
+        currentWindowIndex = 0;
+        currentPosition = -1;
+        playWhenReady = true;
     }
 
     @OnClick(R.id.btn_previous)
     public void onPrevClick() {
         stepIndex--;
+        resetPlayerStatus();
+        loadCurrentStep();
+    }
+
+    private void loadCurrentStep() {
         loadStep(stepList.get(stepIndex));
     }
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releasePlayer();
+    public void onResume() {
+        Log.d(TAG, "onResume: ");
+        super.onResume();
+        if (Util.SDK_INT <= 23) {
+            loadCurrentStep();
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        Log.d(TAG, "onStart: ");
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            loadCurrentStep();
+        }
     }
 
     @Override
     public void onPause() {
+        Log.d(TAG, "onPause: ");
         super.onPause();
         if (Util.SDK_INT <= 23) {
             releasePlayer();
@@ -243,25 +305,26 @@ public class StepDetailFragment extends Fragment implements ExtractorMediaSource
     }
 
     @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy: ");
+        super.onDestroy();
+    }
+
+    private void releasePlayer() {
+        Log.d(TAG, "releasePlayer: ");
+        if (exoplayerManager!= null){
+            exoplayerManager.releasePlayer();
+        }
+        exoplayerManager = null;
+    }
+
+    @Override
     public void onStop() {
+        Log.d(TAG, "onStop: ");
         super.onStop();
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
     }
-
-    private void releasePlayer() {
-        if (player == null) {
-            return;
-        }
-        player.release();
-        player = null;
-    }
-
-    @Override
-    public void onLoadError(IOException error) {
-        Log.e(TAG, "onLoadError: " + error.getMessage());
-    }
-
 
 }
