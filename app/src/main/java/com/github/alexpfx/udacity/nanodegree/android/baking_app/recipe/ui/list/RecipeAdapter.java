@@ -12,13 +12,13 @@ import android.widget.TextView;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
-import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +27,8 @@ import butterknife.ButterKnife;
  * Created by alexandre on 01/08/17.
  */
 
-@PerActivity
+@Singleton
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
-
 
 
     private static final String TAG = "RecipeAdapter";
@@ -37,8 +36,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
     private List<Recipe> itemList = new ArrayList<>();
     private Context context;
     private View.OnClickListener listener;
-    private String key_adapter_index = "key_adapter_index";
-
 
     @Inject
     public RecipeAdapter(Context context, GlideWrapper glideWrapper) {
@@ -135,18 +132,6 @@ class RecipeViewHolder extends RecyclerView.ViewHolder {
 
     private void loadImage(Object model) {
         glideWrapper.loadInto(model, imgRecipe);
-
-
-//        RequestOptions requestOptions = new RequestOptions();
-//        requestOptions.placeholder(R.drawable.placeholder_image);
-//        requestOptions.error(R.drawable.placeholder_no_image);
-//        requestOptions.centerCrop();
-//
-//
-//
-//        Glide.with(context)
-//                .load(model).apply(requestOptions).into(imgRecipe);
-
     }
 
 

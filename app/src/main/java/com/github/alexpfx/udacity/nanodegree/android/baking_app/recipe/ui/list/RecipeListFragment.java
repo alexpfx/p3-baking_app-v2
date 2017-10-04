@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.R;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.Recipe;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.HasComponent;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
 
 
 
-    @Singleton
+    @PerActivity
     @Inject
     RecipeAdapter adapter;
 
@@ -78,28 +80,32 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
 
     public RecipeListFragment() {
         setRetainInstance(true);
-
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         ButterKnife.bind(this, view);
-
-        initInjections();
         setupRecycler();
+
+        repository.recipes(this);
+
         return view;
     }
 
     @Override
     public void onAttach(Context context) {
+        Log.d(TAG, "onAttach: ");
         super.onAttach(context);
-
 
         if (context instanceof OnRecipeSelectListener) {
             recipeSelectListener = (OnRecipeSelectListener) context;
         }
+        initInjections();
     }
 
     private void initInjections() {
@@ -109,10 +115,8 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
     private void setupRecycler() {
         RecyclerView.LayoutManager layoutManager = getLayoutManager();
         recycler.setLayoutManager(layoutManager);
-        recycler.setAdapter(adapter);
         adapter.setListener(this);
-        repository.recipes(this);
-
+        recycler.setAdapter(adapter);
     }
 
     private void showRecipes(List<Recipe> data) {
@@ -138,6 +142,7 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         getActivity().registerReceiver(networkStatusChanged, new IntentFilter(android.net.ConnectivityManager
                 .CONNECTIVITY_ACTION));
@@ -145,9 +150,11 @@ public class RecipeListFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onPause() {
+        Log.d(TAG, "onPause: ");
         getActivity().unregisterReceiver(networkStatusChanged);
         super.onPause();
     }
+
 
     @Override
     public void onReceive(List<Recipe> data) {

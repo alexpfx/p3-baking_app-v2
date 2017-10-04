@@ -1,12 +1,10 @@
 package com.github.alexpfx.udacity.nanodegree.android.baking_app.di;
 
 import android.content.Context;
-import android.os.Handler;
 
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.data.BakingRepository;
+import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.ui.list.RecipeAdapter;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
-
-import java.util.concurrent.Executor;
 
 import javax.inject.Singleton;
 
@@ -21,14 +19,12 @@ import dagger.Component;
 public interface ApplicationComponent {
     Context context();
 
-    Executor executor();
-
     BakingRepository recipesRepository();
 
     Boolean isTablet();
 
-    Handler handler();
-
     GlideWrapper glideWrapper();
+
+    RecipeAdapter recipeAdapter ();
 
 }

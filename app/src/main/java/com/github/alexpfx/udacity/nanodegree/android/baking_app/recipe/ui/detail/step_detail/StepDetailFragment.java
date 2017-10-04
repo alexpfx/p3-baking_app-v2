@@ -22,9 +22,7 @@ import com.github.alexpfx.udacity.nanodegree.android.baking_app.di.PerActivity;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.recipe.di.RecipeComponent;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.GlideWrapper;
 import com.github.alexpfx.udacity.nanodegree.android.baking_app.util.NetworkUtils;
-import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 
 import java.util.List;
@@ -76,13 +74,6 @@ public class StepDetailFragment extends Fragment {
 
     ExoplayerManager exoplayerManager;
 
-    @Inject
-    @PerActivity
-    HttpDataSource.Factory httpDataSourceFactory;
-
-    @Inject
-    @PerActivity
-    ExtractorsFactory extractorsFactory;
 
     private int stepIndex;
 

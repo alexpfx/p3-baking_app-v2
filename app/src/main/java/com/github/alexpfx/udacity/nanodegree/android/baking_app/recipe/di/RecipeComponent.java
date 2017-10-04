@@ -19,6 +19,7 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class})
 public interface RecipeComponent {
+
     void inject(StepDetailFragment stepDetailFragment);
 
     void inject(RecipeListFragment recipeListFragment);
@@ -28,7 +29,6 @@ public interface RecipeComponent {
     void inject(RecipeDetailActivity recipeDetailActivity);
 
     void inject(StepDetailActivity stepDetailActivity);
-
 
     void inject(WidgetSettingsFragment widgetSettingsFragment);
 }
